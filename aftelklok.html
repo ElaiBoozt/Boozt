@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nachtjes Slapen Countdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fdf6ed 0%, #fbead4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #4b2c2c;
+    overflow: hidden;
+  }
+
+  .card {
+    background: rgba(255, 248, 240, 0.9);
+    border-radius: 2rem;
+    padding: 2rem 3rem;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 1rem;
+    color: #a87452; /* donkerder bruin-beige voor 'Nog maar' */
+  }
+
+  #countdown-frame {
+    display: inline-block;
+    border-radius: 1.5rem;
+    padding: 2rem 2.5rem;
+    margin: 1rem 0;
+    background: #f3d8ba; /* zachte beige tint voor het kader */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12), inset 0 2px 0 rgba(255,255,255,0.3);
+  }
+
+  #countdown {
+    font-size: 5em;
+    font-weight: 700;
+    color: #ff7b4a; /* accentkleur voor de nachtjes */
+  }
+
+  #message {
+    font-size: 1.2em;
+    margin-bottom: 1rem;
+  }
+
+  .subtext {
+    font-size: 1.1em;
+    margin: 0.3rem 0;
+    color: #5a4a46;
+  }
+
+  .decor {
+    font-size: 2em;
+    margin-top: 1rem;
+  }
+
+  .firework {
+    position: absolute;
+    font-size: 2em;
+    animation: floatFire 2s ease-in-out infinite;
+  }
+
+  @keyframes floatFire {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-50px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 0.8; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Nog maar ..</h1>
+  <div id="countdown-frame">
+    <div id="countdown"></div>
+  </div>
+  <div id="message" class="subtext">nachtjes slapen tot 16 oktober 2025 ✨</div>
+  <div class="subtext">Even samen.</div>
+  <div class="subtext">Even zijn.</div>
+  <div class="subtext">Even nu.</div>
+  <div class="decor">🧜‍♀️ ✨✨</div>
+</div>
+
+<script>
+  const targetDate = new Date("2025-10-16T00:00:00");
+
+  function updateCountdown() {
+    const now = new Date();
+    let diffTime = targetDate - now;
+    let daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if(daysLeft < 0) daysLeft = 0;
+
+    const countdownEl = document.getElementById("countdown");
+    const messageEl = document.getElementById("message");
+
+    countdownEl.textContent = daysLeft;
+
+    if(daysLeft === 0) {
+      messageEl.textContent = "Het is zover! 🌟 Geniet van je dag!";
+    } else if(daysLeft === 1) {
+      messageEl.textContent = "Nog één nachtje slapen! 😴✨";
+    } else {
+      messageEl.textContent = `Nog ${daysLeft} nachtjes slapen tot 16 oktober 2025 ✨`;
+    }
+
+    // Vuurwerk vanaf 15:00 op de doeldatum
+    if(daysLeft === 0 && now.getHours() >= 15) {
+      addFireworks();
+    }
+  }
+
+  function addFireworks() {
+    // check of er al vuurwerk is
+    if(document.querySelectorAll('.firework').length > 0) return;
+
+    const fireworks = ["🎆","💥","✨","🎇"];
+    for(let i=0; i<20; i++) {
+      const fire = document.createElement("div");
+      fire.className = "firework";
+      fire.textContent = fireworks[Math.floor(Math.random()*fireworks.length)];
+      fire.style.left = Math.random()*80 + "%";
+      fire.style.top = Math.random()*60 + "%";
+      fire.style.fontSize = 1.5 + Math.random()*1.5 + "em";
+      fire.style.animationDelay = Math.random()*2 + "s";
+      document.body.appendChild(fire);
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60 * 1000); // update elke minuut
+</script>
+</body>
+</html>
