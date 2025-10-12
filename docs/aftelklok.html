@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aftelklok</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #fdf4e3 0%, #fff8f0 100%);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #5a4a46;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #container {
+    display: inline-block;
+    text-align: center;
+  }
+  #countdown-frame {
+    display: inline-block;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #f3e7d9;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    margin: 20px 0;
+    min-width: 120px;
+  }
+  #countdown {
+    font-size: 6vw;
+    font-weight: bold;
+    color: #8b5e3c;
+    margin: 0;
+  }
+  #message {
+    font-size: 1.5em;
+    color: #6b4f41;
+    margin-top: 10px;
+  }
+  #extra {
+    font-size: 2em;
+    margin-top: 10px;
+  }
+  .firework {
+    position: absolute;
+    font-size: 2em;
+    animation: explode 1s ease-out forwards;
+  }
+  @keyframes explode {
+    0% {opacity: 1; transform: scale(0);}
+    50% {opacity: 1; transform: scale(2);}
+    100% {opacity: 0; transform: scale(3);}
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="countdown-frame">
+    <div id="countdown">0</div>
+  </div>
+  <div id="message">Nog maar</div>
+  <div id="extra">Even samen. Even zijn. Even nu. 🧜‍♀️✨✨</div>
+</div>
+
+<script>
+const target = new Date(2025, 9, 16); // maand is 0-index (okt = 9)
+function updateCountdown() {
+  const now = new Date();
+  let diff = target - now;
+  const countdownEl = document.getElementById("countdown");
+  const messageEl = document.getElementById("message");
+
+  if(diff > 0) {
+    const days = Math.ceil(diff / (1000*60*60*24));
+    countdownEl.textContent = days;
+    messageEl.textContent = "Nog maar";
+  } else {
+    countdownEl.textContent = "0";
+    messageEl.textContent = "Het is tijd 💫 — geniet van je afspraak!";
+
+    // Vuurwerk vanaf 15:00
+    if(now.getHours() >= 15) {
+      for(let i=0;i<20;i++){
+        const fw = document.createElement("div");
+        fw.className = "firework";
+        fw.textContent = "🎆";
+        fw.style.left = Math.random()*100 + "vw";
+        fw.style.top = Math.random()*50 + "vh";
+        fw.style.fontSize = (Math.random()*2+1) + "em";
+        document.body.appendChild(fw);
+        setTimeout(()=>fw.remove(),1500);
+      }
+    }
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
