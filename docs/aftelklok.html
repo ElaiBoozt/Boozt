@@ -8,49 +8,62 @@
   body {
     background: radial-gradient(circle at center, #fdf4e3 0%, #fff8f0 100%);
     font-family: 'Poppins', sans-serif;
-    text-align: center;
-    color: #5a4a46;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #5a4a46;
     overflow: hidden;
   }
+
   #container {
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+
+  #message {
+    font-size: 2em;
+    color: #8b5e3c;
+    margin-bottom: 20px;
+  }
+
   #countdown-frame {
-    display: inline-block;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 50px 40px;
+    border-radius: 25px;
     background-color: #f3e7d9;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    margin: 20px 0;
-    min-width: 120px;
-  }
-  #countdown {
-    font-size: 6vw;
+    font-size: 5em;
     font-weight: bold;
     color: #8b5e3c;
-    margin: 0;
+    min-width: 120px;
   }
-  #message {
-    font-size: 1.5em;
-    color: #6b4f41;
-    margin-top: 10px;
-  }
+
   #extra {
-    font-size: 2em;
-    margin-top: 10px;
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-style: italic;
+    line-height: 1.6;
   }
+
+  #extra div {
+    margin: 5px 0;
+  }
+
+  #emojis {
+    margin-top: 15px;
+    font-size: 2em;
+  }
+
   .firework {
     position: absolute;
     font-size: 2em;
     animation: explode 1s ease-out forwards;
   }
+
   @keyframes explode {
     0% {opacity: 1; transform: scale(0);}
     50% {opacity: 1; transform: scale(2);}
@@ -60,15 +73,22 @@
 </head>
 <body>
 <div id="container">
+  <div id="message">Nog maar</div>
   <div id="countdown-frame">
     <div id="countdown">0</div>
   </div>
-  <div id="message">Nog maar</div>
-  <div id="extra">Even samen. Even zijn. Even nu. 🧜‍♀️✨✨</div>
+  <div id="extra">
+    <div>Even samen.</div>
+    <div>Even zijn.</div>
+    <div>Even nu.</div>
+  </div>
+  <div id="emojis">🧜‍♀️✨✨</div>
 </div>
 
 <script>
-const target = new Date(2025, 9, 16); // maand is 0-index (okt = 9)
+// Doeldatum: donderdag 16 oktober 2025
+const target = new Date(2025, 9, 16); // maand 0-indexed: oktober = 9
+
 function updateCountdown() {
   const now = new Date();
   let diff = target - now;
@@ -83,24 +103,5 @@ function updateCountdown() {
     countdownEl.textContent = "0";
     messageEl.textContent = "Het is tijd 💫 — geniet van je afspraak!";
 
-    // Vuurwerk vanaf 15:00
-    if(now.getHours() >= 15) {
-      for(let i=0;i<20;i++){
-        const fw = document.createElement("div");
-        fw.className = "firework";
-        fw.textContent = "🎆";
-        fw.style.left = Math.random()*100 + "vw";
-        fw.style.top = Math.random()*50 + "vh";
-        fw.style.fontSize = (Math.random()*2+1) + "em";
-        document.body.appendChild(fw);
-        setTimeout(()=>fw.remove(),1500);
-      }
-    }
-  }
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-</script>
-</body>
-</html>
+    // Vuurwerk vanaf 15:00 uur
+    if(now.getHour
