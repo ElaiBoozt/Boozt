@@ -1,0 +1,134 @@
+<!--trigger 2-->
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aftelklok – Even samen</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #f8efe7 0%, #f3e5d8 100%);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #5a4a46;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #container {
+    background: #f5e8d9;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(140,110,90,0.25);
+    padding: 40px 60px;
+    display: inline-block;
+  }
+
+  #title {
+    font-size: 1.8em;
+    color: #7a5a43;
+    margin-bottom: 20px;
+  }
+
+  #countdown-box {
+    background: #e9d6c3;
+    color: #7a5a43;
+    font-size: 5em;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 20px 60px;
+    display: inline-block;
+    box-shadow: 0 6px 15px rgba(120,90,60,0.25);
+  }
+
+  #message {
+    font-style: italic;
+    font-size: 1.3em;
+    color: #6a4c3a;
+    margin-top: 30px;
+    line-height: 1.8em;
+  }
+
+  .emoji {
+    font-size: 2em;
+    margin-top: 10px;
+  }
+
+  /* Vuurwerk */
+  .firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: transparent;
+    border-radius: 50%;
+    animation: explode 1.5s ease-out infinite;
+  }
+
+  @keyframes explode {
+    0% { transform: scale(0.5) translateY(0); opacity: 1; }
+    100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+  <div id="container">
+    <div id="title">Nog maar</div>
+    <div id="countdown-box">0</div>
+    <div id="message">
+      <div>Even samen.</div>
+      <div>Even zijn.</div>
+      <div>Even nu.</div>
+      <div class="emoji">🧜‍♀️✨</div>
+    </div>
+  </div>
+
+<script>
+const targetDate = new Date("2025-10-16T00:00:00");
+
+function updateCountdown() {
+  const now = new Date();
+  const timeDiff = targetDate - now;
+
+  const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  const countdownEl = document.getElementById("countdown-box");
+  const titleEl = document.getElementById("title");
+
+  // Als het nog niet zover is
+  if (timeDiff > 0) {
+    countdownEl.textContent = days;
+  } else {
+    countdownEl.textContent = "0";
+  }
+
+  // Controleer of het 16 okt 2025 na 15:00 is
+  const fireworkTime = new Date("2025-10-16T15:00:00");
+  if (now >= fireworkTime) {
+    titleEl.textContent = "Het is tijd 💫";
+    countdownEl.textContent = "✨";
+    startFireworks();
+  }
+}
+
+function startFireworks() {
+  for (let i = 0; i < 20; i++) {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.left = Math.random() * 100 + "vw";
+    fw.style.top = Math.random() * 100 + "vh";
+    fw.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    fw.style.animationDelay = Math.random() * 1.5 + "s";
+    document.body.appendChild(fw);
+
+    setTimeout(() => fw.remove(), 2000);
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000 * 60 * 60); // update elk uur
+</script>
+</body>
+</html>
