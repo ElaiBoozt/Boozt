@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Countdown Afspraak</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #ffe6d5 0%, #fff3eb 100%);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #402d2d;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  #countdown {
+    font-size: 5em;
+    color: #ff8c52;
+    text-shadow: 0 0 15px rgba(255,180,120,0.6);
+    margin: 20px 0;
+  }
+  #message {
+    font-size: 1.5em;
+    color: #5a4a46;
+    margin-top: 20px;
+  }
+  .stars::before {
+    content: "✨✨✨";
+    display: block;
+    font-size: 2em;
+    margin-top: 10px;
+  }
+  .heart {
+    position: absolute;
+    font-size: 2em;
+    color: #ff99aa;
+    animation: float 6s linear infinite;
+  }
+  @keyframes float {
+    0% {transform: translateY(0px) translateX(0px);}
+    50% {transform: translateY(-80px) translateX(20px);}
+    100% {transform: translateY(0px) translateX(0px);}
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="countdown"></div>
+  <div id="message">Ik kijk ernaar uit 😉✨</div>
+</div>
+
+<script>
+// Doel-tijd: 16:00 vandaag (Amsterdam)
+const target = new Date();
+target.setHours(16,0,0,0);
+
+function updateCountdown() {
+  const now = new Date();
+  let diff = target - now;
+  const countdownEl = document.getElementById("countdown");
+  const messageEl = document.getElementById("message");
+
+  if(diff > 0) {
+    const hrs = Math.floor(diff / (1000*60*60));
+    const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const secs = Math.floor((diff % (1000*60)) / 1000);
+    countdownEl.textContent = `${hrs}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    messageEl.textContent = "Ik kijk ernaar uit 😉✨";
+  } else {
+    countdownEl.textContent = "00:00:00";
+    messageEl.textContent = "Het is tijd 💫 — geniet van je afspraak!";
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Voeg zwevende hartjes toe
+for(let i=0; i<15; i++) {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💖";
+  heart.style.left = Math.random()*100 + "%";
+  heart.style.animationDelay = Math.random()*6 + "s";
+  document.body.appendChild(heart);
+}
+</script>
+</body><!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aftelklok</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #fdf4e3 0%, #fff8f0 100%);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #5a4a46;
+    overflow: hidden;
+  }
+
+  #container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #message {
+    font-size: 2em;
+    color: #8b5e3c;
+    margin-bottom: 20px;
+  }
+
+  #countdown-frame {
+    padding: 50px 40px;
+    border-radius: 25px;
+    background-color: #f3e7d9;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    font-size: 5em;
+    font-weight: bold;
+    color: #8b5e3c;
+    min-width: 120px;
+  }
+
+  #extra {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  #extra div {
+    margin: 5px 0;
+  }
+
+  #emojis {
+    margin-top: 15px;
+    font-size: 2em;
+  }
+
+  .firework {
+    position: absolute;
+    font-size: 2em;
+    animation: explode 1s ease-out forwards;
+  }
+
+  @keyframes explode {
+    0% {opacity: 1; transform: scale(0);}
+    50% {opacity: 1; transform: scale(2);}
+    100% {opacity: 0; transform: scale(3);}
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="message">Nog maar</div>
+  <div id="countdown-frame">
+    <div id="countdown">0</div>
+  </div>
+  <div id="extra">
+    <div>Even samen.</div>
+    <div>Even zijn.</div>
+    <div>Even nu.</div>
+  </div>
+  <div id="emojis">🧜‍♀️✨✨</div>
+</div>
+
+<script>
+// Doeldatum: donderdag 16 oktober 2025
+const target = new Date(2025, 9, 16); // maand 0-indexed: oktober = 9
+
+function updateCountdown() {
+  const now = new Date();
+  let diff = target - now;
+  const countdownEl = document.getElementById("countdown");
+  const messageEl = document.getElementById("message");
+
+  if(diff > 0) {
+    const days = Math.ceil(diff / (1000*60*60*24));
+    countdownEl.textContent = days;
+    messageEl.textContent = "Nog maar";
+  } else {
+    countdownEl.textContent = "0";
+    messageEl.textContent = "Het is tijd 💫 — geniet van je afspraak!";
+
+    // Vuurwerk vanaf 15:00 uur
+    if(now.getHour
+</html>
