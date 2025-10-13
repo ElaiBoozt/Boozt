@@ -1,4 +1,4 @@
-<!--trigger 7-->
+<!--trigger 8-->
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -50,16 +50,16 @@
     z-index: 2;
   }
 
-  /* Groot kader inclusief aftelklok en tekst */
+  /* Groot kader inclusief alles */
   #frame {
     margin: 40px auto;
-    padding: 40px 20px;
+    padding: 40px 20px 30px 20px;
     width: 360px;
     border-radius: 24px;
-    background: linear-gradient(145deg, rgba(242, 227, 211, 0.9), rgba(248, 240, 230, 0.9));
+    background: linear-gradient(145deg, rgba(242, 227, 211, 0.95), rgba(248, 240, 230, 0.9));
     box-shadow: 0 8px 20px rgba(150, 120, 90, 0.25);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     z-index: 2;
   }
 
@@ -112,7 +112,7 @@
     margin-top: 15px;
   }
 
-  /* De tekst onderaan hoort nu binnen het kader */
+  /* Nu binnen het kader zelf */
   #footer {
     margin-top: 35px;
     font-style: italic;
@@ -155,6 +155,7 @@
     </div>
     <div id="message"></div>
 
+    <!-- De romantische tekst is nu binnen hetzelfde kader -->
     <div id="footer">
       ✨<br>
       Even samen.<br>
@@ -197,11 +198,31 @@
 
     // Hartjes genereren
     const numHearts = 55;
-    const colors = ["💖", "🧡", "💜", "💙", "💛", "💚", "❤️"];
+    const colors = ["💖", "❤️", "💜", "💙", "💛", "💚", "🧡"];
     const hearts = [];
 
     for (let i = 0; i < numHearts; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.textContent = colors[Math.floor(Math.random() * colors.length)];
-      heart.style.left = Math.random() * 100 +*
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.top = Math.random() * 100 + "%";
+      heart.style.animationDelay = Math.random() * 10 + "s";
+      heart.style.animationDuration = 8 + Math.random() * 4 + "s";
+      document.body.appendChild(heart);
+      hearts.push(heart);
+    }
+
+    function triggerFireworks() {
+      hearts.forEach((heart) => {
+        heart.textContent = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.fontSize = (2 + Math.random() * 2) + "em";
+        heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+        heart.style.opacity = 0.9;
+      });
+    }
+  </script>
+</body>
+</html>
+
+
