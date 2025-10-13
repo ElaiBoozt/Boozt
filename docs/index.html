@@ -51,12 +51,13 @@
     z-index: 2;
   }
 
+  /* Groot kader */
   #frame {
     margin: 40px auto;
     padding: 40px 20px;
-    width: 320px;
-    border-radius: 20px;
-    background: linear-gradient(145deg, #f2e3d3, #f8f0e6);
+    width: 340px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(242, 227, 211, 0.85), rgba(248, 240, 230, 0.85));
     box-shadow: 0 8px 20px rgba(150, 120, 90, 0.25);
     position: relative;
     overflow: hidden;
@@ -71,7 +72,7 @@
     left: -75%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(120deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 80%);
+    background: linear-gradient(120deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
     transform: skewX(-25deg);
     animation: shine 6s infinite;
   }
@@ -82,16 +83,35 @@
     100% { left: 125%; }
   }
 
+  /* Binnenste kader voor aftelling */
+  #countdown-box {
+    background: #f5e4d0;
+    border-radius: 16px;
+    padding: 25px 10px;
+    width: 160px;
+    margin: 0 auto 15px auto;
+    box-shadow: inset 0 0 8px rgba(140, 100, 70, 0.2),
+                0 4px 8px rgba(140, 100, 70, 0.2);
+  }
+
   #countdown {
     font-size: 3em;
     color: #b07c56;
     font-weight: 600;
+    line-height: 1em;
+  }
+
+  #nachtjes {
+    font-size: 1.1em;
+    color: #7c5e48;
+    font-weight: 500;
+    margin-top: 5px;
   }
 
   #message {
     font-size: 1.3em;
     color: #705540;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 
   #footer {
@@ -130,7 +150,10 @@
 <body>
   <h1>Nog maar…</h1>
   <div id="frame">
-    <div id="countdown"></div>
+    <div id="countdown-box">
+      <div id="countdown"></div>
+      <div id="nachtjes">nachtjes</div>
+    </div>
     <div id="message"></div>
   </div>
 
@@ -145,6 +168,7 @@
 
   <script>
     const countdownEl = document.getElementById("countdown");
+    const nachtjesEl = document.getElementById("nachtjes");
     const messageEl = document.getElementById("message");
     const targetDate = new Date("2025-10-16T00:00:00");
 
@@ -154,22 +178,25 @@
       const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
       if (diff > 0) {
-        countdownEl.textContent = days + (days === 1 ? " nachtje" : " nachtjes");
+        countdownEl.textContent = days;
+        nachtjesEl.style.display = "block";
         messageEl.textContent = "";
       } else if (now < new Date("2025-10-16T17:30:00")) {
         countdownEl.textContent = "💫";
+        nachtjesEl.style.display = "none";
         messageEl.textContent = "Het is bijna zover";
       } else {
         countdownEl.textContent = "";
+        nachtjesEl.style.display = "none";
         messageEl.textContent = "💖💥✨";
         triggerFireworks();
       }
     }
 
     updateCountdown();
-    setInterval(updateCountdown, 1000 * 60 * 10); // elke 10 min bijwerken
+    setInterval(updateCountdown, 1000 * 60 * 10);
 
-    // Maak hartjes
+    // Hartjes genereren
     const numHearts = 55;
     const colors = ["🧡", "❤️", "💜", "💙", "💛", "💚"];
     const hearts = [];
@@ -186,7 +213,7 @@
       hearts.push(heart);
     }
 
-    // Hartjes veranderen in 'vuurwerk'-hartjes na 16 okt 17:30
+    // Hartjes veranderen in vuurwerk-hartjes na 16 okt 17:30
     function triggerFireworks() {
       hearts.forEach((heart) => {
         heart.textContent = colors[Math.floor(Math.random() * colors.length)];
@@ -198,4 +225,3 @@
   </script>
 </body>
 </html>
-
