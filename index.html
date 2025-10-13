@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aftelklok</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #5a4a46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    background: #f8f2e7;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtiele glansanimatie */
+  body::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(25deg);
+    animation: shine 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%) rotate(25deg); }
+    100% { transform: translateX(100%) rotate(25deg); }
+  }
+
+  #container {
+    background: #f6ebe0;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 50px 40px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    z-index: 1;
+  }
+
+  #title {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #7a5a43;
+  }
+
+  #countdown-box {
+    background: linear-gradient(145deg, #f9f4eb, #f0e5d8);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(120,90,60,0.2);
+    padding: 30px;
+    font-size: 4em;
+    font-weight: 600;
+    color: #7a5a43;
+    margin-bottom: 30px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  #countdown-box.pop {
+    transform: scale(1.2);
+  }
+
+  #message {
+    font-style: italic;
+    font-size: 1.3em;
+    line-height: 1.6em;
+    margin-top: 10px;
+  }
+
+  #message div {
+    margin: 5px 0;
+  }
+
+  #emojis {
+    font-size: 2em;
+    margin-top: 10px;
+  }
+
+  .firework {
+    position: absolute;
+    font-size: 2em;
+    animation: explode 1.5s ease-out forwards;
+  }
+
+  @keyframes explode {
+    0% {opacity: 1; transform: scale(0);}
+    50% {opacity: 1; transform: scale(2);}
+    100% {opacity: 0; transform: scale(3);}
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="title">Nog maar…</div>
+  <div id="countdown-box">0</div>
+  <div id="message">
+    <div>✨</div>
+    <div>Even samen.</div>
+    <div>Even zijn.</div>
+    <div>Even nu.</div>
+    <div id="emojis">🧜🏻‍♀️✨</div>
+    <div>Tot snel 😘</div>
+  </div>
+</div>
+
+<script>
+const targetDate = new Date("2025-10-16T00:00:00");
+const fireworkTime = new Date("2025-10-16T17:30:00");
+let lastDays = null;
+
+function updateCountdown() {
+  const now = new Date();
+  const countdownEl = document.getElementById("countdown-box");
+  const titleEl = document.getElementById("title");
+
+  let diff = targetDate - now;
+  if (diff > 0) {
+    const nights = Math.ceil(diff / (1000*60*60*24));
+    countdownEl.textContent = nights;
+    titleEl.textContent = "Nog maar…";
+
+    // pop animatie bij verandering
+    if (nights !== lastDays) {
+      countdownEl.classList.add('pop');
+      setTimeout(() => countdownEl.classList.remove('pop'), 500);
+      lastDays = nights;
+    }
+  } else {
+    countdownEl.textContent = "Het is bijna zover";
+    titleEl.textContent = "";
+  }
+
+  // Vuurwerk na 16 okt 17:30
+  if(now >= fireworkTime){
+    for(let i=0; i<20; i++){
+      const fw = document.createElement("div");
+      fw.className = "firework";
+      fw.textContent = "🎆";
+      fw.style.left = Math.random()*100 + "vw";
+      fw.style.top = Math.random()*50 + "vh";
+      fw.style.fontSize = (Math.random()*2+1) + "em";
+      document.body.appendChild(fw);
+      setTimeout(()=>fw.remove(),2000);
+    }
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000*60); // update elke minuut
+</script>
+</body>
+</html>
