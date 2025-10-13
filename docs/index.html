@@ -1,171 +1,200 @@
-<!--trigger 3-->
+<!--trigger 4-->
 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aftelklok</title>
+<title>Nog maar...</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
-    padding: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #f6eee7 0%, #f3e8dc 100%);
     font-family: 'Poppins', sans-serif;
-    color: #5a4a46;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    color: #5a463a;
     text-align: center;
-    background: #f8f2e7;
-    position: relative;
     overflow: hidden;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
   }
 
-  /* Subtiele glansanimatie */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Subtiele glans over de achtergrond */
   body::before {
     content: "";
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
-    transform: rotate(25deg);
-    animation: shine 6s linear infinite;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.35), transparent 70%),
+                radial-gradient(circle at 70% 80%, rgba(255,255,255,0.25), transparent 70%);
+    animation: backgroundGlow 15s ease-in-out infinite alternate;
     pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes backgroundGlow {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.03); }
+  }
+
+  h1 {
+    font-size: 2.2em;
+    margin-top: 60px;
+    color: #7c5e48;
+    position: relative;
+    z-index: 2;
+  }
+
+  #frame {
+    margin: 40px auto;
+    padding: 40px 20px;
+    width: 320px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f2e3d3, #f8f0e6);
+    box-shadow: 0 8px 20px rgba(150, 120, 90, 0.25);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* Glans over het kader */
+  #frame::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 80%);
+    transform: skewX(-25deg);
+    animation: shine 6s infinite;
   }
 
   @keyframes shine {
-    0% { transform: translateX(-100%) rotate(25deg); }
-    100% { transform: translateX(100%) rotate(25deg); }
+    0% { left: -75%; }
+    60% { left: 125%; }
+    100% { left: 125%; }
   }
 
-  #container {
-    background: #f6ebe0;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    padding: 50px 40px;
-    max-width: 400px;
-    width: 90%;
-    position: relative;
-    z-index: 1;
-  }
-
-  #title {
-    font-size: 2em;
+  #countdown {
+    font-size: 3em;
+    color: #b07c56;
     font-weight: 600;
-    margin-bottom: 20px;
-    color: #7a5a43;
-  }
-
-  #countdown-box {
-    background: linear-gradient(145deg, #f9f4eb, #f0e5d8);
-    border-radius: 16px;
-    box-shadow: 0 6px 15px rgba(120,90,60,0.2);
-    padding: 30px;
-    font-size: 4em;
-    font-weight: 600;
-    color: #7a5a43;
-    margin-bottom: 30px;
-    display: inline-block;
-    transition: transform 0.3s ease;
-  }
-
-  #countdown-box.pop {
-    transform: scale(1.2);
   }
 
   #message {
-    font-style: italic;
     font-size: 1.3em;
+    color: #705540;
+    margin-top: 10px;
+  }
+
+  #footer {
+    margin-top: 40px;
+    font-style: italic;
     line-height: 1.6em;
-    margin-top: 10px;
+    color: #6d5644;
+    position: relative;
+    z-index: 2;
   }
 
-  #message div {
-    margin: 5px 0;
-  }
-
-  #emojis {
-    font-size: 2em;
-    margin-top: 10px;
-  }
-
-  .firework {
+  .heart {
     position: absolute;
-    font-size: 2em;
-    animation: explode 1.5s ease-out forwards;
+    font-size: 1.8em;
+    opacity: 0.6;
+    animation: float 10s ease-in-out infinite;
+    z-index: 1;
   }
 
-  @keyframes explode {
-    0% {opacity: 1; transform: scale(0);}
-    50% {opacity: 1; transform: scale(2);}
-    100% {opacity: 0; transform: scale(3);}
+  @keyframes float {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateY(-100px) scale(1.1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.8;
+    }
   }
 </style>
 </head>
 <body>
-<div id="container">
-  <div id="title">Nog maar… nachtjes </div>
-  <div id="countdown-box">0</div>
-  <div id="message">
-    <div>✨</div>
-    <div>Even samen.</div>
-    <div>Even zijn.</div>
-    <div>Even nu.</div>
-    <div id="emojis">🧜🏻‍♀️✨</div>
-    <div>Tot snel 😘</div>
+  <h1>Nog maar…</h1>
+  <div id="frame">
+    <div id="countdown"></div>
+    <div id="message"></div>
   </div>
-</div>
 
-<script>
-const targetDate = new Date("2025-10-16T00:00:00");
-const fireworkTime = new Date("2025-10-16T17:30:00");
-let lastDays = null;
+  <div id="footer">
+    ✨<br>
+    Even samen.<br>
+    Even zijn.<br>
+    Even nu.<br>
+    🧜🏻‍♀️✨<br>
+    Tot snel 😘
+  </div>
 
-function updateCountdown() {
-  const now = new Date();
-  const countdownEl = document.getElementById("countdown-box");
-  const titleEl = document.getElementById("title");
+  <script>
+    const countdownEl = document.getElementById("countdown");
+    const messageEl = document.getElementById("message");
+    const targetDate = new Date("2025-10-16T00:00:00");
 
-  let diff = targetDate - now;
-  if (diff > 0) {
-    const nights = Math.ceil(diff / (1000*60*60*24));
-    countdownEl.textContent = nights;
-    titleEl.textContent = "Nog maar…";
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-    // pop animatie bij verandering
-    if (nights !== lastDays) {
-      countdownEl.classList.add('pop');
-      setTimeout(() => countdownEl.classList.remove('pop'), 500);
-      lastDays = nights;
+      if (diff > 0) {
+        countdownEl.textContent = days + (days === 1 ? " nachtje" : " nachtjes");
+        messageEl.textContent = "";
+      } else if (now < new Date("2025-10-16T17:30:00")) {
+        countdownEl.textContent = "💫";
+        messageEl.textContent = "Het is bijna zover";
+      } else {
+        countdownEl.textContent = "";
+        messageEl.textContent = "💖💥✨";
+        triggerFireworks();
+      }
     }
-  } else {
-    countdownEl.textContent = "Het is bijna zover";
-    titleEl.textContent = "";
-  }
 
-  // Vuurwerk na 16 okt 17:30
-  if(now >= fireworkTime){
-    for(let i=0; i<20; i++){
-      const fw = document.createElement("div");
-      fw.className = "firework";
-      fw.textContent = "🎆";
-      fw.style.left = Math.random()*100 + "vw";
-      fw.style.top = Math.random()*50 + "vh";
-      fw.style.fontSize = (Math.random()*2+1) + "em";
-      document.body.appendChild(fw);
-      setTimeout(()=>fw.remove(),2000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 10); // elke 10 min bijwerken
+
+    // Maak hartjes
+    const numHearts = 55;
+    const colors = ["🧡", "❤️", "💜", "💙", "💛", "💚"];
+    const hearts = [];
+
+    for (let i = 0; i < numHearts; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.top = Math.random() * 100 + "%";
+      heart.style.animationDelay = Math.random() * 10 + "s";
+      heart.style.animationDuration = 8 + Math.random() * 4 + "s";
+      document.body.appendChild(heart);
+      hearts.push(heart);
     }
-  }
-}
 
-updateCountdown();
-setInterval(updateCountdown, 1000*60); // update elke minuut
-</script>
+    // Hartjes veranderen in 'vuurwerk'-hartjes na 16 okt 17:30
+    function triggerFireworks() {
+      hearts.forEach((heart) => {
+        heart.textContent = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.fontSize = (2 + Math.random() * 2) + "em";
+        heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+        heart.style.opacity = 0.9;
+      });
+    }
+  </script>
 </body>
-
 </html>
-
