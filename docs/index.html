@@ -1,4 +1,4 @@
-<!--trigger 7-->
+<!--trigger 8-->
 
 <!doctype html>
 <html lang="nl">
@@ -51,6 +51,7 @@ header{text-align:center;margin-bottom:20px;}
   color: var(--inkt);
   letter-spacing:1px;
   margin-bottom:6px;
+  cursor:pointer;
 }
 .meta{font-size:14px;color:var(--muted);}
 .meta span{margin-right:10px;}
@@ -178,7 +179,7 @@ button.btn:hover{opacity:0.85;}
 <div class="pamflet">
 
 <header>
-  <div class="masthead">DE GAZETTE DER GEDULDIGEN</div>
+  <div class="masthead" id="masthead">DE GAZETTE DER GEDULDIGEN</div>
   <div class="meta">
     <span id="metaDate">Vrijdag 24 oktober 2025</span>
     <span>| Jaargang I — Nr. 7</span>
@@ -223,7 +224,7 @@ button.btn:hover{opacity:0.85;}
 
 <button class="btn" id="forceTear">Scheur vandaag</button>
 
-<footer>Dubbelklik op de kop om de lokale aftel-opslag te resetten.</footer>
+<footer>Dubbelklik op de kop om de lokale aftelknop te verversen.</footer>
 </div>
 
 <script>
@@ -246,7 +247,11 @@ const dailyWonder = {
 
 /* ====== Aftel-logica ====== */
 function keyForDay(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function nightsRemaining(nowDate){ const diffMs = SHOW_AT_08 - nowDate; return Math.max(0, Math.ceil(diffMs / (1000*60*60*24))); }
+function nightsRemaining(nowDate){ 
+  const target = new Date(SHOW_AT_08.getFullYear(), SHOW_AT_08.getMonth(), SHOW_AT_08.getDate(), 0,0,0);
+  const diffMs = target - nowDate;
+  return Math.max(0, Math.ceil(diffMs / (1000*60*60*24)));
+}
 function renderTears(remaining){
   const stack=el('tearStack'); stack.innerHTML='';
   const toShow=Math.min(8, Math.max(remaining,0));
@@ -316,10 +321,8 @@ function refresh(){
   }
   renderTears(rem);
 
-  // Dagelijkse verwondering
   el('fact').textContent = dailyWonder[keyForDay(t)] || 'Laat je vandaag inspireren door de kleine wonderen om je heen.';
 
-  // auto-tear per dag
   const key=keyForDay(t); 
   if(localStorage.getItem(LS_LAST_OPEN)!==key){
     const torn=parseInt(localStorage.getItem(LS_TEARED)||'0',10)+1;
@@ -331,11 +334,17 @@ function refresh(){
 /* Manual tear */
 el('forceTear').addEventListener('click',()=>{
   const torn=parseInt(localStorage.getItem(LS_TEARED)||'0',10)+1;
-  localStorage.setItem(LS_TEARED',String(torn));
+  localStorage.setItem(LS_TEARED,String(torn));
   refresh();
 });
+
+/* Kop dubbelklik = reset timer */
 el('masthead').addEventListener('dblclick',()=>{
-  if(confirm('Reset lokale aftel-opslag?')){localStorage.removeItem(LS_TEARED); localStorage.removeItem(LS_LAST_OPEN); location.reload();}
+  if(confirm('Reset lokale aftel-opslag?')){
+    localStorage.removeItem(LS_TEARED);
+    localStorage.removeItem(LS_LAST_OPEN);
+    refresh();
+  }
 });
 
 renderStaticWeather();
@@ -344,5 +353,3 @@ setInterval(refresh,1000);
 </script>
 </body>
 </html>
-
-
