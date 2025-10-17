@@ -11,39 +11,90 @@
 
 <style>
   :root{
-    --papier: #fff8f0;
-    --inkt: #1a1a1a;
-    --muted: #7f766e;
-    --accent: #e07b39;
-    --shadow: rgba(0,0,0,0.08);
+    --achtergrond: #8b5e3c;   /* donker bruin achtergrond */
+    --papier: #f5e5d0;         /* licht beige pamflet */
+    --inkt: #0d1b2a;           /* donkerblauw tekst */
+    --muted: #3d3d3d;          /* grijs voor subtiele tekst */
+    --accent: #e07b39;         /* warme accentkleur */
+    --shadow: rgba(0,0,0,0.15);
   }
 
   *{box-sizing:border-box}
-  body{margin:0;background:#f2e9e1;font-family:Spectral, Georgia, serif;display:flex;justify-content:center;padding:20px;color:var(--inkt);}
-  .pamflet{width:100%;max-width:720px;background:var(--papier);border-radius:10px;box-shadow:0 8px 20px var(--shadow);overflow:hidden;padding:20px;}
+  body{
+    margin:0;
+    background: var(--achtergrond);
+    font-family: Spectral, Georgia, serif;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+    color: var(--inkt);
+  }
+
+  .pamflet{
+    width:100%;
+    max-width:720px;
+    background: var(--papier);
+    border-radius:10px;
+    box-shadow:0 8px 20px var(--shadow);
+    overflow:hidden;
+    padding:20px;
+  }
 
   header{text-align:center;margin-bottom:20px;}
-  .masthead{font-family:'Playfair Display', serif;font-size:36px;font-weight:900;color:var(--accent);letter-spacing:1px;margin-bottom:6px;}
+  .masthead{
+    font-family:'Playfair Display', serif;
+    font-size:36px;
+    font-weight:900;
+    color: var(--inkt);
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
   .meta{font-size:14px;color:var(--muted);}
   .meta span{margin-right:10px;}
 
-  .main-headline{text-align:center;font-size:28px;font-weight:800;margin:20px 0;color:#333;}
+  .main-headline{text-align:center;font-size:28px;font-weight:800;margin:20px 0;color: var(--inkt);}
   .subhead{text-align:center;color:var(--muted);margin-bottom:20px;}
 
-  .photo-frame{background:linear-gradient(180deg,#fff3e6,#fff6f2);border-radius:8px;padding:20px;text-align:center;margin-bottom:20px;}
-  .big-number{font-family:'Playfair Display', serif;font-size:120px;font-weight:900;color:var(--accent);}
+  .photo-frame{
+    background:linear-gradient(180deg,#fdf0e2,#f5e5d0);
+    border-radius:8px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:20px;
+  }
+  .big-number{
+    font-family:'Playfair Display', serif;
+    font-size:120px;
+    font-weight:900;
+    color: var(--accent);
+  }
   .photo-caption{margin-top:12px;color:var(--muted);font-weight:600;font-size:14px;}
 
   .tear-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0;}
-  .tear{padding:12px 16px;background:#fff3e6;border-left:6px solid var(--accent);border-radius:4px;font-weight:700;box-shadow:0 4px 12px var(--shadow);}
+  .tear{
+    padding:12px 16px;
+    background: #f7e9d7;
+    border-left:6px solid var(--accent);
+    border-radius:4px;
+    font-weight:700;
+    box-shadow:0 4px 12px var(--shadow);
+    color: var(--inkt);
+  }
   .tear.dim{opacity:0.3;}
 
   .panels{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:20px;}
-  .panel{flex:1 1 220px;background:#fff9f2;border-radius:8px;padding:16px;box-shadow:0 4px 12px var(--shadow);}
+  .panel{
+    flex:1 1 220px;
+    background:#fff3e0;
+    border-radius:8px;
+    padding:16px;
+    box-shadow:0 4px 12px var(--shadow);
+    color: var(--inkt);
+  }
   .panel h4{margin-top:0;margin-bottom:10px;font-size:18px;color:var(--accent);}
   .panel p{margin:0;color:var(--muted);font-size:14px;line-height:1.4;}
 
-  .weather .temp{font-size:32px;font-weight:800;color:#e07b39;}
+  .weather .temp{font-size:32px;font-weight:800;color:var(--accent);}
   .weather .meta{font-size:13px;color:var(--muted);margin-top:4px;}
   .weather svg{width:40px;height:40px;margin-top:8px;}
 
@@ -51,7 +102,17 @@
 
   footer{text-align:center;font-size:12px;color:var(--muted);margin-top:20px;}
 
-  button.btn{margin-top:12px;padding:10px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;transition:0.2s;}
+  button.btn{
+    margin-top:12px;
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+  }
   button.btn:hover{opacity:0.85;}
 
   @media (max-width:600px){
@@ -62,4 +123,143 @@
 </style>
 </head>
 <body>
-<div class="pamfle
+<div class="pamflet">
+
+  <header>
+    <div class="masthead">DE GAZETTE DER GEDULDIGEN</div>
+    <div class="meta">
+      <span id="metaDate">Vrijdag 24 oktober 2025</span>
+      <span>| Jaargang I — Nr. 7</span>
+      <span>| Prijs: één glimlach</span>
+    </div>
+  </header>
+
+  <div class="main-headline" id="mainHeadline">NOG MAAR <span id="headlineNumber">—</span> NACHTJES</div>
+  <div class="subhead" id="subhead">De Gazette telt af tot het grote moment.</div>
+
+  <div class="photo-frame">
+    <div class="big-number" id="bigNumber">—</div>
+    <div class="photo-caption" id="photoCaption">Nog te slapen nachtjes</div>
+  </div>
+
+  <div class="tear-stack" id="tearStack"></div>
+
+  <div class="panels">
+    <div class="panel weather" id="weatherBlock">
+      <h4>Weerbericht</h4>
+      <div class="temp" id="temp">17°C</div>
+      <div class="meta" id="weatherMeta">Lichte bewolking</div>
+      <div id="weatherIcon">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="20" cy="18" r="6" fill="currentColor"/><path d="M20 2v6M20 34v6M6 18h6M34 18h6" stroke-linecap="round"/><path d="M28 44h22a8 8 0 0 0 0-16 12 12 0 0 0-22-4A10 10 0 0 0 20 34a8 8 0 0 0 8 10z" fill="currentColor"/></g></svg>
+      </div>
+      <div style="margin-top:8px;font-size:13px;color:var(--muted)">
+        <strong>Neerslag:</strong> <span id="precip">10%</span><br>
+        <strong>Wind:</strong> <span id="wind">14 km/u ZW</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h4>Horoscoop Liefde</h4>
+      <p class="horoscope">Vandaag is een mooie dag om open te zijn voor connecties. Kleine gebaren van aandacht kunnen een glimlach én een hart sneller doen kloppen. Vertrouw op je intuïtie in de liefde.</p>
+    </div>
+
+    <div class="panel fact">
+      <h4>Weetje van de dag</h4>
+      <p id="fact">Wist je dat een glimlach gemiddeld 7 seconden duurt, maar het effect uren aanhoudt?</p>
+    </div>
+  </div>
+
+  <button class="btn" id="forceTear">Scheur vandaag</button>
+
+  <footer>Dubbelklik op de kop om de lokale aftel-opslag te resetten.</footer>
+
+</div>
+
+<script>
+const WEER_TEMPLATE = {
+  temp: 17,
+  precip: 10,
+  wind_speed: 14,
+  wind_dir: 'ZW',
+  icon: 'sun-cloud',
+  summary: 'Lichte bewolking'
+};
+
+const SHOW_AT_08 = new Date('2025-10-24T08:00:00+02:00');
+const TARGET_10 = new Date('2025-10-24T10:00:00+02:00');
+
+const LS_LAST_OPEN = 'gazette_last_open';
+const LS_TEARED = 'gazette_teared';
+
+const el = id => document.getElementById(id);
+const now = () => new Date();
+
+function keyForDay(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+function nightsRemaining(nowDate){
+  const diffMs = SHOW_AT_08 - nowDate;
+  return Math.max(0, Math.ceil(diffMs / (1000*60*60*24)));
+}
+
+function renderStaticWeather(){
+  el('temp').textContent = `${WEER_TEMPLATE.temp}°C`;
+  el('precip').textContent = `${WEER_TEMPLATE.precip}%`;
+  el('wind').textContent = `${WEER_TEMPLATE.wind_speed} km/u ${WEER_TEMPLATE.wind_dir}`;
+  el('weatherMeta').textContent = WEER_TEMPLATE.summary;
+}
+
+function renderTears(remaining){
+  const stack = el('tearStack');
+  stack.innerHTML = '';
+  const toShow = Math.min(8, Math.max(remaining, 0));
+  const tornCount = parseInt(localStorage.getItem(LS_TEARED) || '0', 10);
+  for(let i=0;i<toShow;i++){
+    const div = document.createElement('div');
+    div.className = 'tear';
+    const dayNum = remaining - i;
+    div.textContent = dayNum > 1 ? `${dayNum} nachtjes` : dayNum === 1 ? '1 nachtje' : 'Vandaag';
+    if(i < tornCount) div.classList.add('dim');
+    stack.appendChild(div);
+  }
+}
+
+function refresh(){
+  const t = now();
+  el('metaDate').textContent = new Intl.DateTimeFormat('nl-NL', { weekday:'long', year:'numeric', month:'long', day:'numeric' }).format(t);
+
+  if(t < SHOW_AT_08){
+    const rem = nightsRemaining(t);
+    el('headlineNumber').textContent = rem;
+    el('mainHeadline').textContent = `NOG MAAR ${rem} NACHTJES`;
+    el('bigNumber').textContent = String(rem);
+    el('photoCaption').textContent = rem === 1 ? 'Nog 1 nachtje' : `Nog maar ${rem} nachtjes`;
+    renderTears(rem);
+  } else {
+    el('mainHeadline').textContent = 'HET IS VANDAAG ZOVER 🎉';
+    el('headlineNumber').textContent = '';
+    el('bigNumber').textContent = '🎉';
+    el('photoCaption').textContent = 'Vandaag breekt het moment aan!';
+    renderTears(0);
+  }
+}
+
+/* Manual controls */
+el('forceTear').addEventListener('click', () => {
+  const torn = parseInt(localStorage.getItem(LS_TEARED) || '0', 10) + 1;
+  localStorage.setItem(LS_TEARED, String(torn));
+  refresh();
+});
+
+el('masthead')?.addEventListener('dblclick', () => {
+  if(confirm('Reset lokale aftel-opslag?')) {
+    localStorage.removeItem(LS_TEARED);
+    localStorage.removeItem(LS_LAST_OPEN);
+    location.reload();
+  }
+});
+
+renderStaticWeather();
+refresh();
+</script>
+</body>
+</html>
