@@ -1,4 +1,4 @@
-<!--trigger 9-->
+<!--trigger 10-->
 
 <!doctype html>
 <html lang="nl">
@@ -16,11 +16,9 @@
   --inkt: #0d1b2a;
   --muted: #3d3d3d;
   --accent: #e07b39;
-  --horoscope-color: #0d1b2a;
   --shadow: rgba(0,0,0,0.15);
 }
 
-*{box-sizing:border-box}
 body{
   margin:0;
   background: var(--achtergrond);
@@ -39,8 +37,8 @@ body{
   box-shadow:0 8px 20px var(--shadow);
   overflow:hidden;
   padding:20px;
-  position:relative;
   min-height:100vh;
+  position:relative;
 }
 
 header{text-align:center;margin-bottom:20px;}
@@ -66,112 +64,39 @@ header{text-align:center;margin-bottom:20px;}
   text-align:center;
   margin-bottom:20px;
 }
-.big-number{
-  font-family:'Playfair Display', serif;
-  font-size:120px;
-  font-weight:900;
-  color: var(--accent);
-}
+.big-number{font-family:'Playfair Display', serif;font-size:120px;font-weight:900;color: var(--accent);}
 .photo-caption{margin-top:12px;color:var(--muted);font-weight:600;font-size:14px;}
 
 .tear-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0;}
-.tear{
-  padding:12px 16px;
-  background: #f7e9d7;
-  border-left:6px solid var(--accent);
-  border-radius:4px;
-  font-weight:700;
-  box-shadow:0 4px 12px var(--shadow);
-  color: var(--inkt);
-}
+.tear{padding:12px 16px;background: #f7e9d7;border-left:6px solid var(--accent);border-radius:4px;font-weight:700;box-shadow:0 4px 12px var(--shadow);color: var(--inkt);}
 .tear.dim{opacity:0.3;}
 
 .panels{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:20px;}
-.panel{
-  flex:1 1 220px;
-  background:#fff3e0;
-  border-radius:8px;
-  padding:16px;
-  box-shadow:0 4px 12px var(--shadow);
-  color: var(--inkt);
-}
+.panel{flex:1 1 220px;background:#fff3e0;border-radius:8px;padding:16px;box-shadow:0 4px 12px var(--shadow);color: var(--inkt);}
 .panel h4{margin-top:0;margin-bottom:10px;font-size:18px;color:var(--accent);}
 .panel p{margin:0;color:var(--muted);font-size:14px;line-height:1.4;}
 
 .weather .temp{font-size:32px;font-weight:800;color:var(--accent);}
 .weather .meta{font-size:13px;color:var(--muted);margin-top:4px;}
 
-.horoscope-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-.horoscope-card {
-  min-width: 200px;
-  max-width: 250px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  background:#f7e9d7;
-  color: var(--inkt);
-  box-shadow:0 4px 12px var(--shadow);
-  text-align:center;
-}
-.horoscope-card .sign {
-  font-size:24px;
-  font-weight:800;
-  margin-bottom:8px;
-  color: var(--horoscope-color);
-}
-.horoscope-card .text {
-  font-size:14px;
-  color: var(--muted);
-}
-.arrow {
-  background: var(--accent);
-  color: #fff;
-  border:none;
-  border-radius:6px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-size:16px;
-}
-.arrow:hover {opacity:0.85;}
+.horoscope-slider{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;}
+.horoscope-card{min-width:200px;max-width:250px;padding:12px 16px;border-radius:8px;background:#f7e9d7;color: var(--inkt);box-shadow:0 4px 12px var(--shadow);text-align:center;}
+.horoscope-card .sign{font-size:24px;font-weight:800;margin-bottom:8px;color: var(--inkt);}
+.horoscope-card .text{font-size:14px;color:var(--muted);}
+.arrow{background: var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:16px;}
+.arrow:hover{opacity:0.85;}
 
 footer{text-align:center;font-size:12px;color:var(--muted);margin-top:20px;}
-button.btn{
-  margin-top:12px;
-  padding:10px 16px;
-  border:none;
-  border-radius:6px;
-  background:var(--accent);
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.2s;
-}
+button.btn{margin-top:12px;padding:10px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;transition:0.2s;}
 button.btn:hover{opacity:0.85;}
 
-.confetti {
-  position: fixed;
-  font-size: 18px;
-  pointer-events: none;
-  z-index: 9999;
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-@keyframes fall {
-  0% { transform: translate(0,0) rotate(0deg);}
-  100% { transform: translate(var(--x), 100vh) rotate(360deg);}
-}
+.confetti{position:fixed;font-size:18px;pointer-events:none;z-index:9999;animation-name:fall;animation-timing-function:linear;animation-fill-mode:forwards;}
+@keyframes fall{0%{transform:translate(0,0) rotate(0deg);}100%{transform:translate(var(--x),100vh) rotate(360deg);}}
 
-@media (max-width:600px){
+@media(max-width:600px){
   .big-number{font-size:80px;}
   .main-headline{font-size:22px;}
   .panels{flex-direction:column;}
-  .horoscope-card{min-width:160px; max-width:180px;}
 }
 </style>
 </head>
@@ -188,7 +113,7 @@ button.btn:hover{opacity:0.85;}
 </header>
 
 <div class="main-headline" id="mainHeadline">NOG MAAR <span id="headlineNumber">—</span> NACHTJES 🪐</div>
-<div class="subhead" id="subhead">De Gazette telt af tot de volgende planetoïde… 🪐•🪐•🪐</div>
+<div class="subhead">De Gazette telt af tot de volgende planetoïde… 🪐•🪐•🪐</div>
 
 <div class="photo-frame">
   <div class="big-number" id="bigNumber">—</div>
@@ -198,7 +123,7 @@ button.btn:hover{opacity:0.85;}
 <div class="tear-stack" id="tearStack"></div>
 
 <div class="panels">
-  <div class="panel weather" id="weatherBlock">
+  <div class="panel weather">
     <h4>Weer in Amersfoort 📍</h4>
     <div class="temp" id="temp">15°C</div>
     <div class="meta" id="weatherMeta">🌤 Bewolkt</div>
@@ -207,12 +132,12 @@ button.btn:hover{opacity:0.85;}
   <div class="panel horoscope-panel">
     <h4>Horoscoop – Relaties</h4>
     <div class="horoscope-slider">
-      <button class="arrow left" id="prevHoroscope">◀</button>
+      <button class="arrow" id="prevHoroscope">◀</button>
       <div class="horoscope-card" id="horoscopeCard">
         <div class="sign" id="horoscopeSign">♈ Ram</div>
         <div class="text" id="horoscopeText">Vandaag voel je je sterker dan de afgelopen dagen.</div>
       </div>
-      <button class="arrow right" id="nextHoroscope">▶</button>
+      <button class="arrow" id="nextHoroscope">▶</button>
     </div>
   </div>
 
@@ -223,56 +148,38 @@ button.btn:hover{opacity:0.85;}
 </div>
 
 <button class="btn" id="forceTear">Scheur vandaag</button>
-
 <footer>Dubbelklik op de kop om de lokale aftelknop te verversen.</footer>
+
 </div>
 
 <script>
 const SHOW_AT_08 = new Date('2025-10-24T08:00:00+02:00');
-const LS_LAST_OPEN = 'gazette_last_open';
-const LS_TEARED = 'gazette_teared';
 const el = id => document.getElementById(id);
 const now = () => new Date();
-const WEER_TEMPLATE = {temp: 15, summary:'Bewolkt 🌥'};
 
-/* === Verwondering === */
+/* === Verwondering per dag === */
 const dailyWonder = {
   '2025-10-17':'Vandaag is een mooie dag om te verdwalen in verwondering.',
   '2025-10-18':'Een glimlach reist sneller dan het licht van de zon.',
   '2025-10-19':'Dingen lijken kleiner van ver, behalve dromen.',
   '2025-10-20':'Vandaag mag de tijd even niets van je vragen.',
-  '2025-10-21':'Kleine gebaren bouwen grote verhalen.'
+  '2025-10-21':'Kleine gebaren bouwen grote verhalen.',
+  '2025-10-22':'De wind weet meer geheimen dan je denkt.',
+  '2025-10-23':'Vandaag is het perfecte moment om even stil te staan.',
+  '2025-10-24':'Verwondering eindigt nooit — ze verandert alleen van vorm.'
 };
 
-/* === Aftel === */
-function keyForDay(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function nightsRemaining(nowDate){ 
-  const target = new Date(SHOW_AT_08);
-  const diffMs = target - nowDate;
-  return Math.max(0, Math.ceil(diffMs / (1000*60*60*24)));
-}
-function renderTears(remaining){
-  const stack=el('tearStack'); stack.innerHTML='';
-  const toShow=Math.min(8, Math.max(remaining,0));
-  const tornCount=parseInt(localStorage.getItem(LS_TEARED)||'0',10);
-  for(let i=0;i<toShow;i++){
-    const div=document.createElement('div'); div.className='tear';
-    const dayNum=remaining-i; div.textContent=dayNum>1?`${dayNum} nachtjes`:dayNum===1?'1 nachtje':'Vandaag';
-    if(i<tornCount) div.classList.add('dim'); stack.appendChild(div);
-  }
-}
-
 /* === Horoscopen per dag & teken === */
-const horoscopes=['♈ Ram','♉ Stier','♊ Tweelingen','♋ Kreeft','♌ Leeuw','♍ Maagd','♎ Weegschaal','♏ Schorpioen','♐ Boogschutter','♑ Steenbok','♒ Waterman','♓ Vissen'];
+const horoscopes = ['♈ Ram','♉ Stier','♊ Tweelingen','♋ Kreeft','♌ Leeuw','♍ Maagd','♎ Weegschaal','♏ Schorpioen','♐ Boogschutter','♑ Steenbok','♒ Waterman','♓ Vissen'];
 
 const dailyHoroscopes = {
   '2025-10-17':{
-    '♈ Ram':'Je energie werkt aanstekelijk — iemand kijkt op naar je.',
-    '♉ Stier':'Een onverwachte blik zegt meer dan woorden. (Maagd merkt het op.)',
+    '♈ Ram':'Je energie werkt aanstekelijk — iemand kijkt naar je op.',
+    '♉ Stier':'Een onverwachte blik zegt meer dan woorden.',
     '♊ Tweelingen':'Je woorden vinden vandaag de juiste oren.',
     '♋ Kreeft':'Thuis is waar iemand vandaag op je wacht.',
     '♌ Leeuw':'Een compliment dat je geeft, keert in dubbele kracht terug.',
-    '♍ Maagd':'Iemand begrijpt je vandaag zonder dat je iets zegt. (Stier voelt het.)',
+    '♍ Maagd':'Iemand begrijpt je vandaag zonder dat je iets zegt.',
     '♎ Weegschaal':'Balans tussen geven en nemen brengt rust.',
     '♏ Schorpioen':'Een geheim verlangen komt dichterbij het licht.',
     '♐ Boogschutter':'De horizon is dichterbij dan je denkt.',
@@ -281,7 +188,7 @@ const dailyHoroscopes = {
     '♓ Vissen':'Je dromen kleuren de realiteit vandaag.'
   },
   '2025-10-18':{
-    '♈ Ram':'Je enthousiasme werkt aanstekelijk, vooral bij Kreeft.',
+    '♈ Ram':'Je enthousiasme werkt aanstekelijk.',
     '♉ Stier':'Vandaag ontdek je dat stilte soms alles zegt.',
     '♊ Tweelingen':'Een lach verbindt je onverwacht met iemand.',
     '♋ Kreeft':'Iemand deelt iets persoonlijks — luister met je hart.',
@@ -289,73 +196,43 @@ const dailyHoroscopes = {
     '♍ Maagd':'Een klein gebaar maakt je dag warmer.',
     '♎ Weegschaal':'Oude herinneringen brengen nieuwe inzichten.',
     '♏ Schorpioen':'Passie en mysterie gaan hand in hand vandaag.',
-    '♐ Boogschutter':'Durf vandaag iets te zeggen wat je lang voelde.',
+    '♐ Boogschutter':'Durf iets te zeggen wat je lang voelde.',
     '♑ Steenbok':'Stilte brengt vandaag meer dan woorden.',
     '♒ Waterman':'Een onverwachte boodschap zet iets in beweging.',
     '♓ Vissen':'Je gevoeligheid raakt iemand diep.'
-  }
-};
-
-/* === Slider === */
-let currentIndex=0;
-function showHoroscope(index){
-  const sign=horoscopes[index];
-  el('horoscopeSign').textContent=sign;
-  const todayKey = keyForDay(now());
-  const text=(dailyHoroscopes[todayKey] && dailyHoroscopes[todayKey][sign]) || 'Vandaag is een dag vol mogelijkheden in de liefde.';
-  el('horoscopeText').textContent=text;
-}
-el('prevHoroscope').addEventListener('click',()=>{currentIndex=(currentIndex-1+horoscopes.length)%horoscopes.length;showHoroscope(currentIndex);});
-el('nextHoroscope').addEventListener('click',()=>{currentIndex=(currentIndex+1)%horoscopes.length;showHoroscope(currentIndex);});
-showHoroscope(currentIndex);
-
-/* === Confetti === */
-function launchConfetti(){
-  const colors=['#e07b39','#f9c74f','#90be6d','#f94144','#577590'];
-  for(let i=0;i<120;i++){
-    const conf=document.createElement('div');
-    conf.className='confetti';
-    conf.textContent='🎉';
-    conf.style.color=colors[Math.floor(Math.random()*colors.length)];
-    conf.style.left='10px';
-    conf.style.top='10px';
-    const xOffset = Math.random()*400;
-    const duration = 2+Math.random()*2;
-    conf.style.setProperty('--x', xOffset+'px');
-    conf.style.animationDuration = duration+'s';
-    document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(), (duration*1000)+500);
-  }
-}
-
-/* === Refresh === */
-function refresh(){
-  const t=now();
-  el('metaDate').textContent=new Intl.DateTimeFormat('nl-NL',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(t);
-  const rem=nightsRemaining(t);
-  if(rem>0){
-    el('headlineNumber').textContent=rem;
-    el('bigNumber').textContent=rem;
-    el('photoCaption').textContent=rem===1?'Nog 1 nachtje':`Nog maar ${rem} nachtjes`;
-  } else {
-    el('headlineNumber').textContent='';
-    el('bigNumber').textContent='Het is eindelijk zover! 🎉';
-    el('photoCaption').textContent='Vandaag breekt het moment aan!';
-    launchConfetti();
-  }
-  renderTears(rem);
-  el('fact').textContent=dailyWonder[keyForDay(t)]||'Laat je vandaag inspireren door de kleine wonderen om je heen.';
-  showHoroscope(currentIndex);
-}
-
-/* === Events === */
-el('forceTear').addEventListener('click',()=>{const torn=parseInt(localStorage.getItem(LS_TEARED)||'0',10)+1;localStorage.setItem(LS_TEARED,String(torn));refresh();});
-el('masthead').addEventListener('dblclick',()=>{if(confirm('Reset lokale aftel-opslag?')){localStorage.removeItem(LS_TEARED);localStorage.removeItem(LS_LAST_OPEN);refresh();}});
-
-refresh();
-setInterval(refresh,60000);
-</script>
-</body>
-</html>
-
-
+  },
+  '2025-10-19':{
+    '♈ Ram':'Vandaag trek je mensen aan die jouw vuur voelen.',
+    '♉ Stier':'Een vertrouwd gezicht brengt rust.',
+    '♊ Tweelingen':'Je woorden kunnen iemand inspireren.',
+    '♋ Kreeft':'Een herinnering aan vroeger verwarmt je hart.',
+    '♌ Leeuw':'Jouw enthousiasme is vandaag besmettelijk.',
+    '♍ Maagd':'Luister naar de subtiele signalen van een ander.',
+    '♎ Weegschaal':'Een balans tussen hart en hoofd brengt harmonie.',
+    '♏ Schorpioen':'Vertrouwen opent een nieuw hoofdstuk.',
+    '♐ Boogschutter':'Laat spontaniteit vandaag de leiding nemen.',
+    '♑ Steenbok':'Een planning helpt, maar laat ruimte voor toeval.',
+    '♒ Waterman':'Je creativiteit verrast vandaag iemand.',
+    '♓ Vissen':'Een droom lijkt plots iets dichterbij.'
+  },
+  '2025-10-20':{
+    '♈ Ram':'Je energie trekt iemand aan die je niet verwacht.',
+    '♉ Stier':'Vertrouwen is vandaag het sleutelwoord.',
+    '♊ Tweelingen':'Een gesprek zet iets moois in beweging.',
+    '♋ Kreeft':'Je zorgzaamheid wordt vandaag opgemerkt.',
+    '♌ Leeuw':'Een vriendelijk gebaar maakt een groot verschil.',
+    '♍ Maagd':'Een compliment dat je krijgt, voelt terecht.',
+    '♎ Weegschaal':'Je hart zoekt vandaag evenwicht.',
+    '♏ Schorpioen':'Een diep gesprek brengt helderheid.',
+    '♐ Boogschutter':'Durf de controle los te laten.',
+    '♑ Steenbok':'Geduld toont vandaag zijn kracht.',
+    '♒ Waterman':'Je visie inspireert iemand dichtbij.',
+    '♓ Vissen':'Je intuïtie wijst de juiste richting.'
+  },
+  '2025-10-21':{
+    '♈ Ram':'Een nieuwe kans dient zich aan — grijp die.',
+    '♉ Stier':'Vandaag voel je verbinding zonder woorden.',
+    '♊ Tweelingen':'Iemand waardeert je oprechte nieuwsgierigheid.',
+    '♋ Kreeft':'Emoties brengen warmte, geen zwakte.',
+    '♌ Leeuw':'Laat trots wijken voor tederheid.',
+    '♍ Maagd':'Een d
