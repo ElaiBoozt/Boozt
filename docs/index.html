@@ -1,4 +1,4 @@
-<!--trigger 10-->
+<!--trigger 11-->
 
 <!doctype html>
 <html lang="nl">
@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
+:root {
   --achtergrond:#7a4b2a;
   --papier:#f3dfc4;
   --inkt:#0d1b2a;
@@ -19,7 +19,7 @@
   --shadow:rgba(0,0,0,0.15);
 }
 
-body{
+body {
   margin:0;
   background:var(--achtergrond);
   font-family:Spectral,Georgia,serif;
@@ -29,7 +29,7 @@ body{
   color:var(--inkt);
 }
 
-.pamflet{
+.pamflet {
   width:100%;
   max-width:720px;
   background:var(--papier);
@@ -109,13 +109,13 @@ button.btn:hover{opacity:0.85;}
 <header>
   <div class="masthead" id="masthead">DE GAZETTE DER GEDULDIGEN</div>
   <div class="meta">
-    <span id="metaDate">Vrijdag 17 oktober 2025</span>
+    <span id="metaDate">—</span>
     <span>| Jaargang I — Nr. 7</span>
     <span>| Prijs: één glimlach</span>
   </div>
 </header>
 
-<div class="main-headline" id="mainHeadline">NOG MAAR <span id="headlineNumber">—</span> NACHTJES 🪐</div>
+<div class="main-headline">NOG MAAR <span id="headlineNumber">—</span> NACHTJES 🪐</div>
 <div class="subhead">De Gazette telt af tot de volgende planetoïde… 🪐•🪐•🪐</div>
 
 <div class="photo-frame">
@@ -156,29 +156,23 @@ button.btn:hover{opacity:0.85;}
 </div>
 
 <script>
-const SHOW_AT_08 = new Date('2025-10-24T08:00:00+02:00');
+// --- CONFIG ---
+const TARGET_DATE = new Date('2025-10-24T08:00:00+02:00');
 const el = id => document.getElementById(id);
-const now = () => new Date();
 
-function keyForDay(d){return d.toISOString().split('T')[0];}
-function nightsRemaining(nowDate){
-  const diff = SHOW_AT_08 - nowDate;
-  return Math.max(0, Math.ceil(diff/(1000*60*60*24)));
+// --- HULPFUNCTIES ---
+function todayKey(){
+  const d = new Date();
+  return d.toISOString().split('T')[0];
 }
-function renderTears(rem){
-  const s = el('tearStack');
-  s.innerHTML='';
-  for(let i=rem;i>0;i--){
-    const d=document.createElement('div');
-    d.className='tear';
-    d.textContent=i===1?'1 nachtje':`${i} nachtjes`;
-    s.appendChild(d);
-  }
+function nightsRemaining(){
+  const diff = TARGET_DATE - new Date();
+  return Math.max(0, Math.ceil(diff / (1000*60*60*24)));
 }
 
-/* === Confetti === */
+// --- CONFETTI ---
 function shootConfetti(){
-  for(let i=0;i<150;i++){
+  for(let i=0;i<100;i++){
     const c=document.createElement('div');
     c.className='confetti';
     c.textContent='🎊';
@@ -191,48 +185,104 @@ function shootConfetti(){
   }
 }
 
-/* === Horoscoop data (voorbeeld ingekort) === */
-const horoscopes=['♈ Ram','♉ Stier','♊ Tweelingen','♋ Kreeft','♌ Leeuw','♍ Maagd','♎ Weegschaal','♏ Schorpioen','♐ Boogschutter','♑ Steenbok','♒ Waterman','♓ Vissen'];
-const dailyHoroscopes={'2025-10-17':{'♈ Ram':'Je energie werkt aanstekelijk.','♉ Stier':'Een blik zegt alles.'}};
-let currentIndex=0;
-function showHoroscope(i){
-  const s=horoscopes[i];
-  const key=keyForDay(now());
-  el('horoscopeSign').textContent=s;
-  el('horoscopeText').textContent=(dailyHoroscopes[key]&&dailyHoroscopes[key][s])||'Vandaag is een dag vol mogelijkheden.';
+// --- HOROSCOOP DATA (structuur voor alle dagen, voorbeeld voor 17 okt, rest makkelijk uit te breiden) ---
+const horoscopes = ['♈ Ram','♉ Stier','♊ Tweelingen','♋ Kreeft','♌ Leeuw','♍ Maagd','♎ Weegschaal','♏ Schorpioen','♐ Boogschutter','♑ Steenbok','♒ Waterman','♓ Vissen'];
+
+const dailyHoroscopes = {
+  '2025-10-17':{
+    '♈ Ram':'Je straalt rust uit die anderen vertrouwen geeft.',
+    '♉ Stier':'Een onverwachte blik zegt meer dan woorden.',
+    '♊ Tweelingen':'Je woorden vinden vandaag precies hun plek.',
+    '♋ Kreeft':'Je openheid brengt iemand dichterbij.',
+    '♌ Leeuw':'Vandaag mag je trots zijn op wat je deelt.',
+    '♍ Maagd':'Een klein gebaar heeft grote betekenis.',
+    '♎ Weegschaal':'Balans tussen gevoel en verstand loont.',
+    '♏ Schorpioen':'Je passie wekt nieuwsgierigheid.',
+    '♐ Boogschutter':'Een oude wens krijgt nieuwe vorm.',
+    '♑ Steenbok':'Kleine stappen brengen groot vertrouwen.',
+    '♒ Waterman':'Je anders-zijn inspireert iemand stilletjes.',
+    '♓ Vissen':'Je dromen raken vandaag realiteit.'
+  }
+  // ← 18–24 okt vul je hier aan in dezelfde structuur
+};
+
+// --- VERWONDERING ---
+const dailyWonder = {
+  '2025-10-17':'Vandaag is een mooie dag om te verdwalen in verwondering.',
+  '2025-10-18':'Een glimlach reist sneller dan het licht van de zon.',
+  '2025-10-19':'Dingen lijken kleiner van ver, behalve dromen.',
+  '2025-10-20':'Vandaag mag de tijd even niets van je vragen.',
+  '2025-10-21':'Kleine gebaren bouwen grote verhalen.',
+  '2025-10-22':'Wie verwondert, vergeet haast.',
+  '2025-10-23':'Verandering is ook een vorm van verwondering.',
+  '2025-10-24':'Verwondering eindigt nooit — ze verandert alleen van vorm.'
+};
+
+// --- RENDER FUNCTIES ---
+function renderDate(){
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  el('metaDate').textContent = dateStr;
 }
-el('prevHoroscope').onclick=()=>{currentIndex=(currentIndex-1+horoscopes.length)%horoscopes.length;showHoroscope(currentIndex);}
-el('nextHoroscope').onclick=()=>{currentIndex=(currentIndex+1)%horoscopes.length;showHoroscope(currentIndex);}
 
-/* === Verwondering === */
-const dailyWonder={'2025-10-17':'Vandaag is een mooie dag om te verdwalen in verwondering.','2025-10-24':'Verwondering eindigt nooit — ze verandert alleen van vorm.'};
+function renderTears(rem){
+  const s = el('tearStack');
+  s.innerHTML='';
+  for(let i=rem;i>0;i--){
+    const d=document.createElement('div');
+    d.className='tear';
+    d.textContent=i===1?'1 nachtje':`${i} nachtjes`;
+    s.appendChild(d);
+  }
+}
 
-/* === Update functie === */
-function updateCountdown(){
-  const today = now();
-  const rem = nightsRemaining(today);
-  if(rem>0){
-    el('bigNumber').textContent=rem;
-    el('headlineNumber').textContent=rem;
-    el('photoCaption').textContent='Nog te slapen nachtjes';
-  }else{
-    el('bigNumber').textContent='🎉';
-    el('headlineNumber').textContent='HET IS EINDELIJK ZOVER!';
-    el('photoCaption').textContent='Vandaag is de dag!';
+let currentIndex = 0;
+function renderHoroscope(){
+  const sign = horoscopes[currentIndex];
+  const key = todayKey();
+  el('horoscopeSign').textContent = sign;
+  el('horoscopeText').textContent = (dailyHoroscopes[key] && dailyHoroscopes[key][sign]) || 'Vandaag is een dag vol mogelijkheden in de liefde.';
+}
+
+function renderWonder(){
+  const key = todayKey();
+  el('fact').textContent = dailyWonder[key] || 'Laat je vandaag inspireren door de kleine wonderen om je heen.';
+}
+
+function renderCountdown(){
+  const rem = nightsRemaining();
+  if(rem > 0){
+    el('bigNumber').textContent = rem;
+    el('headlineNumber').textContent = rem;
+    el('photoCaption').textContent = rem===1?'Nog 1 nachtje':'Nog te slapen nachtjes';
+  } else {
+    el('bigNumber').textContent = '🎉';
+    el('headlineNumber').textContent = 'HET IS EINDELIJK ZOVER!';
+    el('photoCaption').textContent = 'Vandaag is de dag!';
     shootConfetti();
   }
   renderTears(rem);
-  const key=keyForDay(today);
-  el('fact').textContent=dailyWonder[key]||'Vandaag brengt iets nieuws.';
-  showHoroscope(currentIndex);
 }
 
-/* === Event listeners === */
-el('masthead').onclick=updateCountdown;
-el('forceTear').onclick=updateCountdown;
+// --- EVENTLISTENERS ---
+el('masthead').onclick = updateAll;
+el('forceTear').onclick = updateAll;
+el('prevHoroscope').onclick = ()=>{currentIndex=(currentIndex-1+horoscopes.length)%horoscopes.length;renderHoroscope();}
+el('nextHoroscope').onclick = ()=>{currentIndex=(currentIndex+1)%horoscopes.length;renderHoroscope();}
 
-/* === Start === */
-updateCountdown();
+// --- UPDATE FUNCTIE ---
+function updateAll(){
+  renderDate();
+  renderCountdown();
+  renderHoroscope();
+  renderWonder();
+}
+
+// Init en auto-update per minuut
+updateAll();
+setInterval(updateAll, 60000);
 </script>
 </body>
 </html>
+
+
