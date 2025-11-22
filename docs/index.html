@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Glunder — Countdown & Spellen</title>
+<title>Glunder — Barok Planeet Puzzel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --burgundy:#5a1816; --olive-dark:#0b2b20; --gold:#ffd766; --beige:#efe6cf; --num-green:#07321f;
+  --burgundy:#5a1816; --gold:#ffd766; --beige:#efe6cf; --num-green:#07321f;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background:linear-gradient(180deg,#071515 0%, #0b2b20 55%, #071915 100%);color:var(--beige);-webkit-font-smoothing:antialiased;}
@@ -21,19 +21,17 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
 .timer{background: linear-gradient(180deg,#122f28,#0e2f25); border-radius:12px; padding:22px; text-align:center; box-shadow:0 14px 36px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,215,130,0.03); display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;}
 .time-label{font-size:13px;color: rgba(255,245,220,0.9);letter-spacing:0.06em;margin-bottom:10px}
 
-/* Moon: use poster as texture; number sits on top */
-.moon{width:260px;height:260px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;overflow:visible;border:3px solid rgba(255,215,130,0.06);box-shadow:0 10px 36px rgba(0,0,0,0.7),0 0 26px rgba(255,220,120,0.04) inset;background-size:600px 600px; /* background-size controls how we slice the sprite */background-position:center;}
+/* Moon (we show the numeric countdown on top of the planet texture) */
+.moon{width:260px;height:260px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;overflow:visible;border:3px solid rgba(255,215,130,0.06);box-shadow:0 10px 36px rgba(0,0,0,0.7),0 0 26px rgba(255,220,120,0.04) inset;background-size:900px 900px;background-position:center;}
 .moon .num{position:relative;z-index:2;font-family:'Playfair Display',serif;font-size:clamp(48px,10vw,120px);color:var(--num-green);font-weight:700;line-height:1;text-shadow:0 0 20px rgba(255,235,170,0.18),0 2px 0 rgba(0,0,0,0.35)}
 .moon .moon-label{position:absolute;bottom:10px;width:100%;text-align:center;color:rgba(255,250,230,0.9);font-size:13px}
-.after-block{display:none;text-align:center;margin-top:10px;font-style:italic;color:#fff2d3}
+.after-block{display:none;text-align:center;margin-top:10px}
 
-/* Horoscope */
-.horoscope{background: rgba(255,255,255,0.95); border-radius:10px; padding:12px; color:#12321f; box-shadow:0 8px 22px rgba(0,0,0,0.45); display:flex; gap:12px; align-items:center;}
-.sign-badge{width:72px;height:72px;border-radius:10px;background:linear-gradient(180deg,#f1f6ea,#eef8e8);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#122d20;font-weight:700;border:1px solid rgba(40,60,40,0.06); flex-shrink:0}
-.sign-symbol{font-size:22px}
-.controls{display:flex;gap:8px;margin-top:10px}
+/* Horoscoop minimal */
+.horoscope{background: rgba(255,255,255,0.95); border-radius:10px; padding:12px; color:#12321f; box-shadow:0 8px 22px rgba(0,0,0,0.45);}
+.sign-badge{width:72px;height:72px;border-radius:10px;background:linear-gradient(180deg,#f1f6ea,#eef8e8);display:flex;align-items:center;justify-content:center;color:#122d20;font-weight:700;border:1px solid rgba(40,60,40,0.06)}
 
-/* Games panel */
+/* Games */
 .game-panel{background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02)); border-radius:10px; padding:12px; box-shadow:0 8px 22px rgba(0,0,0,0.5); min-height:220px; display:flex;flex-direction:column;align-items:center; gap:12px;}
 .game-title{font-style:italic;font-weight:700;color:var(--beige);font-size:20px}
 .game-controls{display:flex;gap:8px;justify-content:center;width:100%}
@@ -41,33 +39,26 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
 
 /* Sudoku */
 .sudoku-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:100%;max-width:420px;padding:12px;border-radius:10px;position:relative;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-.sudoku-grid::before,.sudoku-grid::after{content:'';position:absolute;background: rgba(255,215,130,0.22)}
-.sudoku-grid::before{width:4px;height:100%;left:50%;top:0;transform:translateX(-2px);border-radius:2px}
-.sudoku-grid::after{height:4px;width:100%;top:50%;left:0;transform:translateY(-2px);border-radius:2px}
 .sudoku-cell{background:#fff;border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#122d20}
-.sudoku-cell.prefilled{background:#f7f4ea;color:#122d20}
+.sudoku-cell.prefilled{background:#f7f4ea}
 .sudoku-cell input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-weight:700;font-size:18px;outline:none}
 
-/* Memory: flip + background slices from poster */
+/* Memory */
 .memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:360px}
-.memory-card{perspective:1000px;height:90px;border-radius:10px;cursor:pointer}
-.memory-inner{position:relative;width:100%;height:90px;transform-style:preserve-3d;transition:transform .5s}
+.memory-card{perspective:800px;height:90px;border-radius:10px;cursor:pointer;position:relative}
+.memory-inner{position:relative;width:100%;height:90px;transform-style:preserve-3d;transition:transform .45s}
 .memory-card.revealed .memory-inner{transform:rotateY(180deg)}
 .memory-face{position:absolute;inset:0;border-radius:8px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,0.28)}
 .memory-front{background:linear-gradient(180deg,#fffaf0,#f3fff7);font-size:28px}
-.memory-back{transform:rotateY(180deg);background-size:600px 600px;background-repeat:no-repeat;background-position:center}
+.memory-back{transform:rotateY(180deg);background-size:900px 900px;background-repeat:no-repeat;background-position:center}
 
-/* Puzzle */
+/* Puzzle 3x3 */
 .puzzle-wrap{width:100%;background: linear-gradient(180deg,var(--burgundy), #5b1b1b);padding:12px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:10px}
 .puzzle-board{width:320px;height:320px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02))}
 .puzzle-tile{border-radius:6px;background-size:320px 320px;background-position:center;display:flex;align-items:center;justify-content:center;font-weight:700;color:#122d20;cursor:pointer;user-select:none}
 .puzzle-empty{background:linear-gradient(180deg,#041512,#071a15)}
 
-@media(max-width:980px){
-  .poster{grid-template-columns:1fr;padding:12px}
-  .moon{width:190px;height:190px}
-  .puzzle-board{width:260px;height:260px;background-size:260px 260px}
-}
+@media(max-width:980px){.poster{grid-template-columns:1fr;padding:12px}.moon{width:190px;height:190px}}
 </style>
 </head>
 <body>
@@ -76,7 +67,7 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
     <div class="left">
       <div class="timer">
         <div class="time-label" id="timeLabel">Countdown</div>
-        <div class="moon" id="moonEl" role="img" aria-label="Supermaan">
+        <div class="moon" id="moonEl" role="img" aria-label="Barok planeet als maan">
           <div class="num" id="moonNumber">…</div>
           <div class="moon-label" id="moonLabel">nachtjes</div>
         </div>
@@ -84,11 +75,11 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
       </div>
 
       <div class="horoscope">
-        <div class="sign-badge" id="signBadge"><div class="sign-symbol" id="signSymbol">♈</div></div>
+        <div class="sign-badge" id="signBadge">♈</div>
         <div style="flex:1">
           <h3 id="signName" style="margin:0;color:#0f3b28">Ram</h3>
           <p id="signQuote" style="margin:6px 0 0 0;color:#243b32">Je quote verschijnt hier…</p>
-          <div class="controls" style="margin-top:10px">
+          <div style="margin-top:10px">
             <button class="btn" id="prevSign">← Vorige</button>
             <button class="btn" id="nextSign">Volgende →</button>
           </div>
@@ -100,7 +91,6 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
       <div class="game-panel" aria-label="Spellen">
         <div id="gameTitle" class="game-title">Glunder Sudoku</div>
         <div id="gameArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:160px;justify-content:center"></div>
-
         <div class="game-controls">
           <button class="btn" id="prevGame">← Vorig spel</button>
           <button class="btn" id="nextGame">Volgend spel →</button>
@@ -111,13 +101,13 @@ html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background
   </div>
 </div>
 
-<div id="confetti" class="confetti" style="display:none"></div>
-
 <script>
-/* ---------- Settings ---------- */
-const SUPERMOON = 'countdown-poster.png'; // file must be in same folder as this HTML
+/* ---------- Use local baroque planet image ----------
+   Download and save as /docs/baroque-planet.png
+--------------------------------------------------*/
+const PLANET_IMG = 'baroque-planet.png';
 
-/* ---------- Countdown (moon uses poster texture) ---------- */
+/* ---------- Countdown (moon uses planet texture) ---------- */
 const target = new Date('2025-11-28T19:30:00+01:00').getTime();
 const moonEl = document.getElementById('moonEl');
 const moonNumber = document.getElementById('moonNumber');
@@ -125,9 +115,9 @@ const moonLabel = document.getElementById('moonLabel');
 const afterBlock = document.getElementById('afterBlock');
 const timeLabel = document.getElementById('timeLabel');
 
-// set moon texture right away (adjust background-size if your image is bigger/smaller)
-moonEl.style.backgroundImage = `url("${SUPERMOON}")`;
-moonEl.style.backgroundSize = '600px 600px'; // adjust if you want different zoom/crop
+// apply planet texture
+moonEl.style.backgroundImage = `url("${PLANET_IMG}")`;
+moonEl.style.backgroundSize = '900px 900px'; // tweak if needed
 
 function updateCountdown(){
   const now = Date.now();
@@ -145,156 +135,112 @@ function updateCountdown(){
     moonEl.style.display = 'none';
     afterBlock.style.display = 'block';
     timeLabel.textContent = 'Vandaag!';
-    // optional: trigger confetti (not implemented here)
   }
 }
 updateCountdown();
 setInterval(updateCountdown,1000);
 
-
-/* ---------- Horoscopes (prev/next only) ---------- */
+/* ---------- Horoscopes simple ---------- */
 const horoscopes = [
-  {sign:"Ram",symbol:"♈",color:"#d6e9c9",quotes:["Je hart klopt sneller van verwachting.","Je durft — en dat maakt het spannend mooi."]},
-  {sign:"Stier",symbol:"♉",color:"#e7edd6",quotes:["Comfort en smaak maken dit moment kostbaar.","Een rustige aanwezigheid geeft diepe rust."]},
-  {sign:"Tweelingen",symbol:"♊",color:"#d8f0eb",quotes:["Communicatie opent nieuwe deuren.","Blijf nieuwsgierig."]},
-  {sign:"Kreeft",symbol:"♋",color:"#e0e9f2",quotes:["Thuis voelt nu extra warm.","Een emotionele golf brengt inzicht."]},
-  {sign:"Leeuw",symbol:"♌",color:"#fbe7d6",quotes:["Laat je licht stralen.","Creativiteit stroomt."]},
-  {sign:"Maagd",symbol:"♍",color:"#e6f3e6",quotes:["Structuur helpt je vooruit.","Kleine stappen geven grote resultaten."]},
-  {sign:"Weegschaal",symbol:"♎",color:"#f0f4f7",quotes:["Balans brengt rust.","Een mooie ontmoeting op je pad."]},
-  {sign:"Schorpioen",symbol:"♏",color:"#e6e0f2",quotes:["Diepte en focus brengen inzicht.","Je passie is je kracht."]},
-  {sign:"Boogschutter",symbol:"♐",color:"#fef4e6",quotes:["Avontuur lonkt.","Laat spontaniteit toe."]},
-  {sign:"Steenbok",symbol:"♑",color:"#e0e0e0",quotes:["Doorzettingsvermogen wint.","Plan en handel."]},
-  {sign:"Waterman",symbol:"♒",color:"#d6f0f2",quotes:["Innovatie en creativiteit.","Denk buiten de lijnen."]},
-  {sign:"Vissen",symbol:"♓",color:"#e6f0f7",quotes:["Intuïtie leidt je.","Droom groot en blijf gegrond."]}
+  {sign:"Ram",symbol:"♈",color:"#d6e9c9",quotes:["Je hart klopt sneller van verwachting."]},
+  {sign:"Stier",symbol:"♉",color:"#e7edd6",quotes:["Comfort en smaak maken dit moment kostbaar."]},
+  {sign:"Tweelingen",symbol:"♊",color:"#d8f0eb",quotes:["Communicatie opent nieuwe deuren."]},
+  {sign:"Kreeft",symbol:"♋",color:"#e0e9f2",quotes:["Thuis voelt nu extra warm."]},
+  {sign:"Leeuw",symbol:"♌",color:"#fbe7d6",quotes:["Laat je licht stralen."]},
+  {sign:"Maagd",symbol:"♍",color:"#e6f3e6",quotes:["Structuur helpt je vooruit."]},
+  {sign:"Weegschaal",symbol:"♎",color:"#f0f4f7",quotes:["Balans brengt rust."]},
+  {sign:"Schorpioen",symbol:"♏",color:"#e6e0f2",quotes:["Diepte en focus brengen inzicht."]},
+  {sign:"Boogschutter",symbol:"♐",color:"#fef4e6",quotes:["Avontuur lonkt."]},
+  {sign:"Steenbok",symbol:"♑",color:"#e0e0e0",quotes:["Doorzettingsvermogen wint."]},
+  {sign:"Waterman",symbol:"♒",color:"#d6f0f2",quotes:["Innovatie en creativiteit."]},
+  {sign:"Vissen",symbol:"♓",color:"#e6f0f7",quotes:["Intuïtie leidt je."]}
 ];
 let signIndex = 0;
 const signBadge = document.getElementById('signBadge');
-const signSymbol = document.getElementById('signSymbol');
 const signName = document.getElementById('signName');
 const signQuote = document.getElementById('signQuote');
-
 function showSign(i){
   signIndex = (i + horoscopes.length) % horoscopes.length;
   const s = horoscopes[signIndex];
-  signSymbol.textContent = s.symbol;
+  signBadge.textContent = s.symbol;
   signName.textContent = s.sign;
-  signBadge.style.background = `linear-gradient(180deg, ${s.color}, #fff7e6)`;
   signQuote.textContent = s.quotes[0];
 }
 document.getElementById('nextSign').addEventListener('click', ()=> showSign(signIndex+1));
 document.getElementById('prevSign').addEventListener('click', ()=> showSign(signIndex-1));
 showSign(0);
 
-/* ---------- Game rotation & helpers ---------- */
-const gameArea = document.getElementById('gameArea');
-const gameTitle = document.getElementById('gameTitle');
+/* ---------- Games: rotate between sudoku, puzzle, memory ---------- */
 const games = ['sudoku','puzzle','memory'];
 let currentGame = 0;
+const gameArea = document.getElementById('gameArea');
+const gameTitle = document.getElementById('gameTitle');
 document.getElementById('nextGame').addEventListener('click', ()=> setGame(currentGame+1));
 document.getElementById('prevGame').addEventListener('click', ()=> setGame(currentGame-1));
-document.getElementById('shuffleGame').addEventListener('click', ()=> initCurrentGame()); // triggers reset/shuffle
+document.getElementById('shuffleGame').addEventListener('click', ()=> { if(games[currentGame]==='puzzle') initPuzzle(); else initCurrentGame(); });
 
-function setGame(i){
-  currentGame = ((i % games.length) + games.length) % games.length;
-  initCurrentGame();
-}
-function initCurrentGame(){
-  gameArea.innerHTML = '';
-  if (games[currentGame] === 'sudoku') { gameTitle.textContent = 'Glunder Sudoku'; initSudoku(); }
-  if (games[currentGame] === 'puzzle') { gameTitle.textContent = 'Glunder Schuifpuzzel'; initPuzzle(); }
-  if (games[currentGame] === 'memory') { gameTitle.textContent = 'Glunder Memory'; initMemory(); }
-}
+function setGame(i){ currentGame = ((i % games.length) + games.length) % games.length; initCurrentGame(); }
+function initCurrentGame(){ gameArea.innerHTML=''; if(games[currentGame]==='sudoku'){ gameTitle.textContent='Glunder Sudoku'; initSudoku(); } else if(games[currentGame]==='puzzle'){ gameTitle.textContent='Glunder Schuifpuzzel'; initPuzzle(); } else { gameTitle.textContent='Glunder Memory'; initMemory(); } }
 setGame(0);
 
-
-/* ========== Sudoku (6x6) ========== */
+/* =========== Sudoku =========== */
 function initSudoku(){
-  const N = 6, boxR = 2, boxC = 3;
+  const N=6, boxR=2, boxC=3;
   let solution = Array.from({length:N}, ()=>Array(N).fill(0));
-  function isSafe(grid,r,c,v){
-    for(let i=0;i<N;i++) if(grid[r][i]===v) return false;
-    for(let i=0;i<N;i++) if(grid[i][c]===v) return false;
-    const sr = r - (r%boxR), sc = c - (c%boxC);
-    for(let i=0;i<boxR;i++) for(let j=0;j<boxC;j++) if(grid[sr+i][sc+j]===v) return false;
-    return true;
-  }
-  function fill(grid){
-    for(let r=0;r<N;r++){
-      for(let c=0;c<N;c++){
-        if(grid[r][c]===0){
-          const nums=[1,2,3,4,5,6].sort(()=>Math.random()-0.5);
-          for(const v of nums){
-            if(isSafe(grid,r,c,v)){ grid[r][c]=v; if(fill(grid)) return true; grid[r][c]=0; }
-          }
-          return false;
-        }
-      }
-    }
-    return true;
-  }
+  function isSafe(grid,r,c,v){ for(let i=0;i<N;i++) if(grid[r][i]===v) return false; for(let i=0;i<N;i++) if(grid[i][c]===v) return false; const sr=r-(r%boxR), sc=c-(c%boxC); for(let i=0;i<boxR;i++) for(let j=0;j<boxC;j++) if(grid[sr+i][sc+j]===v) return false; return true; }
+  function fill(grid){ for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ if(grid[r][c]===0){ const nums=[1,2,3,4,5,6].sort(()=>Math.random()-0.5); for(const v of nums){ if(isSafe(grid,r,c,v)){ grid[r][c]=v; if(fill(grid)) return true; grid[r][c]=0; } } return false; } } } return true; }
   fill(solution);
-  function makePuzzle(sol, clues=18){
-    const puzzle = sol.map(r=>r.slice());
-    const cells=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) cells.push([r,c]);
-    cells.sort(()=>Math.random()-0.5);
-    let removed=0;
-    for(const [r,c] of cells){
-      if((N*N-removed) <= clues) break;
-      puzzle[r][c]=0; removed++;
-    }
-    return puzzle;
-  }
-  let puzzle = makePuzzle(solution, 18);
+  function makePuzzle(sol, clues=18){ const puzzle = sol.map(r=>r.slice()); const cells=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) cells.push([r,c]); cells.sort(()=>Math.random()-0.5); let removed=0; for(const [r,c] of cells){ if((N*N-removed)<=clues) break; puzzle[r][c]=0; removed++; } return puzzle; }
+  let puzzle = makePuzzle(solution,18);
 
-  // render
   const grid = document.createElement('div'); grid.className='sudoku-grid';
-  const cellsEls = [];
+  const cellsEls=[];
   for(let r=0;r<N;r++){
     for(let c=0;c<N;c++){
       const wrap = document.createElement('div'); wrap.className='sudoku-cell';
       const val = puzzle[r][c];
-      if(val !== 0){ wrap.classList.add('prefilled'); wrap.textContent = val; }
+      if(val!==0){ wrap.classList.add('prefilled'); wrap.textContent = val; }
       else { const input = document.createElement('input'); input.type='text'; input.maxLength=1; input.addEventListener('input', ()=> input.value = input.value.replace(/[^1-6]/g,'').slice(0,1)); wrap.appendChild(input); }
       grid.appendChild(wrap); cellsEls.push(wrap);
     }
   }
-  // controls: check/hint/new
-  const controls = document.createElement('div'); controls.style.marginTop='10px'; controls.style.display='flex'; controls.style.gap='8px';
+
+  // Controls
+  const controls = document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.marginTop='8px';
   const btnCheck = document.createElement('button'); btnCheck.className='btn'; btnCheck.textContent='Controleer';
   const btnHint = document.createElement('button'); btnHint.className='btn'; btnHint.textContent='Hint';
   const btnNew = document.createElement('button'); btnNew.className='btn'; btnNew.textContent='Nieuw';
   const status = document.createElement('div'); status.style.marginTop='8px';
+
   btnCheck.addEventListener('click', ()=>{
     let ok=true, all=true;
-    for(let r=0;r<N;r++){ for(let c=0;c<N;c++){
-      const idx = r*N+c; const cell = cellsEls[idx];
+    for(let r=0;r<N;r++) for(let c=0;c<N;c++){
+      const idx=r*N+c; const cell=cellsEls[idx];
       if(puzzle[r][c] !== 0){
-        // prefilled -> compare to solution
-        if(solution[r][c] !== puzzle[r][c]) { ok=false; cell.style.background='#fff2f2'; }
-        else { cell.style.background=''; }
+        if(solution[r][c] !== puzzle[r][c]) { ok=false; cell.style.background='#fff2f2'; } else { cell.style.background=''; }
       } else {
         const inp = cell.querySelector('input'); const v = inp.value ? Number(inp.value) : 0;
         if(!v){ all=false; ok=false; cell.style.background=''; }
-        else if(v !== solution[r][c]) { ok=false; cell.style.background='#fff2f2'; }
+        else if(v !== solution[r][c]){ ok=false; cell.style.background='#fff2f2'; }
         else { cell.style.background='#e9f7ee'; }
       }
-    }}
+    }
     if(ok && all){ status.textContent='🎉 Compleet en correct!'; status.style.color='#1b6e3a'; }
     else if(!all){ status.textContent='Vul alle vakken in (hint helpt).'; status.style.color='#6b3b3b'; }
     else { status.textContent='Er staan nog fouten — controleer de rode vakken.'; status.style.color='#6b3b3b'; }
   });
+
   btnHint.addEventListener('click', ()=>{
     const empties=[];
-    for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(puzzle[r][c]===0){ const idx=r*N+c; const cell=cellsEls[idx]; const inp=cell.querySelector('input'); if(inp && (!inp.value || inp.value==='')) empties.push({r,c,cell,inp}); }
+    for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(puzzle[r][c]===0){ const idx=r*N+c; const cell=cellsEls[idx]; const inp=cell.querySelector('input'); if(inp && (!inp.value || inp.value=='')) empties.push({r,c,cell,inp}); }
     if(empties.length===0){ status.textContent='Geen lege vakken meer voor hint.'; return; }
     const pick = empties[Math.floor(Math.random()*empties.length)]; pick.inp.value = solution[pick.r][pick.c]; pick.cell.style.background='#e9f7ee'; status.textContent='Hint geplaatst.';
   });
+
   btnNew.addEventListener('click', ()=>{
-    // regenerate
     solution = Array.from({length:N}, ()=>Array(N).fill(0));
     fill(solution);
     puzzle = makePuzzle(solution, 16 + Math.floor(Math.random()*6));
-    // rerender inputs & prefilled
     for(let r=0;r<N;r++) for(let c=0;c<N;c++){
       const idx=r*N+c; const cell=cellsEls[idx]; cell.innerHTML=''; cell.classList.remove('prefilled'); cell.style.background='';
       if(puzzle[r][c] !== 0){ cell.classList.add('prefilled'); cell.textContent = puzzle[r][c]; }
@@ -309,59 +255,45 @@ function initSudoku(){
   gameArea.appendChild(status);
 }
 
-/* ========== Memory: use different slices of poster for backs ========== */
+/* =========== Memory (use slices of planet image) =========== */
 function initMemory(){
-  // mapping of 8 different background positions (percent) across the poster
-  // tweak these values if you want different crops from your poster
+  const grid = document.createElement('div'); grid.className='memory-grid'; gameArea.appendChild(grid);
+  // predetermined slice positions (tweak if needed)
   const slices = [
-    '0% 0%', '33% 0%', '66% 0%',
-    '0% 33%', '33% 33%', '66% 33%',
-    '0% 66%', '33% 66%'
+    '0% 0%', '50% 0%',
+    '0% 50%', '50% 50%',
+    '25% 20%', '75% 20%',
+    '25% 75%', '75% 75%'
   ];
-  const grid = document.createElement('div'); grid.className = 'memory-grid';
-  gameArea.appendChild(grid);
-  // build deck (pairs)
   let deck = [];
-  for(let i=0;i<slices.length;i++) deck.push(i), deck.push(i);
+  for(let i=0;i<slices.length;i++){ deck.push(i); deck.push(i); }
   deck.sort(()=>Math.random()-0.5);
 
-  let first=null,second=null,lock=false,matches=0;
-  deck.forEach((idx)=>{
+  let first=null, second=null, lock=false, matches=0;
+  deck.forEach(idx=>{
     const card = document.createElement('div'); card.className='memory-card';
     const inner = document.createElement('div'); inner.className='memory-inner';
     const front = document.createElement('div'); front.className='memory-face memory-front'; front.textContent='?';
     const back = document.createElement('div'); back.className='memory-face memory-back';
-    // set back to slice out of poster
-    back.style.backgroundImage = `url("${SUPERMOON}")`;
-    back.style.backgroundSize = '600px 600px';
+    back.style.backgroundImage = `url("${PLANET_IMG}")`;
+    back.style.backgroundSize = '900px 900px';
     back.style.backgroundPosition = slices[idx];
     inner.appendChild(front); inner.appendChild(back);
     card.appendChild(inner);
     card.addEventListener('click', ()=>{
       if(lock || card.classList.contains('revealed') || card.classList.contains('matched')) return;
-      card.classList.add('revealed');
-      card.querySelector('.memory-inner').style.transform = 'rotateY(180deg)';
-      if(!first) first = {card, idx};
-      else if(!second){
-        second = {card, idx};
-        if(first.idx === second.idx){
-          // match
-          first.card.classList.add('matched'); second.card.classList.add('matched');
-          first=null; second=null; matches++;
-          if(matches === slices.length){
-            setTimeout(()=> alert('🎉 Gefeliciteerd — alle paren gevonden!'), 300);
-          }
-        } else {
-          lock=true;
-          setTimeout(()=>{ first.card.classList.remove('revealed'); first.card.querySelector('.memory-inner').style.transform=''; second.card.classList.remove('revealed'); second.card.querySelector('.memory-inner').style.transform=''; first=null; second=null; lock=false; }, 800);
-        }
+      card.classList.add('revealed'); card.querySelector('.memory-inner').style.transform='rotateY(180deg)';
+      if(!first) first={card,idx};
+      else if(!second){ second={card,idx};
+        if(first.idx === second.idx){ first.card.classList.add('matched'); second.card.classList.add('matched'); first=null; second=null; matches++; if(matches===slices.length) setTimeout(()=>alert('🎉 Alle paren gevonden!'),300);
+        } else { lock=true; setTimeout(()=>{ first.card.classList.remove('revealed'); first.card.querySelector('.memory-inner').style.transform=''; second.card.classList.remove('revealed'); second.card.querySelector('.memory-inner').style.transform=''; first=null; second=null; lock=false; },800); }
       }
     });
     grid.appendChild(card);
   });
 }
 
-/* ========== Puzzle 3x3 (Schuifpuzzel) ========== */
+/* =========== Puzzle 3x3 using baroque planet image =========== */
 function initPuzzle(){
   const wrapper = document.createElement('div');
   const puzzleWrap = document.createElement('div'); puzzleWrap.className='puzzle-wrap';
@@ -370,75 +302,73 @@ function initPuzzle(){
   wrapper.appendChild(puzzleWrap);
 
   const size = 3, total = size*size;
-  // build tiles array 0..total-2 and null for empty
-  let tiles = Array.from({length:total}, (_,i)=>i);
-  // we will treat tile numbers 0..7 as image piece indices (left-to-right, top-to-bottom)
+  let tiles = Array.from({length:total}, (_,i)=>i); // 0..8
+  // treat last index as empty tile (value total-1)
+  tiles[total-1] = total-1;
+
   function render(){
-    board.innerHTML = '';
-    const imgSize = 320; // must match CSS puzzle-tile background-size
+    board.innerHTML='';
+    const imgSize = 320; // matches CSS puzzle-tile background-size
     for(let i=0;i<total;i++){
       const v = tiles[i];
       const cell = document.createElement('div');
       if(v === total-1){
-        cell.className = 'puzzle-empty';
+        cell.className='puzzle-empty';
       } else {
-        cell.className = 'puzzle-tile';
-        // compute row/col of the piece within the source image
-        const row = Math.floor(v/size), col = v % size;
-        const posX = (col * 100/(size-1)) + '%'; // use percent positions across the source
-        const posY = (row * 100/(size-1)) + '%';
-        cell.style.backgroundImage = `url("${SUPERMOON}")`;
+        cell.className='puzzle-tile';
+        // compute row/col in source image
+        const row = Math.floor(v/size), col = v%size;
+        const posX = (col)*(100/(size-1)) + '%';
+        const posY = (row)*(100/(size-1)) + '%';
+        cell.style.backgroundImage = `url("${PLANET_IMG}")`;
         cell.style.backgroundSize = `${imgSize}px ${imgSize}px`;
-        // position using percent mapping to show different part of the image
         cell.style.backgroundPosition = `${(col)*(100/(size-1))}% ${(row)*(100/(size-1))}%`;
-        // show number for clarity
-        cell.textContent = v+1;
+        // optionally show a faint index for debugging:
+        cell.style.color = 'rgba(0,0,0,0.25)';
+        cell.style.fontWeight = '700';
+        cell.textContent = '';
       }
       cell.addEventListener('click', ()=> tryMove(i));
       board.appendChild(cell);
     }
   }
+
   function tryMove(index){
     const emptyIdx = tiles.indexOf(total-1);
     const r1=Math.floor(index/size), c1=index%size;
     const r2=Math.floor(emptyIdx/size), c2=emptyIdx%size;
-    const dist = Math.abs(r1-r2) + Math.abs(c1-c2);
+    const dist = Math.abs(r1-r2)+Math.abs(c1-c2);
     if(dist === 1){
       [tiles[index], tiles[emptyIdx]] = [tiles[emptyIdx], tiles[index]];
       render();
     }
   }
+
   function shuffle(){
-    do {
-      tiles = tiles.sort(()=>Math.random()-0.5);
-    } while(!isSolvable(tiles));
-    // ensure empty at end
-    if(tiles[tiles.length-1] !== total-1){
-      const idx = tiles.indexOf(total-1);
-      tiles.splice(idx,1); tiles.push(total-1);
-    }
+    do{ tiles = tiles.sort(()=>Math.random()-0.5); } while(!isSolvable(tiles));
+    if(tiles[tiles.length-1] !== total-1){ const idx = tiles.indexOf(total-1); tiles.splice(idx,1); tiles.push(total-1); }
     render();
   }
+
   function inversions(arr){
     const list = arr.filter(v=>v!==total-1);
-    let inv=0;
+    let inv = 0;
     for(let i=0;i<list.length;i++) for(let j=i+1;j<list.length;j++) if(list[i]>list[j]) inv++;
     return inv;
   }
   function isSolvable(arr){ return inversions(arr) % 2 === 0; }
 
-  const shuffleBtn = document.createElement('button');
-  shuffleBtn.className='btn';
-  shuffleBtn.textContent = 'Schud';
+  const shuffleBtn = document.createElement('button'); shuffleBtn.className='btn'; shuffleBtn.textContent='Schud';
   shuffleBtn.addEventListener('click', ()=> shuffle());
   puzzleWrap.appendChild(shuffleBtn);
 
   shuffle();
-  // expose UI
   gameArea.appendChild(wrapper);
 }
 
-/* end of script */
+/* initialize first game */
+initCurrentGame = function(){ setGame(currentGame); };
+initCurrentGame();
 </script>
 </body>
 </html>
