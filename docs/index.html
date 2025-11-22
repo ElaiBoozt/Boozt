@@ -1,250 +1,355 @@
-<!--trigger new2 28 nov 2025  OPT11  idee chinees koekje voor nieuwjaar onthoud! -->
+-- cookies chinese newjaar remember --
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Glunder — Countdown</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Glunder Countdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root{
-  --burgundy:#5a1816;
-  --olive-dark:#0b2b20;
-  --gold:#ffd766;
-  --beige:#efe6cf;
-  --num-green:#07321f;
-}
-*{box-sizing:border-box}
-html,body{margin:0;height:100%;background:linear-gradient(180deg,#071515 0%, #0b2b20 55%, #071915 100%);font-family:'Cormorant Garamond',serif;color:var(--beige);}
-.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;}
+    body {
+        margin:0;
+        font-family: "Cormorant Garamond", serif;
+        background:#062d20;
+        color:#f5e8c8;
+        text-align:center;
+    }
 
-.poster{
-  width:min(1100px,96%);
-  border-radius:14px;
-  padding:18px;
-  display:grid;
-  grid-template-columns:1fr 440px;
-  gap:20px;
-  position:relative;
-  background: linear-gradient(180deg, rgba(8,18,14,0.45), rgba(8,16,14,0.12));
-  box-shadow:0 20px 60px rgba(0,0,0,0.7);
-  border:1px solid rgba(255,215,130,0.03);
-  overflow:hidden;
-}
+    h2 {
+        font-weight:600;
+        font-size:2.2rem;
+        color:#f5e8c8;
+        margin-top:20px;
+        margin-bottom:10px;
+    }
+    h2.glunder-title {
+        font-style:italic;
+        font-weight:700;
+        color:#f5e8c8;
+    }
 
-.left,.right{padding:14px;display:flex;flex-direction:column;gap:16px;}
+    /* Countdown poster */
+    #countdown-container {
+        width:360px;
+        margin:20px auto 40px auto;
+        position:relative;
+    }
 
-.timer{
-  background: linear-gradient(180deg,#122f28,#0e2f25);
-  border-radius:12px;
-  padding:22px;
-  text-align:center;
-  box-shadow:0 14px 36px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,215,130,0.03);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;
-}
+    #countdown-container img {
+        width:100%;
+        border-radius:6px;
+    }
 
-.time-label{font-size:13px;color: rgba(255,245,220,0.9);letter-spacing:0.06em;margin-bottom:10px;}
+    #days-number {
+        position:absolute;
+        top:36%;
+        left:50%;
+        transform:translateX(-50%);
+        font-size:5rem;
+        color:#063f28;
+        font-weight:700;
+    }
 
-.moon{
-  width:260px;height:260px;border-radius:50%;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  background-image:url('countdown-poster.png');
-  background-size:cover;
-  background-position:center;
-  box-shadow:0 10px 36px rgba(0,0,0,0.7),0 0 26px rgba(255,220,120,0.04) inset;
-  border:3px solid rgba(255,215,130,0.06);
-  overflow:visible;
-}
-.moon .num{
-  position:relative; z-index:2;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(48px,10vw,120px);
-  color: var(--num-green); font-weight:700; line-height:1;
-  text-shadow:0 0 20px rgba(255,235,170,0.18),0 2px 0 rgba(0,0,0,0.35);
-}
-.moon .moon-label{
-  position:absolute; bottom:10px;width:100%; text-align:center;color:rgba(255,250,230,0.9); font-size:13px;
-}
+    #countdown-text {
+        position:absolute;
+        bottom:12%;
+        left:50%;
+        transform:translateX(-50%);
+        font-size:2.5rem;
+        font-style:italic;
+    }
 
-.horoscope{
-  background: rgba(255,255,255,0.95);
-  border-radius:10px;
-  padding:12px;
-  color:#12321f;
-  box-shadow:0 8px 22px rgba(0,0,0,0.45);
-}
-.horoscope .row{display:flex;gap:12px;align-items:center;}
-.sign-badge{ width:72px;height:72px;border-radius:10px;background:linear-gradient(180deg,#f1f6ea,#eef8e8);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#122d20;font-weight:700;border:1px solid rgba(40,60,40,0.06);}
-.sign-symbol{font-size:22px;}
-.sign-short{margin-top:6px;font-size:12px;text-transform:uppercase;font-weight:700;color:#122d20;letter-spacing:0.04em;}
+    /* Horoscoop */
+    #horoscope-box {
+        margin:30px auto;
+        padding:20px;
+        width:90%;
+        max-width:600px;
+        background:#0f3b2c;
+        border:1px solid #bda066;
+        border-radius:8px;
+    }
+    .horo-symbol {
+        font-size:3rem;
+        margin-bottom:10px;
+    }
+    #horoscope-text {
+        font-size:1.6rem;
+        line-height:1.3;
+        margin:15px 0;
+    }
+    #next-horo {
+        margin-top:10px;
+        background:#bda066;
+        border:none;
+        padding:8px 16px;
+        font-size:1.4rem;
+        border-radius:6px;
+        cursor:pointer;
+        font-family:"Cormorant Garamond";
+    }
 
-.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.btn{background:var(--gold); color:#2b2416; border:0; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 6px 10px rgba(200,150,60,0.12);}
+    /* Games container */
+    .game-section {
+        background:#4d0f14; /* bordeaux */
+        padding:20px;
+        margin:35px auto;
+        border-radius:10px;
+        width:92%;
+        max-width:720px;
+        color:#f5e8c8;
+        border:1px solid #bda066;
+    }
+    .game-section h3 {
+        font-style:italic;
+        font-weight:700;
+        color:#f5e8c8;
+        font-size:2rem;
+        margin-top:0;
+        margin-bottom:15px;
+    }
 
-.game-panel{background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02)); border-radius:10px; padding:12px; box-shadow:0 8px 22px rgba(0,0,0,0.5); min-height:220px; display:flex;flex-direction:column;align-items:center; gap:12px;}
-.game-title{font-style:italic;font-weight:700;color:var(--beige);font-size:20px;}
-.game-controls{display:flex;gap:8px;justify-content:center;width:100%;}
+    /* Memory */
+    #memory-grid {
+        display:grid;
+        grid-template-columns:repeat(4, 80px);
+        grid-gap:10px;
+        justify-content:center;
+        margin-bottom:20px;
+    }
+    .memory-card {
+        width:80px;
+        height:80px;
+        background:#062d20;
+        border:2px solid #bda066;
+        border-radius:6px;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+    .memory-card img {
+        width:70px;
+        display:none;
+    }
 
-.sudoku-grid{display:grid; grid-template-columns: repeat(6,1fr); gap:8px; width:100%; max-width:420px; padding:12px; border-radius:10px; position:relative; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-.sudoku-cell{background:#fff; border-radius:8px; padding:8px; display:flex;align-items:center;justify-content:center; font-weight:700; font-size:18px; color:#122d20;}
-.sudoku-cell.prefilled{background:#f7f4ea;color:#122d20;}
-.sudoku-cell input{width:100%; height:100%; text-align:center; border:none; background:none; font-weight:700; font-size:18px; color:#122d20;}
+    /* Schuifpuzzel */
+    #puzzle {
+        width:320px;
+        height:320px;
+        margin:0 auto 20px auto;
+        display:grid;
+        grid-template-columns:repeat(4, 1fr);
+        grid-template-rows:repeat(4, 1fr);
+        gap:2px;
+    }
+    .piece {
+        background-size:400%;
+        background-image:url('docs/countdown-poster.png');
+        border:1px solid #bda066;
+        cursor:pointer;
+    }
+    .empty {
+        background:none;
+        border:none;
+    }
 
-.memory-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; width:100%;}
-.memory-card{border-radius:10px; height:90px; display:flex;align-items:center;justify-content:center; cursor:pointer; overflow:hidden; box-shadow:0 8px 18px rgba(0,0,0,0.28);}
-.memory-card .face{width:92%; height:84%; border-radius:8px; background-size:cover; background-position:center; transition:transform 220ms ease; display:flex;align-items:center;justify-content:center;}
-.memory-card.revealed .face{transform:scale(1.03);}
-.memory-card.matched{opacity:0.45; transform:scale(0.98); pointer-events:none;}
-
-.puzzle-wrap{width:100%; background: linear-gradient(180deg,var(--burgundy), #5b1b1b); padding:12px; border-radius:10px; display:flex;flex-direction:column;align-items:center; gap:10px;}
-.puzzle-board{width:320px; height:320px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; padding:10px; border-radius:8px; background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02));}
-.puzzle-tile{border-radius:6px; background-size:320px 320px; background-position:center; display:flex;align-items:center;justify-content:center; transition:transform 220ms ease, box-shadow 220ms ease;}
-.puzzle-tile:hover{transform:translateY(-6px); box-shadow:0 18px 30px rgba(0,0,0,0.45);}
-.puzzle-empty{background:linear-gradient(180deg,#041512,#071a15);}
+    /* Sudoku */
+    #sudoku {
+        width:360px;
+        margin:0 auto 20px auto;
+        display:grid;
+        grid-template-columns:repeat(6, 1fr);
+    }
+    #sudoku input {
+        width:55px;
+        height:55px;
+        font-size:2rem;
+        text-align:center;
+        background:#062d20;
+        border:1px solid #bda066;
+        color:#f5e8c8;
+        font-family:"Cormorant Garamond";
+    }
+    /* Block borders */
+    #sudoku input:nth-child(3n+1) { border-left:2px solid #bda066; }
+    #sudoku input:nth-child(-n+6) { border-top:2px solid #bda066; }
+    #sudoku input:nth-child(n+31) { border-bottom:2px solid #bda066; }
 </style>
 </head>
-<body>
-<div class="wrap">
-  <div class="poster">
-    <div class="left">
-      <div class="timer">
-        <div class="time-label" id="timeLabel">Countdown</div>
-        <div class="moon" id="moonEl">
-          <div class="num" id="moonNumber">…</div>
-          <div class="moon-label" id="moonLabel">nachtjes</div>
-        </div>
-      </div>
-      <div class="horoscope">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div class="sign-badge" id="signBadge">
-            <div class="sign-symbol" id="signSymbol">♈</div>
-            <div class="sign-short" id="signShort">Ram</div>
-          </div>
-          <div style="flex:1;">
-            <h3 id="signName" style="margin:0;color:#0f3b28">Ram</h3>
-            <p id="signQuote" style="margin:6px 0 0 0;color:#243b32">Je quote verschijnt hier…</p>
-            <div class="controls">
-              <button class="btn" id="prevSign">← Vorige</button>
-              <button class="btn" id="nextSign">Volgende →</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="right">
-      <div class="game-panel" aria-label="Spellen">
-        <div id="gameTitle" class="game-title">Glunder Sudoku</div>
-        <div id="gameArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:160px;justify-content:center"></div>
-        <div class="game-controls">
-          <button class="btn" id="prevGame">← Vorig spel</button>
-          <button class="btn" id="nextGame">Volgend spel →</button>
-          <button class="btn" id="shuffleGame">Shuffle spel</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<body>
+
+<h1 style="font-size:3rem; margin-top:25px;">Countdown</h1>
+
+<div id="countdown-container">
+    <img src="docs/countdown-poster.png" alt="poster">
+    <div id="days-number"></div>
+    <div id="countdown-text"></div>
 </div>
 
+<!-- HOROSCOOP -->
+<div id="horoscope-box">
+    <div class="horo-symbol" id="horo-symbol">♈</div>
+    <div id="horoscope-text"></div>
+    <button id="next-horo">Volgende</button>
+</div>
+
+<!-- MEMORY -->
+<div class="game-section">
+    <h3 class="glunder-title">Glunder Memory</h3>
+    <div id="memory-grid"></div>
+</div>
+
+<!-- SCHUIFPUZZEL -->
+<div class="game-section">
+    <h3 class="glunder-title">Glunder Schuifpuzzel</h3>
+    <div id="puzzle"></div>
+</div>
+
+<!-- SUDOKU -->
+<div class="game-section">
+    <h3 class="glunder-title">Glunder Sudoku</h3>
+    <div id="sudoku"></div>
+</div>
+
+
 <script>
-const SUPERMOON='countdown-poster.png';
+/* ---------------- COUNTDOWN ---------------- */
+function updateCountdown() {
+    const eventDate = new Date("2025-11-28T19:30:00+01:00");
+    const now = new Date();
+    const diff = eventDate - now;
+    const days = Math.ceil(diff / (1000*60*60*24));
 
-/* Countdown */
-const target=new Date('2025-11-28T19:30:00+01:00').getTime();
-const moonNumber=document.getElementById('moonNumber');
-const moonLabel=document.getElementById('moonLabel');
-const timeLabel=document.getElementById('timeLabel');
-
-function updateCountdown(){
-  const now=Date.now();
-  const diff=target-now;
-  if(diff>0){
-    const days=Math.floor(diff/(1000*60*60*24));
-    moonNumber.textContent=days;
-    moonLabel.textContent=days===1?'nacht':'nachtjes';
-  }else{
-    moonNumber.textContent='0';
-    moonLabel.textContent='nachtjes';
-  }
+    if (days > 0) {
+        document.getElementById("days-number").textContent = days;
+        document.getElementById("countdown-text").textContent = "nachtjes";
+    } else {
+        document.getElementById("days-number").textContent = "";
+        document.getElementById("countdown-text").innerHTML =
+            "Vandaag is het eindelijk zover!<br><span style='font-size:1.6rem;'>Vandaag weer samen • Vandaag dichtbij, Glunder ✨</span>";
+    }
 }
 updateCountdown();
-setInterval(updateCountdown,1000);
 
-/* Horoscopes */
-const horoscopes=[{sign:"Ram",symbol:"♈",color:"#d6e9c9",quotes:["Je hart klopt sneller van verwachting.","Je durft — en dat maakt het spannend mooi.","Een kleine daad zet een avond in beweging."]},{sign:"Stier",symbol:"♉",color:"#e7edd6",quotes:["Comfort en smaak maken dit moment kostbaar.","Een rustige aanwezigheid geeft diepe rust.","Geniet van de tastbare details om je heen."]}];
-let signIndex=0;
-const signBadge=document.getElementById('signBadge');
-const signSymbol=document.getElementById('signSymbol');
-const signShort=document.getElementById('signShort');
-const signName=document.getElementById('signName');
-const signQuoteEl=document.getElementById('signQuote');
-function showSign(idx){
-  signIndex=(idx+horoscopes.length)%horoscopes.length;
-  const obj=horoscopes[signIndex];
-  signSymbol.textContent=obj.symbol;
-  signShort.textContent=obj.sign;
-  signBadge.style.background=`linear-gradient(180deg, ${obj.color}, #fff7e6)`;
-  signName.textContent=obj.sign;
-  signQuoteEl.textContent=obj.quotes[0];
+/* ---------------- HOROSCOOP ---------------- */
+const horoscopes = [
+  {sym:"♈", list:["Nieuw inzicht ontvouwt zich…","Je warmte raakt iemand dichtbij.","Vandaag is mild en zacht.","Een onverwacht compliment komt.","Je straalt meer dan je doorhebt.","Een deur gaat open.","Iemand vertrouwt je iets toe.","Je voelt verbinding."]},
+  {sym:"♉", list:["Rust brengt helderheid.","Een klein gebaar wordt groot.","Je charme werkt subtiel.","Vandaag vindt iets jou.","Er komt zachte energie binnen.","Je voelt waardering.","Iemand kijkt naar je op.","Stilte zegt genoeg."]},
+  {sym:"♊", list:["Speelsheid opent iets.","Een gesprek blijft hangen.","Synchroniciteit verschijnt.","Je woorden raken iemand.","Iemand onthult iets moois.","Het onverwachte verrast zacht.","Je innerlijke licht beweegt.","Een glimlach brengt nieuws."]},
+  {sym:"♋", list:["Warmte omringt je.","Je intuïtie wijst de weg.","Iemand ziet jouw zachtheid.","Een fijn moment keert terug.","Je voelt je gedragen.","Een oude zorg verdwijnt.","Je wordt gezien.","Er komt vrede."]},
+  {sym:"♌", list:["Je straalt zonder moeite.","Een nieuw idee vonkt.","Iemand bewondert je.","Vandaag voelt koninklijk.","Een deur opent vanzelf.","Je kracht is stil aanwezig.","Je inspireert iemand.","Warm vuur in je hart."]},
+  {sym:"♍", list:["Details vallen op hun plek.","Je zorgt beter voor jezelf.","Rust brengt precisie.","Iemand waardeert je inzet.","Je ziet iets helder.","Een zachte verrassing.","Je geeft licht.","Een zachte stap vooruit."]},
+  {sym:"♎", list:["Evenwicht komt terug.","Een mooi moment vangt je.","Je ontvangt zachtheid.","Verbinding maakt licht.","Iemand ziet jouw schoonheid.","Rust in je hart.","Een keuze wordt makkelijk.","Je woorden brengen vrede."]},
+  {sym:"♏", list:["Diepte brengt helderheid.","Je voelt magnetisme.","Een geheim opent zich.","Iemand vertrouwt jou.","Je kracht is kalm.","Je intuïtie klopt.","Een intens maar fijn moment.","Er komt helderheid."]},
+  {sym:"♐", list:["Vrijheid ademt.","Je voelt avontuur.","Een glimlach opent iets.","Iemand wil dichterbij.","Vandaag voelt licht.","Je hart lacht.","Een nieuw pad glanst.","Een kleine ontdekking."]},
+  {sym:"♑", list:["Je voelt rust.","Een doel komt dichterbij.","Iemand waardeert je kracht.","Er ontstaat stabiliteit.","Zachte discipline werkt.","Je inspireert stil.","Een warm gebaar.","Een nieuwe basis."]},
+  {sym:"♒", list:["Je voelt originaliteit.","Een idee raakt iemand.","Verrassing in de lucht.","Iemand ziet je anders.","Vandaag is creatief.","Je brengt licht.","Een zachte wending.","Een onverwacht inzicht."]},
+  {sym:"♓", list:["Je voelt magie.","Droom wordt tastbaar.","Iemand voelt je aan.","Zachtheid opent iets.","Je hart volgt fluistering.","Een mooi moment drijft binnen.","Je raakt iemand diep.","Een zachte kans."]}
+];
+
+let currentIndex = 0;
+
+function loadHoroscope() {
+    const h = horoscopes[currentIndex];
+    document.getElementById("horo-symbol").textContent = h.sym;
+    const day = new Date().getDate()%8;
+    document.getElementById("horoscope-text").textContent = h.list[day];
 }
-document.getElementById('nextSign').addEventListener('click',()=>showSign(signIndex+1));
-document.getElementById('prevSign').addEventListener('click',()=>showSign(signIndex-1));
-showSign(0);
+document.getElementById("next-horo").onclick = () => {
+    currentIndex = (currentIndex+1)%horoscopes.length;
+    loadHoroscope();
+};
+loadHoroscope();
 
-/* Games: Sudoku, Memory, Puzzle */
-const gameArea=document.getElementById('gameArea');
-const gameTitle=document.getElementById('gameTitle');
-let currentGame=0;
-document.getElementById('nextGame').addEventListener('click',()=>setGame(currentGame+1));
-document.getElementById('prevGame').addEventListener('click',()=>setGame(currentGame-1));
-document.getElementById('shuffleGame').addEventListener('click',()=>initCurrentGame());
+/* ---------------- MEMORY ---------------- */
+const memoryImages = [
+    "docs/countdown-poster.png",
+    "docs/countdown-poster.png",
+    "docs/planet.png",
+    "docs/planet.png",
+    "docs/meteor.png",
+    "docs/meteor.png",
+    "docs/sun.png",
+    "docs/sun.png"
+];
+memoryImages.sort(() => Math.random()-0.5);
 
-function setGame(i){
-  currentGame=((i+3)%3);
-  initCurrentGame();
+const memGrid = document.getElementById("memory-grid");
+let memFirst = null;
+let memBusy = false;
+
+memoryImages.forEach((src, i) => {
+    const card = document.createElement("div");
+    card.className="memory-card";
+    const img = document.createElement("img");
+    img.src = src;
+    card.appendChild(img);
+    card.onclick=function(){
+        if(memBusy) return;
+        img.style.display="block";
+        if(!memFirst){ memFirst=this; return; }
+        if(memFirst===this) return;
+        if(memFirst.firstChild.src===img.src){
+            memFirst.style.opacity=0.3;
+            this.style.opacity=0.3;
+            memFirst=null;
+        } else {
+            memBusy=true;
+            setTimeout(()=>{
+                memFirst.firstChild.style.display="none";
+                img.style.display="none";
+                memFirst=null;
+                memBusy=false;
+            },600);
+        }
+    }
+    memGrid.appendChild(card);
+});
+
+/* ---------------- SCHUIFPUZZEL ---------------- */
+const puzzle = document.getElementById("puzzle");
+let order = [...Array(15).keys(), "empty"];
+order.sort(()=>Math.random()-0.5);
+
+function drawPuzzle() {
+    puzzle.innerHTML="";
+    order.forEach((v,i)=>{
+        const d=document.createElement("div");
+        const row=Math.floor(i/4);
+        const col=i%4;
+        if(v==="empty"){
+            d.className="piece empty";
+        } else {
+            d.className="piece";
+            const x = (v%4)*33.3;
+            const y = Math.floor(v/4)*33.3;
+            d.style.backgroundPosition=`${-x}% ${-y}%`;
+        }
+        d.onclick=()=>move(i);
+        puzzle.appendChild(d);
+    });
 }
-function initCurrentGame(){
-  gameArea.innerHTML='';
-  if(currentGame===0){gameTitle.textContent='Glunder Sudoku';initSudoku();}
-  if(currentGame===1){gameTitle.textContent='Glunder Schuifpuzzel';initPuzzle();}
-  if(currentGame===2){gameTitle.textContent='Glunder Memory';initMemory();}
+function move(i){
+    const emptyIndex = order.indexOf("empty");
+    const touches=[i-1,i+1,i-4,i+4];
+    if(touches.includes(emptyIndex)){
+        [order[i],order[emptyIndex]]=[order[emptyIndex],order[i]];
+        drawPuzzle();
+    }
 }
+drawPuzzle();
 
-/* Sudoku 6x6 */
-function initSudoku(){
-  const N=6,boxR=2,boxC=3;
-  let solution=Array.from({length:N},()=>Array(N).fill(0));
-  function isSafe(grid,r,c,val){for(let i=0;i<N;i++)if(grid[r][i]===val)return false;for(let i=0;i<N;i++)if(grid[i][c]===val)return false;const startR=r-(r%boxR),startC=c-(c%boxC);for(let i=0;i<boxR;i++)for(let j=0;j<boxC;j++)if(grid[startR+i][startC+j]===val)return false;return true;}
-  function fillGrid(grid){for(let r=0;r<N;r++){for(let c=0;c<N;c++){if(grid[r][c]===0){const nums=[1,2,3,4,5,6].sort(()=>Math.random()-0.5);for(const v of nums){if(isSafe(grid,r,c,v)){grid[r][c]=v;if(fillGrid(grid))return true;grid[r][c]=0;}}return false;}}return true;}
-  fillGrid(solution);
-  function makePuzzle(sol,clues=18){let puzzle=sol.map(r=>r.slice());const cells=[];for(let r=0;r<N;r++)for(let c=0;c<N;c++)cells.push([r,c]);cells.sort(()=>Math.random()-0.5);let removed=0;for(const [r,c]of cells){if((N*N-removed)<=clues)break;puzzle[r][c]=0;removed++;}return puzzle;}
-  let puzzle=makePuzzle(solution,18);
-  const gridEl=document.createElement('div'); gridEl.className='sudoku-grid';gameArea.appendChild(gridEl);
-  const cellsEls=[];
-  for(let r=0;r<N;r++){for(let c=0;c<N;c++){const wrap=document.createElement('div');wrap.className='sudoku-cell';const val=puzzle[r][c];if(val!==0){wrap.classList.add('prefilled');wrap.textContent=val;}else{const input=document.createElement('input');input.type='number';input.min=1;input.max=6;input.addEventListener('input',()=>{if(input.value)input.value=input.value.replace(/[^1-6]/g,'').slice(0,1);});wrap.appendChild(input);}gridEl.appendChild(wrap);cellsEls.push(wrap);}}
+/* ---------------- SUDOKU (6x6) ---------------- */
+const sudokuGrid = document.getElementById("sudoku");
+for(let i=0;i<36;i++){
+    const inp=document.createElement("input");
+    inp.maxLength=1;
+    sudokuGrid.appendChild(inp);
 }
-
-/* Memory */
-function initMemory(){
-  const grid=document.createElement('div');grid.className='memory-grid';gameArea.appendChild(grid);
-  const variants=[{id:'moon',color:'#ffd766'},{id:'planet',color:'#a3d5ff'},{id:'sun',color:'#ff9a5c'},{id:'star',color:'#c4ff96'}];
-  let deck=[];variants.forEach(v=>{deck.push(v);deck.push(v);});deck.sort(()=>Math.random()-0.5);
-  let first=null,second=null,lock=false;
-  deck.forEach(card=>{const el=document.createElement('div');el.className='memory-card';const face=document.createElement('div');face.className='face';face.style.backgroundColor=card.color;el.appendChild(face);
-  el.addEventListener('click',()=>{if(lock||el.classList.contains('revealed')||el.classList.contains('matched'))return;el.classList.add('revealed');if(!first)first={el,id:card.id};else if(!second){second={el,id:card.id};if(first.id===second.id){first.el.classList.add('matched');second.el.classList.add('matched');first=null;second=null;}else{lock=true;setTimeout(()=>{first.el.classList.remove('revealed');second.el.classList.remove('revealed');first=null;second=null;lock=false;},700);}}});grid.appendChild(el);});
-}
-
-/* Sliding puzzle */
-function initPuzzle(){
-  const wrapper=document.createElement('div');const puzzleWrap=document.createElement('div');puzzleWrap.className='puzzle-wrap';wrapper.appendChild(puzzleWrap);
-  const board=document.createElement('div');board.className='puzzle-board';puzzleWrap.appendChild(board);
-  const size=3,total=size*size;let tiles=[];for(let i=1;i<total;i++)tiles.push(i);tiles.push(null);
-  function render(){board.innerHTML='';tiles.forEach((v,idx)=>{const tile=document.createElement('div');tile.className='puzzle-tile';if(v!==null){tile.textContent=v;}else{tile.classList.add('puzzle-empty');}tile.addEventListener('click',()=>moveTile(idx));board.appendChild(tile);});}
-  function moveTile(idx){const empty=tiles.indexOf(null);const r1=Math.floor(idx/size),c1=idx%size,r2=Math.floor(empty/size),c2=empty%size;if(Math.abs(r1-r2)+Math.abs(c1-c2)===1){[tiles[idx],tiles[empty]]=[tiles[empty],tiles[idx]];render();}}
-  function shuffle(){for(let i=0;i<100;i++){const empty=tiles.indexOf(null);const neighbors=[];const r2=Math.floor(empty/size),c2=empty%size;[[r2-1,c2],[r2+1,c2],[r2,c2-1],[r2,c2+1]].forEach(([r,c])=>{if(r>=0&&r<size&&c>=0&&c<size)neighbors.push(r*size+c);});const pick=neighbors[Math.floor(Math.random()*neighbors.length)];[tiles[empty],tiles[pick]]=[tiles[pick],tiles[empty]];}} 
-  const shuffleBtn=document.createElement('button');shuffleBtn.textContent='Schud';shuffleBtn.className='btn';shuffleBtn.addEventListener('click',()=>{shuffle();render();});puzzleWrap.appendChild(shuffleBtn);shuffle();render();gameArea.appendChild(wrapper);}
-initCurrentGame();
 </script>
+
 </body>
 </html>
