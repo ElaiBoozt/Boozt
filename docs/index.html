@@ -1,165 +1,192 @@
-<!--trigger new2 28 nov 2025   idee chinees koekje voor nieuwjaar onthoud! -->
+<!--trigger new2 28 nov 2025  OPT3  idee chinees koekje voor nieuwjaar onthoud! -->
 
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Glunder Evening — Countdown & Poster</title>
+<title>Glunder — Countdown</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
   :root{
     --olive:#0b2b20;
-    --olive-panel:#183825;
+    --olive-panel:#153a2c;
     --gold:#ffd766;
-    --beige:#f7efe0;
-    --card-bg: rgba(255,255,255,0.92);
+    --beige:#efe6cf;
+    --card-bg: rgba(255,255,255,0.94);
     --accent:#e6b46a;
+    --moon-overlay: rgba(255, 250, 230, 0.12);
+    --num-green: #07321f;
   }
-
-  * { box-sizing: border-box; }
-  html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background: linear-gradient(180deg,#061717 0%, #0f2d25 45%, #122d20 100%); color:var(--beige);}
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background: linear-gradient(180deg,#061717 0%, #0f2d25 40%, #122d20 100%); color:var(--beige); -webkit-font-smoothing:antialiased;}
   .page {min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;}
 
+  /* Poster container */
   .poster {
     width:min(1100px,96%);
-    background: linear-gradient(180deg, rgba(10,20,14,0.45), rgba(255,255,255,0.03));
     border-radius:16px;
-    padding:22px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+    padding:18px;
     display:grid;
-    grid-template-columns: 1fr 420px;
+    grid-template-columns: 1fr 440px;
     gap:20px;
     position:relative;
     overflow:hidden;
-    border: 1px solid rgba(255,215,130,0.045);
+    background: linear-gradient(180deg, rgba(6,18,14,0.45), rgba(10,18,14,0.15));
+    border: 1px solid rgba(255,215,130,0.03);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.7);
   }
 
-  .frame-decoration { position:absolute; inset:12px; border-radius:12px; pointer-events:none; box-shadow: 0 0 0 2px rgba(255,215,130,0.02) inset; }
-
-  .left { padding:18px; display:flex;flex-direction:column; gap:18px; }
-
-  .timer-card {
-    background: linear-gradient(180deg, var(--olive-panel) 0%, #183924 100%);
-    border-radius:14px;
-    padding:28px;
-    color:var(--gold);
-    text-align:center;
-    box-shadow: 0 14px 36px rgba(0,0,0,0.6), inset 0 -8px 24px rgba(255,215,130,0.03);
-    position:relative;
-    min-height:260px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-  }
-
-  /* Maan met afbeeldingsachtergrond */
-  .moon {
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    background-image: url("/mnt/data/ChatGPT Image 22 nov 2025, 07_13_26.png");
+  /* Decorative ornate corners using uploaded art as overlay (faded) */
+  .ornaments {
+    pointer-events:none;
+    position:absolute; inset:6px; border-radius:12px;
+    background-image: url('/mnt/data/A_2D_digital_graphic_design_titled_"Countdown_Glun.png');
     background-size: cover;
     background-position: center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 28px rgba(255,220,120,0.05) inset;
-    position:relative;
-    border: 2px solid rgba(255,215,130,0.12);
-  }
-  .moon .num {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(48px, 8vw, 104px);
-    color: rgba(7,28,20,1);
-    text-shadow: 0 0 8px rgba(255,245,200,0.4);
-    font-weight:700;
-    transform: translateY(-6px);
-  }
-  .moon .label {
-    position:absolute;
-    bottom:8px;
-    width:100%;
-    text-align:center;
-    color: rgba(255,250,230,0.88);
-    font-size:14px;
-    letter-spacing:0.06em;
+    opacity: 0.06;
+    mix-blend-mode: screen;
+    filter: hue-rotate(10deg) saturate(0.6) brightness(0.9);
   }
 
-  .time-caption { color: var(--beige); font-size:14px; margin-top:12px; }
-
-  .after { display:none; text-align:center; }
-  .after h1 { font-family:'Playfair Display',serif; color:var(--gold); font-size:clamp(30px,6vw,72px); margin:0; font-style:italic; text-shadow:0 0 18px rgba(255,240,180,0.45);}
-  .after p { margin:8px 0 0 0; color: #fff2d3; font-style:italic; }
-
-  .panel { background: var(--card-bg); border-radius:12px; padding:14px; box-shadow: 0 6px 20px rgba(0,0,0,0.5); color:#222; }
-
-  .horoscope { display:flex; gap:12px; align-items:center; }
-  .sign-badge {
-    width:78px; height:78px; border-radius:12px; display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-weight:700;color:#122d20; background: linear-gradient(180deg,#f1f6ea,#eef8e8);
-    border: 2px solid rgba(35,60,40,0.08);
-    box-shadow: 0 8px 18px rgba(30,30,30,0.06);
-  }
-  .sign-symbol { font-size:22px; line-height:1; }
-  .sign-name { margin-top:6px; font-size:12px; color:#1b3b28; text-transform:uppercase; font-weight:700; letter-spacing:0.06em; }
-  .horoscope-text h3 { margin:0; font-size:18px; color:#24321b; }
-  .horoscope-text p { margin:6px 0 0; color:#333; font-size:15px; }
-
-  .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-
+  .left { padding:18px; display:flex; flex-direction:column; gap:18px; }
   .right { padding:18px; display:flex; flex-direction:column; gap:18px; }
 
-  .game-area { display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; min-height:180px; }
+  /* Timer card */
+  .timer-card {
+    background: linear-gradient(180deg, var(--olive-panel), #123a2a);
+    padding:22px;
+    border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.65), inset 0 -10px 24px rgba(255,215,130,0.02);
+    position:relative;
+    min-height:260px;
+    border: 1px solid rgba(255,215,130,0.03);
+  }
 
+  .time-label {
+    font-size:13px;
+    color: rgba(255,245,210,0.8);
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+  }
+
+  /* Moon: show uploaded image, overlay, big number inside */
+  .moon {
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background-image: url('/mnt/data/A_2D_digital_graphic_design_titled_"Countdown_Glun.png');
+    background-size: cover;
+    background-position: center;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 28px rgba(255,220,120,0.04) inset;
+    border: 3px solid rgba(255,215,130,0.06);
+    overflow:visible;
+  }
+
+  /* subtle light overlay on moon to increase contrast for number */
+  .moon::after{
+    content:'';
+    position:absolute; inset:0; border-radius:50%;
+    background: linear-gradient(rgba(255,255,245,0.06), rgba(255,255,240,0.04));
+    mix-blend-mode: screen;
+    pointer-events:none;
+  }
+
+  /* moon number: green, large, with gold glow */
+  .moon .num {
+    font-family:'Playfair Display', serif;
+    font-size: clamp(48px, 10vw, 120px);
+    color: var(--num-green); /* groen cijfer in maan */
+    font-weight:700;
+    text-shadow:
+      0 0 22px rgba(255,215,120,0.22),
+      0 2px 0 rgba(0,0,0,0.35);
+    transform: translateY(-6px);
+    z-index:2;
+    line-height:1;
+  }
+  .moon .label {
+    position:absolute; bottom:10px; width:100%; text-align:center; color: rgba(255,248,225,0.9); font-size:13px;
+  }
+
+  /* After (celebration) */
+  .after { display:none; text-align:center; }
+  .after h1 { font-family:'Playfair Display', serif; font-style:italic; font-weight:700; color:var(--gold); font-size:clamp(28px,5.6vw,64px); text-shadow: 0 0 18px rgba(255,240,180,0.45); margin:0; }
+  .after p { margin:8px 0 0 0; color: #fff2d3; font-style:italic; }
+
+  /* Horoscope panel */
+  .panel { background: rgba(255,255,255,0.94); border-radius:12px; padding:14px; box-shadow: 0 8px 24px rgba(0,0,0,0.45); color:#14321f; }
+  .horoscope { display:flex; gap:12px; align-items:center; }
+  .sign-badge { width:78px; height:78px; border-radius:12px; display:flex;flex-direction:column;align-items:center;justify-content:center; background: linear-gradient(180deg,#f1f6ea,#eef8e8); color:#112e21; border:2px solid rgba(40,60,40,0.08); font-weight:700; }
+  .sign-symbol { font-size:22px; }
+  .sign-name { margin-top:6px; font-size:12px; text-transform:uppercase; font-weight:700; color:#122d20; }
+  .horoscope-text h3 { margin:0; font-size:18px; color:#0f3b28; }
+  .horoscope-text p { margin:6px 0 0; color:#263b32; font-size:15px; }
+
+  .controls { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+
+  /* Right: games */
+  .game-area { display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center; min-height:200px; }
+  .game-title { font-style:italic; font-weight:700; color:var(--beige); margin-bottom:8px; font-size:20px; }
+
+  /* Buttons */
   .btn { background:var(--gold); color:#2b2416; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; box-shadow:0 6px 10px rgba(200,150,60,0.12); }
 
-  .memory-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; width:100%; }
-  .card { background: linear-gradient(180deg,#fffdf2,#f6fff5); border-radius:10px; padding:6px; height:80px; display:flex; align-items:center; justify-content:center; color:#122d20; font-size:18px; cursor:pointer; box-shadow: 0 6px 10px rgba(0,0,0,0.12); }
+  /* Memory */
+  .memory-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:100%; }
+  .card { background: linear-gradient(180deg,#f5f7ee,#fbfff8); border-radius:10px; height:90px; display:flex;align-items:center;justify-content:center; cursor:pointer; color:#102b20; font-weight:700; box-shadow: 0 8px 18px rgba(0,0,0,0.25); }
   .card.revealed { background:#fffbe8; }
   .card.matched { opacity:0.45; transform:scale(0.98); cursor:default; }
 
-  .puzzle-board { width:320px; height:320px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
-  .tile { border-radius:8px; background-size: 320px 320px; background-position:center; display:flex;align-items:center;justify-content:center; cursor:pointer; box-shadow: inset 0 -8px 18px rgba(0,0,0,0.08); color:#fff; font-weight:700; }
+  /* Puzzle: green background, beige title text */
+  .puzzle-wrap { background: linear-gradient(180deg,#0b3a2c,#0a3326); padding:12px; border-radius:10px; display:flex;flex-direction:column;align-items:center; gap:10px; }
+  .puzzle-board { width:320px; height:320px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; background: rgba(0,0,0,0.03); padding:10px; border-radius:8px; }
+  .tile { border-radius:6px; background-size: 320px 320px; background-position:center; display:flex;align-items:center;justify-content:center; cursor:pointer; box-shadow: inset 0 -6px 14px rgba(0,0,0,0.08); transition: transform 220ms ease, box-shadow 220ms ease; }
+  .tile:hover { transform: translateY(-6px); box-shadow: 0 18px 30px rgba(0,0,0,0.45); }
+  .tile.empty { background: linear-gradient(180deg,#062117,#08281f); }
 
-  /* Sudoku 6x6 grid with bold crosslines between 3+3 */
-  .sudoku-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; width:100%; max-width:420px; position:relative; padding:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px; }
+  /* Sudoku 6x6 */
+  .sudoku-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap:8px; width:100%; max-width:420px; padding:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px; position:relative; }
   .sudoku-grid::before, .sudoku-grid::after { content:''; position:absolute; background:rgba(255,215,130,0.22); }
   .sudoku-grid::before { width:4px; height:100%; left:50%; top:0; transform:translateX(-2px); border-radius:2px; }
   .sudoku-grid::after { height:4px; width:100%; top:50%; left:0; transform:translateY(-2px); border-radius:2px; }
-
-  .sudoku-cell { background:#fff; border-radius:6px; padding:6px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#122d20; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
-  .sudoku-cell.prefilled { background:#f3f6ed; color:#1b2b18; }
-  .sudoku-cell input { width:100%; height:100%; text-align:center; border:0; outline:none; font-size:18px; background:transparent; }
+  .sudoku-cell { background:#fff; border-radius:8px; padding:8px; display:flex;align-items:center;justify-content:center; font-weight:700; font-size:18px; color:#122d20; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+  .sudoku-cell.prefilled { background:#f3f6ed; color:#122d20; }
+  .sudoku-cell input { width:100%;height:100%;text-align:center;border:0;outline:none;font-size:18px;background:transparent; }
 
   .sudoku-controls { display:flex; gap:8px; justify-content:center; margin-top:8px; }
-  .game-title { font-style:italic; font-weight:700; color:var(--gold); margin-bottom:8px; font-size:18px; font-family:'Cormorant Garamond',serif; }
+
+  /* Confetti */
+  .confetti { position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:9999; display:none; }
 
   @media(max-width:980px){
     .poster { grid-template-columns: 1fr; padding:14px; }
     .right { order:3; }
-    .moon { width:170px; height:170px; }
+    .moon{ width:170px; height:170px; }
+    .puzzle-board { width:260px; height:260px; background-size:260px 260px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="poster" role="main" aria-label="Glunder Evening poster">
-    <div class="frame-decoration" aria-hidden="true"></div>
+  <div class="poster" role="main" aria-label="Glunder poster">
+    <div class="ornaments" aria-hidden="true"></div>
 
     <!-- LEFT -->
     <div class="left">
       <div class="timer-card" aria-live="polite">
-        <div class="small-label" id="timeLabel">Countdown naar 28 nov 19:30</div>
+        <div class="time-label">Countdown</div>
 
-        <!-- moon with number inside (image you uploaded used as background) -->
-        <div class="moon" aria-hidden="false" role="img" aria-label="Maan met aantal nachtjes">
+        <!-- Moon (uploaded image used) -->
+        <div class="moon" role="img" aria-label="Maan met aftelcijfer">
           <div class="num" id="moonNumber">…</div>
           <div class="label" id="moonLabel">nachtjes</div>
         </div>
 
-        <!-- after block shown after countdown -->
+        <!-- After block shown after countdown -->
         <div class="after" id="afterBlock" role="status" aria-hidden="true">
           <h1>Vandaag is het eindelijk zover!</h1>
           <p>Vandaag weer samen</p>
@@ -169,21 +196,20 @@
         <div class="time-caption">Amsterdam — 28 november 19:30</div>
       </div>
 
-      <!-- Horoscope panel -->
+      <!-- Horoscope -->
       <div class="panel" style="margin-top:12px;">
         <div class="horoscope">
           <div class="sign-badge" id="signBadge">
             <div class="sign-symbol" id="signSymbol">♈</div>
             <div class="sign-name" id="signShort">Ram</div>
           </div>
-
           <div class="horoscope-text">
             <h3 id="signName">Ram</h3>
             <p id="signQuote">Je quote verschijnt hier…</p>
           </div>
         </div>
 
-        <div class="controls" style="margin-top:12px;">
+        <div class="controls">
           <button class="btn" id="prevSign">← Vorige</button>
           <button class="btn" id="nextSign">Volgende →</button>
           <button class="btn" id="randomSign">Willekeurig</button>
@@ -202,24 +228,23 @@
           <button class="btn" id="nextGame">Volgend spel →</button>
           <button class="btn" id="shuffleGame">Shuffle spel</button>
         </div>
-
-        <div class="footer-note" style="margin-top:8px">Kies, speel even, en glunder ✨</div>
       </div>
-
-      <!-- removed the "warme groet" panel as requested -->
     </div>
   </div>
 </div>
 
+<!-- Confetti container -->
+<div class="confetti" id="confetti"></div>
+
 <script>
-/* ============================
-   Countdown
-   ============================ */
+/* ========================
+   Countdown logic (days)
+   ======================== */
 const target = new Date('2025-11-28T19:30:00+01:00').getTime();
 const moonNumber = document.getElementById('moonNumber');
 const moonLabel = document.getElementById('moonLabel');
 const afterBlock = document.getElementById('afterBlock');
-const countdownLabel = document.getElementById('timeLabel');
+const timeLabel = document.querySelector('.time-label');
 
 function updateCountdown(){
   const now = Date.now();
@@ -230,20 +255,23 @@ function updateCountdown(){
     moonLabel.textContent = days === 1 ? 'nacht' : 'nachtjes';
     afterBlock.style.display = 'none';
     document.querySelector('.moon').style.display = 'flex';
-    countdownLabel.textContent = 'Countdown naar 28 nov 19:30';
+    timeLabel.textContent = 'Countdown';
   } else {
     document.querySelector('.moon').style.display = 'none';
     afterBlock.style.display = 'block';
-    countdownLabel.textContent = 'Vandaag!';
+    timeLabel.textContent = 'Vandaag!';
     clearInterval(cntInterval);
+    // celebration
+    showConfetti();
   }
 }
 updateCountdown();
 const cntInterval = setInterval(updateCountdown, 1000);
 
-/* ============================
+/* ========================
    Horoscopes (12x8) + symbols
-   ============================ */
+   (kept identical to prior lists)
+   ======================== */
 const horoscopes = [
   {sign:"Ram", symbol:"♈", color:"#d6e9c9", quotes:[
     "Je hart klopt sneller van verwachting.",
@@ -391,47 +419,52 @@ document.getElementById('nextSign').addEventListener('click', ()=> showSign(sign
 document.getElementById('prevSign').addEventListener('click', ()=> showSign(signIndex-1));
 document.getElementById('randomSign').addEventListener('click', ()=> showSign(Math.floor(Math.random()*horoscopes.length)));
 
-/* ============================
-   Games: memory / puzzle / sudoku 6x6
-   Titles: "Glunder Sudoku", "Glunder Memory", "Glunder Schuifpuzzel"
-   ============================ */
+/* ========================
+   Games: order, title & init
+   ======================== */
 const gameArea = document.getElementById('gameArea');
 const gameTitle = document.getElementById('gameTitle');
-const games = ['sudoku','puzzle','memory']; // default order: sudoku first
+const games = ['sudoku','puzzle','memory'];
 let currentGame = 0;
 document.getElementById('nextGame').addEventListener('click', ()=> setGame(currentGame+1));
 document.getElementById('prevGame').addEventListener('click', ()=> setGame(currentGame-1));
 document.getElementById('shuffleGame').addEventListener('click', ()=> initCurrentGame());
 
-function setGame(i){ currentGame = ((i % games.length) + games.length) % games.length; initCurrentGame(); }
+function setGame(i){
+  currentGame = ((i % games.length) + games.length) % games.length;
+  initCurrentGame();
+}
 function initCurrentGame(){
   const name = games[currentGame];
-  // set appropriate title
   if (name === 'sudoku') gameTitle.textContent = 'Glunder Sudoku';
   else if (name === 'puzzle') gameTitle.textContent = 'Glunder Schuifpuzzel';
   else if (name === 'memory') gameTitle.textContent = 'Glunder Memory';
-  gameArea.innerHTML=''; 
-  if (name==='memory') initMemory();
-  else if (name==='puzzle') initPuzzle();
-  else if (name==='sudoku') initSudoku();
+  gameArea.innerHTML = '';
+  if (name === 'memory') initMemory();
+  else if (name === 'puzzle') initPuzzle();
+  else if (name === 'sudoku') initSudoku();
 }
 
-/* inline bright assets */
-const svgPlanetBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><radialGradient id='gp' cx='30%' cy='30%'><stop offset='0' stop-color='#fff7d2'/><stop offset='1' stop-color='#ffd98a'/></radialGradient></defs><rect width='200' height='200' rx='20' fill='#f6f8f4'/><g transform='translate(12,20)'><ellipse cx='80' cy='80' rx='58' ry='40' fill='url(#gp)' stroke='#3a5236' stroke-width='3'/></g></svg>`);
-const svgStarBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='gs' x1='0' x2='1'><stop offset='0' stop-color='#fffbe0'/><stop offset='1' stop-color='#ffd766'/></linearGradient></defs><rect width='200' height='200' rx='20' fill='#f5f8f3'/><g transform='translate(18,18)' fill='#2d4a2f'><path d='M54 6l13 32 33 2-25 20 7 33-31-15-31 15 7-33L1 40l33-2z'/></g></svg>`);
-const svgNebulaBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='#071028'/><g fill-opacity='0.98'><circle cx='60' cy='80' r='16' fill='#ffd766'/><circle cx='230' cy='50' r='10' fill='#fff9e2'/><circle cx='190' cy='220' r='14' fill='#ffe6b3'/><circle cx='60' cy='220' r='8' fill='#fff8d0'/></g></svg>`);
+/* ------------------------
+   Asset: use the uploaded supermoon image as base (same path)
+   ------------------------ */
+const supermoonURL = '/mnt/data/A_2D_digital_graphic_design_titled_"Countdown_Glun.png';
 
-/* ---- Memory ---- */
+/* ---- Memory (uses the supermoon + color shifts for variety) ---- */
 function initMemory(){
   const wrapper = document.createElement('div'); wrapper.style.width='100%';
   const grid = document.createElement('div'); grid.className='memory-grid';
-  const pairSvgs = [
-    {id:'planet', uri: svgPlanetBright},
-    {id:'star', uri: svgStarBright},
-    {id:'nebula', uri: svgNebulaBright},
-    {id:'comet', uri: svgStarBright}
+
+  // We'll create variants by applying CSS filters to same image so visuals vary: moon, planet (hue), meteor (contrast)
+  const variants = [
+    {id:'moon', style:`filter: none;`},
+    {id:'planet', style:`filter: hue-rotate(40deg) saturate(1.1) brightness(0.98);`},
+    {id:'meteor', style:`filter: sepia(0.2) contrast(1.1) saturate(0.9);`},
+    {id:'sun', style:`filter: hue-rotate(-20deg) saturate(1.3) brightness(1.02);`}
   ];
-  let deck = []; pairSvgs.forEach(p=>{ deck.push(p); deck.push(p); });
+
+  let deck = [];
+  variants.forEach(v=>{ deck.push(v); deck.push(v); });
   deck = deck.sort(()=>Math.random()-0.5);
 
   let first=null, second=null, lock=false, matches=0;
@@ -445,7 +478,8 @@ function initMemory(){
         second={el:c,key:cardObj.id};
         if(first.key===second.key){
           first.el.classList.add('matched'); second.el.classList.add('matched'); matches++; first=null; second=null;
-          if(matches===pairSvgs.length){
+          if(matches===variants.length){
+            showConfetti();
             const done=document.createElement('div'); done.textContent='🎉 Gefeliciteerd — match compleet!'; done.style.marginTop='8px'; done.style.fontWeight=700; wrapper.appendChild(done);
           }
         } else {
@@ -455,57 +489,116 @@ function initMemory(){
     });
     grid.appendChild(c);
   });
+
   wrapper.appendChild(grid);
   const info = document.createElement('div'); info.style.fontSize='13px'; info.style.color='#cfcfbf'; info.style.marginTop='8px';
-  info.textContent='Memory — zoek de paren (heldere planeten & sterren).';
+  info.textContent='Memory — zoek de paren in verschillende gloeiende vormen.';
   wrapper.appendChild(info);
   gameArea.appendChild(wrapper);
 
   function reveal(el, cardObj){
     el.classList.add('revealed');
-    const img = document.createElement('div'); img.style.width='100%'; img.style.height='100%'; img.style.display='flex'; img.style.alignItems='center'; img.style.justifyContent='center';
-    img.innerHTML = `<img src="data:image/svg+xml;utf8,${cardObj.uri}" style="width:94%;height:94%;object-fit:contain;border-radius:8px">`;
-    el.innerHTML=''; el.appendChild(img);
+    const img = document.createElement('div');
+    img.style.width='94%'; img.style.height='94%'; img.style.borderRadius='8px';
+    img.style.backgroundImage = `url("${supermoonURL}")`;
+    img.style.backgroundSize = 'cover';
+    img.style.backgroundPosition = 'center';
+    img.style = img.style.cssText + cardObj.style;
+    el.innerHTML = ''; el.appendChild(img);
   }
   function hideCard(el){ el.classList.remove('revealed'); el.innerHTML=''; }
 }
 
-/* ---- Sliding puzzle 3x3 (with brighter planet art slices) ---- */
+/* ---- Puzzle (3x3 sliding) using the supermoon but split; add gentle animations on rotate) --- */
 function initPuzzle(){
   const wrapper = document.createElement('div');
-  const board = document.createElement('div'); board.className='puzzle-board';
+  const puzzleWrap = document.createElement('div'); puzzleWrap.className = 'puzzle-wrap';
+  const board = document.createElement('div'); board.className = 'puzzle-board';
+
   const size = 3; const total = size*size;
-  const imgUrl = `data:image/svg+xml;utf8,${svgPlanetBright}`;
-  let tiles = Array.from({length:total}, (_,i)=>i);
-  function shuffleTiles(){ do { tiles = tiles.sort(()=>Math.random()-0.5); } while(!isSolvable(tiles)); if(tiles[tiles.length-1]!==total-1){ const idx=tiles.indexOf(total-1); tiles.splice(idx,1); tiles.push(total-1); } }
-  function isSolvable(arr){ const a=arr.filter(v=>v!==total-1); let inv=0; for(let i=0;i<a.length;i++) for(let j=i+1;j<a.length;j++) if(a[i]>a[j]) inv++; return inv%2===0; }
+  // create tile positions 0..8
+  let tiles = Array.from({length:total},(_,i)=>i);
+
+  // shuffle preserving solvability
+  function shuffleTiles(){
+    do { tiles = tiles.sort(()=>Math.random()-0.5); } while(!isSolvable(tiles));
+    if(tiles[tiles.length-1] !== total-1){ const idx = tiles.indexOf(total-1); tiles.splice(idx,1); tiles.push(total-1); }
+  }
+  function isSolvable(arr){
+    const a = arr.filter(v=>v!==total-1);
+    let inv=0; for(let i=0;i<a.length;i++) for(let j=i+1;j<a.length;j++) if(a[i]>a[j]) inv++;
+    return inv%2===0;
+  }
   shuffleTiles();
-  function render(){ board.innerHTML=''; for(let i=0;i<total;i++){ const v=tiles[i]; const tile=document.createElement('div'); if(v===total-1){ tile.className='tile empty'; tile.style.background='linear-gradient(180deg,#f9fbfa,#eef6f0)'; } else { tile.className='tile'; const col=v%size, row=Math.floor(v/size); const bgW=300, bgH=300; const posX = - (col*(bgW/size)), posY = - (row*(bgH/size)); tile.style.backgroundImage = `url("${imgUrl}")`; tile.style.backgroundPosition = `${posX}px ${posY}px`; tile.style.backgroundSize = `${bgW}px ${bgH}px`; } tile.addEventListener('click', ()=> tryMove(i)); board.appendChild(tile);} }
-  function tryMove(index){ const emptyIdx = tiles.indexOf(total-1); const r1=Math.floor(index/size), c1=index%size; const r2=Math.floor(emptyIdx/size), c2=emptyIdx%size; const manhattan = Math.abs(r1-r2)+Math.abs(c1-c2); if(manhattan===1){ [tiles[index], tiles[emptyIdx]]=[tiles[emptyIdx], tiles[index]]; render(); if(isSolved()){ const done=document.createElement('div'); done.textContent='✨ Puzzel compleet! ✨'; done.style.marginTop='10px'; done.style.fontWeight=700; wrapper.appendChild(done); } } }
-  function isSolved(){ for(let i=0;i<total;i++) if(tiles[i]!==i) return false; return true; }
-  render(); wrapper.appendChild(board);
-  const hint = document.createElement('div'); hint.style.fontSize='13px'; hint.style.color='#cfcfbf'; hint.style.marginTop='8px'; hint.textContent='Schuifpuzzel — herken planeten-delen en schuif ze op hun plek.'; wrapper.appendChild(hint);
+
+  function render(){
+    board.innerHTML = '';
+    const imgSize = 300; // used for background-size
+    for(let i=0;i<total;i++){
+      const v = tiles[i];
+      const tile = document.createElement('div');
+      tile.className = (v===total-1) ? 'tile empty' : 'tile';
+      if(v!==total-1){
+        const col = v % size, row = Math.floor(v/size);
+        const posX = - (col*(imgSize/size));
+        const posY = - (row*(imgSize/size));
+        tile.style.backgroundImage = `url("${supermoonURL}")`;
+        tile.style.backgroundSize = `${imgSize}px ${imgSize}px`;
+        tile.style.backgroundPosition = `${posX}px ${posY}px`;
+        // add a light entrance animation
+        tile.style.transition = 'transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 200ms';
+      } else {
+        tile.style.background = 'linear-gradient(180deg,#061f18,#052014)';
+      }
+      tile.addEventListener('click', ()=> tryMove(i));
+      board.appendChild(tile);
+    }
+  }
+
+  function tryMove(index){
+    const emptyIdx = tiles.indexOf(total-1);
+    const r1 = Math.floor(index/size), c1 = index%size;
+    const r2 = Math.floor(emptyIdx/size), c2 = emptyIdx%size;
+    const dist = Math.abs(r1-r2)+Math.abs(c1-c2);
+    if(dist === 1){
+      [tiles[index], tiles[emptyIdx]] = [tiles[emptyIdx], tiles[index]];
+      // animate quick scale for clicked tile
+      const clicked = board.children[index];
+      clicked.style.transform = 'scale(0.98)';
+      setTimeout(()=> clicked.style.transform='', 160);
+      render();
+      if(isSolved()){ showConfetti(); const done = document.createElement('div'); done.textContent='✨ Puzzel compleet! ✨'; done.style.marginTop='10px'; done.style.fontWeight=700; wrapper.appendChild(done); }
+    }
+  }
+
+  function isSolved(){ for(let i=0;i<total;i++) if(tiles[i] !== i) return false; return true; }
+
+  render();
+  puzzleWrap.appendChild(board);
+  const hint = document.createElement('div'); hint.style.fontSize='13px'; hint.style.color='#cfcfbf'; hint.style.marginTop='8px';
+  hint.textContent = 'Schuifpuzzel — vorm de supermaan terug.';
+  puzzleWrap.appendChild(hint);
   const controls = document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.marginTop='8px';
-  const btnShuffle = document.createElement('button'); btnShuffle.className='btn'; btnShuffle.textContent='Schud'; btnShuffle.addEventListener('click', ()=>{ shuffleTiles(); render(); });
-  controls.appendChild(btnShuffle); wrapper.appendChild(controls); gameArea.appendChild(wrapper);
+  const btnShuffle = document.createElement('button'); btnShuffle.className='btn'; btnShuffle.textContent='Schud';
+  btnShuffle.addEventListener('click', ()=> { shuffleTiles(); render(); });
+  controls.appendChild(btnShuffle);
+  puzzleWrap.appendChild(controls);
+  wrapper.appendChild(puzzleWrap);
+  gameArea.appendChild(wrapper);
 }
 
-/* ---- Sudoku 6x6 (2x3 blocks), visual centerlines ---- */
+/* ---- Sudoku 6x6 (2x3 boxes) ---- */
 function initSudoku(){
   const wrapper = document.createElement('div'); wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.flexDirection='column'; wrapper.style.alignItems='center';
   const title = document.createElement('div'); title.textContent='Sudoku (6×6) — vul de lege vakjes'; title.style.fontWeight='700'; wrapper.appendChild(title);
 
-  const N = 6;
-  const boxR = 2;
-  const boxC = 3;
-
+  const N = 6, boxR = 2, boxC = 3;
   let solution = Array.from({length:N}, ()=>Array(N).fill(0));
 
-  function isSafe(grid, r, c, val){
+  function isSafe(grid,r,c,val){
     for(let i=0;i<N;i++) if(grid[r][i]===val) return false;
     for(let i=0;i<N;i++) if(grid[i][c]===val) return false;
-    const startR = r - (r % boxR);
-    const startC = c - (c % boxC);
+    const startR = r - (r%boxR), startC = c - (c%boxC);
     for(let i=0;i<boxR;i++) for(let j=0;j<boxC;j++) if(grid[startR+i][startC+j]===val) return false;
     return true;
   }
@@ -552,9 +645,8 @@ function initSudoku(){
     for(let c=0;c<N;c++){
       const wrap = document.createElement('div'); wrap.className='sudoku-cell';
       const val = puzzle[r][c];
-      if(val!==0){
-        wrap.classList.add('prefilled'); wrap.textContent = val;
-      } else {
+      if(val!==0){ wrap.classList.add('prefilled'); wrap.textContent = val; }
+      else {
         const input = document.createElement('input'); input.type='number'; input.min=1; input.max=6; input.setAttribute('inputmode','numeric');
         input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-6]/g,'').slice(0,1); });
         wrap.appendChild(input);
@@ -586,7 +678,7 @@ function initSudoku(){
         }
       }
     }
-    if (correct && allFilled) { status.textContent = '🎉 Compleet en correct!'; status.style.color='#1b6e3a'; }
+    if (correct && allFilled) { status.textContent = '🎉 Compleet en correct!'; status.style.color='#1b6e3a'; showConfetti(); }
     else if (!allFilled) { status.textContent = 'Vul alle vakken in (of gebruik een hint).'; status.style.color='#6b3b3b'; }
     else { status.textContent = 'Er staan nog fouten — zoek ze even.'; status.style.color='#6b3b3b'; }
   });
@@ -623,22 +715,58 @@ function initSudoku(){
 /* init first game */
 initCurrentGame();
 
-/* auto-rotate games every 35s */
-let autoRotate = setInterval(()=> setGame(currentGame+1), 35000);
+/* auto-rotate games every 40s (longer for animations) */
+let autoRotate = setInterval(()=> setGame(currentGame+1), 40000);
 ['nextGame','prevGame','shuffleGame','gameArea'].forEach(id=>{
   document.getElementById(id)?.addEventListener?.('click', ()=> {
     clearInterval(autoRotate);
-    setTimeout(()=> { autoRotate = setInterval(()=> setGame(currentGame+1), 35000); }, 60000);
+    setTimeout(()=> { autoRotate = setInterval(()=> setGame(currentGame+1), 40000); }, 60000);
   });
 });
 
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (e)=>{
-  if (e.key === 'ArrowRight') { setGame(currentGame+1); }
-  if (e.key === 'ArrowLeft') { setGame(currentGame-1); }
-  if (e.key === 'ArrowUp') { showSign(signIndex-1); }
-  if (e.key === 'ArrowDown') { showSign(signIndex+1); }
+  if (e.key === 'ArrowRight') setGame(currentGame+1);
+  if (e.key === 'ArrowLeft') setGame(currentGame-1);
+  if (e.key === 'ArrowUp') showSign(signIndex-1);
+  if (e.key === 'ArrowDown') showSign(signIndex+1);
 });
+
+/* -------------------------
+   Confetti function (simple particle burst)
+   ------------------------- */
+function showConfetti(){
+  const container = document.getElementById('confetti');
+  container.innerHTML = '';
+  container.style.display = 'block';
+  const colors = ['#ffd766','#e6b46a','#fff6d9','#d4a64b'];
+  const count = 40;
+  for(let i=0;i<count;i++){
+    const el = document.createElement('div');
+    el.style.position='absolute';
+    el.style.width = (6+Math.random()*8)+'px';
+    el.style.height = el.style.width;
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.left = (50 + (Math.random()-0.5)*60) + '%';
+    el.style.top = '30%';
+    el.style.opacity = 0.95;
+    el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+    el.style.borderRadius = '2px';
+    el.style.pointerEvents = 'none';
+    container.appendChild(el);
+
+    // animate
+    const dx = (Math.random()-0.5)*1200;
+    const dy = -600 - Math.random()*800;
+    const rot = (Math.random()-0.5)*720;
+    el.animate([
+      { transform: el.style.transform + ' translate(0px,0px)', opacity:1 },
+      { transform: el.style.transform + ` translate(${dx}px,${dy}px) rotate(${rot}deg)`, opacity:0.0 }
+    ], { duration: 1400 + Math.random()*800, easing:'cubic-bezier(.15,.7,.4,1)' });
+  }
+  // hide after animation
+  setTimeout(()=> { container.style.display='none'; container.innerHTML=''; }, 2200);
+}
 </script>
 </body>
 </html>
