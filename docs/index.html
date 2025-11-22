@@ -50,7 +50,7 @@
   /* Moon circle: use uploaded image as base, add beige wash overlay, and place green number */
   .moon {
     width:260px; height:260px; border-radius:50%; position:relative; display:flex;align-items:center;justify-content:center;
-    background-image: url('/mnt/data/A_digital_graphic_countdown_poster_displays_an_eve.png');
+    background-image: url('docs/countdown-poster.png');
     background-size: cover; background-position:center;
     box-shadow: 0 10px 36px rgba(0,0,0,0.7), 0 0 26px rgba(255,220,120,0.04) inset;
     border: 3px solid rgba(255,215,130,0.06);
@@ -102,7 +102,7 @@
   /* Memory cards: small tiles with variants of the supermoon image (CSS filters) */
   .memory-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:100%; }
   .memory-card{ border-radius:10px; height:90px; display:flex;align-items:center;justify-content:center; cursor:pointer; overflow:hidden; box-shadow: 0 8px 18px rgba(0,0,0,0.28); background:linear-gradient(180deg,#fffaf0,#f3fff7); }
-  .memory-card .face{ width:92%; height:84%; border-radius:8px; background-image: url('/mnt/data/A_digital_graphic_countdown_poster_displays_an_eve.png'); background-size:cover; background-position:center; transition:transform 220ms ease; display:flex;align-items:center;justify-content:center; }
+  .memory-card .face{ width:92%; height:84%; border-radius:8px; background-image: url('docs/countdown-poster.png'); background-size:cover; background-position:center; transition:transform 220ms ease; display:flex;align-items:center;justify-content:center; }
   .memory-card.revealed .face{ transform: scale(1.03); }
   .memory-card.matched{ opacity:0.45; transform:scale(0.98); pointer-events:none; }
 
@@ -204,9 +204,9 @@
 /* ===========================
    Use the uploaded supermoon image:
    path (must be present where you open this file):
-   /mnt/data/A_digital_graphic_countdown_poster_displays_an_eve.png
+   docs/countdown-poster.png
    =========================== */
-const SUPERMOON = '/mnt/data/A_digital_graphic_countdown_poster_displays_an_eve.png';
+const SUPERMOON = 'docs/countdown-poster.png';
 
 /* ------------------- Countdown ------------------ */
 const target = new Date('2025-11-28T19:30:00+01:00').getTime();
@@ -679,5 +679,6 @@ document.addEventListener('keydown', (e)=>{
 </script>
 </body>
 </html>
+
 
 
