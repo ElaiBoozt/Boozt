@@ -1,396 +1,567 @@
-<!--trigger 12-->
+<!--trigger new1 28 nov 2025   idee chinees koekje voor nieuwjaar onthoud! -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>De Gazette der Geduldigen — Pamflet</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Glunder Evening — Countdown & Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --olive:#3f5a2f;
+    --olive-deep:#324623;
+    --gold:#ffd766;
+    --beige:#f7efe0;
+    --accent:#e6b46a;
+    --card-bg: rgba(255,255,255,0.88);
+  }
+  html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background: radial-gradient(circle at 12% 12%, #fcf8ee 0%, #efe2c9 36%, #e6cfab 100%); color:#1b1b19;}
+  .page {min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box;}
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
+  .poster {
+    width:min(1100px, 96%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,245,235,0.95));
+    border-radius:18px;padding:28px;box-shadow: 0 18px 40px rgba(30,30,30,0.18);
+    display:grid;grid-template-columns: 1fr 400px;gap:22px;align-items:start;position:relative;overflow:hidden;
+  }
 
-  <style>
-    :root {
-      --achtergrond:#7a4b2a;
-      --papier:#f3dfc4;
-      --inkt:#0d1b2a;
-      --muted:#3d3d3d;
-      --accent:#e07b39;
-      --shadow:rgba(0,0,0,0.15);
-    }
-    body {
-      margin:0;
-      background:var(--achtergrond);
-      font-family:Spectral,Georgia,serif;
-      display:flex;
-      justify-content:center;
-      padding:20px;
-      color:var(--inkt);
-    }
-    .pamflet {
-      width:100%;
-      max-width:720px;
-      background:var(--papier);
-      border-radius:10px;
-      box-shadow:0 8px 20px var(--shadow);
-      overflow:hidden;
-      padding:20px;
-      min-height:100vh;
-      position:relative;
-    }
-    header{text-align:center;margin-bottom:20px;}
-    .masthead{
-      font-family:'Playfair Display',serif;
-      font-size:36px;
-      font-weight:900;
-      color:var(--inkt);
-      letter-spacing:1px;
-      margin-bottom:6px;
-      cursor:pointer;
-    }
-    .meta{font-size:14px;color:var(--muted);}
-    .meta span{margin-right:10px;}
+  /* Gloss & subtle stars */
+  .gloss {position:absolute; inset:0; pointer-events:none; background-image:
+    radial-gradient(circle at 18% 26%, rgba(255,244,200,0.06) 0 2px, transparent 3px),
+    radial-gradient(circle at 80% 62%, rgba(255,230,180,0.05) 0 3px, transparent 4px);
+    mix-blend-mode: screen;
+  }
 
-    .main-headline{text-align:center;font-size:28px;font-weight:800;margin:20px 0;color:var(--inkt);}
-    .subhead{text-align:center;color:var(--muted);margin-bottom:20px;}
+  .left {padding:20px;}
+  .timer-card {
+    background: linear-gradient(180deg, var(--olive) 0%, var(--olive-deep) 100%);
+    border-radius:14px;padding:28px;color:var(--gold);text-align:center;
+    box-shadow: 0 8px 24px rgba(50,50,20,0.35), inset 0 -6px 18px rgba(255,215,130,0.03);
+    position:relative;
+  }
+  #countdown {font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,96px);line-height:1;letter-spacing:0.02em;text-shadow:0 0 18px rgba(255,238,180,0.45);margin:0 0 10px 0;}
+  .small-label {color: rgba(255,250,230,0.9);font-size:14px;margin-bottom:6px;}
 
-    .photo-frame{
-      background:linear-gradient(180deg,#fdf0e2,#f5e5d0);
-      border-radius:8px;
-      padding:20px;
-      text-align:center;
-      margin-bottom:20px;
-    }
-    .big-number{font-family:'Playfair Display',serif;font-size:120px;font-weight:900;color:var(--accent);}
-    .photo-caption{margin-top:12px;color:var(--muted);font-weight:600;font-size:14px;}
+  .after {display:none;color:var(--gold);}
+  .after h1 {font-family:'Playfair Display',serif;font-style:italic;font-weight:700;margin:0;font-size:clamp(28px,6vw,72px);text-shadow:0 0 18px rgba(255,245,200,0.5);}
+  .after .sub {margin-top:12px;font-style:italic;color:#fff8dc;font-size:clamp(14px,2.2vw,20px);line-height:1.2;}
 
-    .tear-stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0;}
-    .tear{padding:12px 16px;background:#f7e9d7;border-left:6px solid var(--accent);border-radius:4px;font-weight:700;box-shadow:0 4px 12px var(--shadow);color:var(--inkt);}
-    .tear.dim{opacity:0.3;}
+  .right {padding:20px;display:flex;flex-direction:column;gap:18px;align-items:stretch;}
+  .panel {background:var(--card-bg);border-radius:12px;padding:14px;box-shadow: 0 6px 16px rgba(10,10,10,0.06);}
 
-    .panels{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:20px;}
-    .panel{flex:1 1 220px;background:#fff3e0;border-radius:8px;padding:16px;box-shadow:0 4px 12px var(--shadow);color:var(--inkt);}
-    .panel h4{margin-top:0;margin-bottom:10px;font-size:18px;color:var(--accent);}
-    .panel p{margin:0;color:var(--muted);font-size:14px;line-height:1.4;}
+  .horoscope {display:flex;gap:12px;align-items:center;}
+  .sign-badge {width:78px;height:78px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#1b1b19;background: linear-gradient(180deg,#d8e7c8,#eaf4d8);border:2px solid rgba(0,0,0,0.06);box-shadow: 0 6px 12px rgba(50,50,30,0.06);font-size:14px;text-transform:uppercase;}
+  .horoscope-text {flex:1;text-align:left;}
+  .horoscope-text h3 {margin:0;font-size:18px;color:#24321b;}
+  .horoscope-text p {margin:6px 0 0 0;color:#3a3a2f;font-size:15px;}
 
-    .weather .temp{font-size:32px;font-weight:800;color:var(--accent);}
-    .weather .meta{font-size:13px;color:var(--muted);margin-top:4px;}
+  .controls {display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .btn {background:var(--gold); color:#2b2416; border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;box-shadow: 0 6px 10px rgba(200,150,60,0.12);}
 
-    .horoscope-slider{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;}
-    .horoscope-card{min-width:200px;max-width:250px;padding:12px 16px;border-radius:8px;background:#f7e9d7;color:var(--inkt);box-shadow:0 4px 12px var(--shadow);text-align:center;}
-    .horoscope-card .sign{font-size:24px;font-weight:800;margin-bottom:8px;color:var(--inkt);}
-    .horoscope-card .text{font-size:14px;color:var(--muted);}
-    .arrow{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:16px;}
-    .arrow:hover{opacity:0.85;}
+  .game-area {display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;min-height:150px;}
 
-    footer{text-align:center;font-size:12px;color:var(--muted);margin-top:20px;}
-    button.btn{margin-top:12px;padding:10px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;transition:0.2s;}
-    button.btn:hover{opacity:0.85;}
+  .memory-grid {display:grid;grid-template-columns: repeat(4, 1fr); gap:8px; width:100%;}
+  .card {background: linear-gradient(180deg,#0f2a2a 0%, #123333 100%);border-radius:8px;padding:12px;height:72px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;cursor:pointer;user-select:none;box-shadow: 0 6px 10px rgba(0,0,0,0.25);}
+  .card.revealed {background: linear-gradient(180deg,#e9f7ee,#dff2e4); color:#12331a;}
+  .card.matched {opacity:0.35; transform:scale(0.98); cursor:default;}
 
-    .confetti{position:fixed;font-size:18px;pointer-events:none;z-index:9999;animation:fall linear forwards;}
-    @keyframes fall{
-      0% { transform:translate(0,0) rotate(0deg); opacity:1; }
-      100% { transform:translate(var(--x),100vh) rotate(720deg); opacity:0; }
-    }
+  .puzzle-board {width:300px;height:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+  .tile {background-size: 300px 300px;background-position:center;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;box-shadow: inset 0 -8px 18px rgba(0,0,0,0.2);}
+  .tile.empty {background:transparent;cursor:default;box-shadow:none}
 
-    @media(max-width:600px){
-      .big-number{font-size:80px;}
-      .main-headline{font-size:22px;}
-      .panels{flex-direction:column;}
-    }
-  </style>
+  .sudoku-grid {display:grid;grid-template-columns: repeat(9, 1fr); gap:6px; width:100%; max-width:420px;}
+  .sudoku-cell {background:#fff;border-radius:6px;padding:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#222;box-shadow: 0 4px 8px rgba(0,0,0,0.06);}
+  .sudoku-cell input{width:100%;height:100%;border:0;text-align:center;font-size:18px;background:transparent;outline:none}
+  .sudoku-cell.prefilled {background:#f3f6ed;color:#1b2b18}
+  .sudoku-controls {display:flex;gap:8px;justify-content:center;margin-top:8px;}
+
+  .footer-note {font-size:12px;color:#4b4b40;opacity:0.9;margin-top:8px;text-align:center}
+
+  @media(max-width:980px){ .poster {grid-template-columns:1fr; padding:18px;} .right {order:3} .sign-badge {width:60px;height:60px;font-size:12px} }
+</style>
 </head>
 <body>
-  <div class="pamflet">
+<div class="page">
+  <div class="poster" role="main" aria-label="Glunder Evening poster">
+    <div class="gloss" aria-hidden="true"></div>
 
-    <header>
-      <div class="masthead" id="masthead">DE GAZETTE DER GEDULDIGEN</div>
-      <div class="meta">
-        <span id="metaDate">—</span>
-        <span>| Jaargang I — Nr. 7</span>
-        <span>| Prijs: één glimlach</span>
-      </div>
-    </header>
+    <!-- LEFT -->
+    <div class="left">
+      <div class="timer-card" aria-live="polite">
+        <div class="small-label" id="timeLabel">Countdown naar 28 nov 19:30</div>
+        <div id="countdown" aria-atomic="true">laden…</div>
 
-    <div class="main-headline">NOG MAAR <span id="headlineNumber">—</span> NACHTJES 🪐</div>
-    <div class="subhead">De Gazette telt af tot de volgende planetoïde… 🪐•🪐•🪐</div>
-
-    <div class="photo-frame">
-      <div class="big-number" id="bigNumber">—</div>
-      <div class="photo-caption" id="photoCaption">Nog te slapen nachtjes</div>
-    </div>
-
-    <div class="tear-stack" id="tearStack"></div>
-
-    <div class="panels">
-      <div class="panel weather">
-        <h4>Weer in Amersfoort 📍</h4>
-        <div class="temp" id="temp">—°C</div>
-        <div class="meta" id="weatherMeta">—</div>
-      </div>
-
-      <div class="panel horoscope-panel">
-        <h4>Horoscoop – Relaties</h4>
-        <div class="horoscope-slider">
-          <button class="arrow" id="prevHoroscope">◀</button>
-          <div class="horoscope-card" id="horoscopeCard">
-            <div class="sign" id="horoscopeSign">♈ Ram</div>
-            <div class="text" id="horoscopeText">—</div>
+        <div class="after" id="afterBlock" role="status" aria-hidden="true">
+          <h1>Vandaag is het eindelijk zover!</h1>
+          <div class="sub">
+            <div>Vandaag weer samen</div>
+            <div>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</div>
           </div>
-          <button class="arrow" id="nextHoroscope">▶</button>
         </div>
       </div>
 
-      <div class="panel">
-        <h4>Dagelijkse portie verwondering</h4>
-        <p id="fact">—</p>
+      <div style="height:16px;"></div>
+
+      <div class="panel" style="margin-top:14px;">
+        <div class="horoscope">
+          <div class="sign-badge" id="signBadge">Ram</div>
+          <div class="horoscope-text">
+            <h3 id="signName">Ram</h3>
+            <p id="signQuote">Je quote verschijnt hier…</p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn" id="prevSign">← Vorige</button>
+          <button class="btn" id="nextSign">Volgende →</button>
+          <button class="btn" id="randomSign">Willekeurig</button>
+        </div>
       </div>
     </div>
 
-    <button class="btn" id="forceTear">Scheur vandaag</button>
-    <footer>Klik op de kop om de afteltimer te verversen 🪐</footer>
+    <!-- RIGHT -->
+    <div class="right">
+      <div class="panel game-area" aria-label="Spel-sectie">
+        <div style="font-weight:700;color:#2d2d2a">Speeltje</div>
+        <div id="gameArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:160px;justify-content:center"></div>
 
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
+          <button class="btn" id="prevGame">← Vorig spel</button>
+          <button class="btn" id="nextGame">Volgend spel →</button>
+          <button class="btn" id="shuffleGame">Shuffle spel</button>
+        </div>
+
+        <div class="footer-note">Kies, speel even, en glunder ✨</div>
+      </div>
+
+      <div class="panel" style="text-align:center;">
+        <div style="font-weight:700;margin-bottom:6px">Een warme groet</div>
+        <div style="color:#55534a">Een kleine poster voor een bijzondere avond — veel plezier en succes met glunderen.</div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <script>
-  // === CONFIG ===
-  const TARGET_DATE = new Date('2025-10-24T08:00:00+02:00');
-  const el = id => document.getElementById(id);
+<script>
+/* -----------------------------
+   Countdown
+------------------------------*/
+const target = new Date('2025-11-28T19:30:00+01:00').getTime();
+const countdownEl = document.getElementById('countdown');
+const afterBlock = document.getElementById('afterBlock');
+const timeLabel = document.getElementById('timeLabel');
 
-  // === WEATHER API SETTINGS (Amersfoort coordinates) ===
-  const LAT = 52.1553;  // Amersfoort
-  const LON = 5.3878;
-  const WEATHER_API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=temperature_2m,precipitation_probability,wind_speed_10m&timezone=Europe/Amsterdam`;
-
-  // === HELPER FUNCTIONS ===
-  function todayKey(){ return new Date().toISOString().split('T')[0]; }
-  function nightsRemaining(){
-    const diff = TARGET_DATE - new Date();
-    return Math.max(0, Math.ceil(diff / (1000*60*60*24)));
+function updateCountdown(){
+  const now = Date.now();
+  const diff = target - now;
+  if (diff > 0){
+    const days = Math.floor(diff/(1000*60*60*24));
+    countdownEl.textContent = days + (days===1 ? ' nacht' : ' nachtjes');
+    countdownEl.style.display='block'; afterBlock.style.display='none';
+    timeLabel.textContent = 'Countdown naar 28 nov 19:30';
+  } else {
+    countdownEl.style.display='none'; afterBlock.style.display='block'; timeLabel.textContent='Vandaag!';
+    clearInterval(cntInterval);
   }
+}
+updateCountdown();
+const cntInterval = setInterval(updateCountdown, 1000);
 
-  // === CONFETTI ===
-  function shootConfetti(){
-    for(let i=0;i<100;i++){
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.textContent = '🎊';
-      c.style.left = Math.random()*100 + 'vw';
-      c.style.setProperty('--x', `${(Math.random()-0.5)*200}px`);
-      c.style.animationDuration = (3 + Math.random()*2) + 's';
-      c.style.fontSize = (12 + Math.random()*16) + 'px';
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(), 5000);
-    }
-  }
+/* -----------------------------
+   Horoscopes: 12 signs x 8 unique quotes
+   (mix: speels, poëtisch, mystiek) - no duplicates between signs
+------------------------------*/
+const horoscopes = [
+  {sign:"Ram", color:"#d6e9c9", quotes:[
+    "Je hart klopt sneller van verwachting.",
+    "Je durft — en dat maakt het spannend mooi.",
+    "Een kleine daad zet een avond in beweging.",
+    "Je glimlach nodigt iemand dichterbij.",
+    "Vandaag straal je met zachte overgave.",
+    "Laat je energie zachtjes de kamer vullen.",
+    "Iemand merkt je warmte op zonder woorden.",
+    "Durf te glunderen — het past je goed."
+  ]},
+  {sign:"Stier", color:"#e7edd6", quotes:[
+    "Comfort en smaak maken dit moment kostbaar.",
+    "Een rustige aanwezigheid geeft diepe rust.",
+    "Geniet van de tastbare details om je heen.",
+    "Vandaag voelt nabijheid als een cadeau.",
+    "Subtiele aanraking zegt meer dan menig woord.",
+    "Laat je zintuigen rustig de weg wijzen.",
+    "Een bekend lied roept zachte herinnering op.",
+    "Eenvoudige luxe kleedt jouw momenten."
+  ]},
+  {sign:"Tweelingen", color:"#d9efd9", quotes:[
+    "Je praatjes openen kleine werelden van plezier.",
+    "Humor maakt een kamer lichter en zachter.",
+    "Een nieuwsgierige vraag start een hartelijk gesprek.",
+    "Je woorden dansen licht in de lucht.",
+    "Verrassing in taal brengt een glimlach.",
+    "Laat je geest speels de avond kleuren.",
+    "Korte gesprekken kunnen diepe connecties brengen.",
+    "Je charme werkt als een zachte uitnodiging."
+  ]},
+  {sign:"Kreeft", color:"#e7e6d7", quotes:[
+    "Zachtheid en aandacht scheppen een thuisgevoel.",
+    "Een warme blik zegt wat woorden niet hoeven.",
+    "Koester kleine momenten van echte verbinding.",
+    "Je zorgzame aard opent stil gedeelde ruimte.",
+    "Herinneringen vinden vanavond een zachte plek.",
+    "Je aanwezigheid voelt als een geruststellende omhelzing.",
+    "Laat tederheid de avond verlichten.",
+    "Intimiteit groeit in kleine, stille gebaren."
+  ]},
+  {sign:"Leeuw", color:"#efe7c8", quotes:[
+    "Je helderheid trekt bewondering zonder moeite.",
+    "Vandaag zal je lach de kamer doen oplichten.",
+    "Stralend en zacht — je bent onmiskenbaar aanwezig.",
+    "Een compliment weerkaatst jouw warme energie.",
+    "Je durft te schitteren op een elegante manier.",
+    "Grootsheid met tederheid is jouw stijl vandaag.",
+    "Laat je hart spreken — het klinkt als muziek.",
+    "Een klein applausje kan onverwacht veel betekenen."
+  ]},
+  {sign:"Maagd", color:"#eef3e0", quotes:[
+    "Oog voor detail maakt kleine magie zichtbaar.",
+    "Je zorgvuldigheid tovert orde tot rust.",
+    "Subtiele perfecties geven de avond inhoud.",
+    "Je praktische aanraking voelt als blijk van zorg.",
+    "Nette aandacht creëert warme herinnering.",
+    "Stilheid met zorg kan veel liefde zeggen.",
+    "Je precisie vertaalt zich in elegante momenten.",
+    "Een kleine handeling oogst grote waardering."
+  ]},
+  {sign:"Weegschaal", color:"#dfe7d2", quotes:[
+    "Schoonheid en evenwicht dansen langs je heen.",
+    "Een charmante opmerking opent zachte ogen.",
+    "Balans brengt ruimte voor oprechte gesprekken.",
+    "Je elegantie nodigt mensen uit dichtbij te komen.",
+    "Rust en stijl maken vanavond memorabel.",
+    "Zachte humor weeft fijne herinneringen in de tijd.",
+    "Jouw eenvoud ademt een bijzondere allure.",
+    "Harmonie kleurt de avond in goudtinten."
+  ]},
+  {sign:"Schorpioen", color:"#e9e5d8", quotes:[
+    "Intensiteit en zachtheid vinden elkaar bij jou.",
+    "Een scherpe blik kan heel veel zeggen vandaag.",
+    "Laat je diepgang zachtjes naar buiten stromen.",
+    "Intieme aandacht schept onvergetelijke momenten.",
+    "Een geheim gebaar heeft grote betekenis vanavond.",
+    "Diepe gevoelens vertalen zich in warme daden.",
+    "Laat je hart spreken — in stilte of in woord.",
+    "Passie met tederheid maakt alles eerbiedig."
+  ]},
+  {sign:"Boogschutter", color:"#e8efd9", quotes:[
+    "Avontuurlijke vonken maken de avond licht.",
+    "Een onbevangen lach opent onverwachte deuren.",
+    "Nieuwsgierigheid leidt tot warme verrassingen.",
+    "Speelsheid nodigt anderen uit te delen.",
+    "Durf te stappen; mooie herinneringen wachten.",
+    "Recht door zee met een glimlach wint harten.",
+    "Laat enthousiasme zacht de ruimte vullen.",
+    "Een lichte grap breekt het ijs in goud."
+  ]},
+  {sign:"Steenbok", color:"#e6e3d6", quotes:[
+    "Stabiel en attent — jouw houding raakt anderen.",
+    "Doorzettingsvermogen krijgt een zachte glans vanavond.",
+    "Doordachte woorden geven houvast en nabijheid.",
+    "Je inzet creëert waardevolle momenten.",
+    "Een rustige daad blijkt groter dan verwacht.",
+    "Consistentie voelt als een warm anker voor anderen.",
+    "Je vastberadenheid toont zich als zorg en stijl.",
+    "Met bedachtzaamheid bouw je intieme ruimte."
+  ]},
+  {sign:"Waterman", color:"#e9f0e7", quotes:[
+    "Je verrassende blik creëert nieuwe mogelijkheden.",
+    "Vernieuwend en vriendelijk — een aanstekelijke mix.",
+    "Durf uniek te zijn; anderen volgen je graag.",
+    "Een origineel idee kan het gesprek verrijken.",
+    "Jouw visie nodigt uit tot open gesprekken.",
+    "Creatieve vonken kleuren de avond met plezier.",
+    "Anders zijn voelt vandaag als een zachte kracht.",
+    "Vreemde wendingen leiden soms tot warme momenten."
+  ]},
+  {sign:"Vissen", color:"#edf6e9", quotes:[
+    "Zacht en dromerig — je brengt rust in het nu.",
+    "Een intuïtieve beweging verbindt twee zielen.",
+    "Dromen en realiteit vinden vanavond elkaar.",
+    "Laat je verbeelding leiden naar warme herinneringen.",
+    "Een kleine fantasie wordt tastbare zachtheid.",
+    "Je empathie maakt nabijheid veilig en rijk.",
+    "Mildheid en diepte vormen een stille belofte.",
+    "Eenvoudige dromen worden vanavond kostbaar."
+  ]}
+];
 
-  // === HOROSCOOP DATA & STRUCTURE ===
-  const horoscopes = ['♈ Ram','♉ Stier','♊ Tweelingen','♋ Kreeft','♌ Leeuw','♍ Maagd','♎ Weegschaal','♏ Schorpioen','♐ Boogschutter','♑ Steenbok','♒ Waterman','♓ Vissen'];
-  const dailyHoroscopes = {
-    '2025-10-17':{
-      '♈ Ram':'Je straalt rust uit die anderen vertrouwen geeft.',
-      '♉ Stier':'Een onverwachte blik zegt meer dan woorden.',
-      '♊ Tweelingen':'Je woorden vinden vandaag precies hun plek.',
-      '♋ Kreeft':'Je openheid brengt iemand dichterbij.',
-      '♌ Leeuw':'Vandaag mag je trots zijn op wat je deelt.',
-      '♍ Maagd':'Een klein gebaar heeft grote betekenis.',
-      '♎ Weegschaal':'Balans tussen gevoel en verstand loont.',
-      '♏ Schorpioen':'Je passie wekt nieuwsgierigheid.',
-      '♐ Boogschutter':'Een oude wens krijgt nieuwe vorm.',
-      '♑ Steenbok':'Kleine stappen brengen groot vertrouwen.',
-      '♒ Waterman':'Je anders-zijn inspireert iemand stilletjes.',
-      '♓ Vissen':'Je dromen raken vandaag realiteit.'
-    },
-    '2025-10-18':{
-      '♈ Ram':'Je vuur verwarmt vandaag meer dan alleen jezelf.',
-      '♉ Stier':'Je merkt iets subtiels in iemands stem dat je raakt.',
-      '♊ Tweelingen':'Woorden fladderen licht, maar raken doel.',
-      '♋ Kreeft':'Een gesprek opent iets wat lang gesloten bleef.',
-      '♌ Leeuw':'Je straalt, zelfs zonder te willen.',
-      '♍ Maagd':'Een rustig moment voelt gedeeld zonder dat iemand spreekt.',
-      '♎ Weegschaal':'Je vindt harmonie in iets kleins vandaag.',
-      '♏ Schorpioen':'Een blik wisselen zegt genoeg.',
-      '♐ Boogschutter':'Lach, want iemand wacht op die vonk.',
-      '♑ Steenbok':'Je inzet wordt zachtjes gezien.',
-      '♒ Waterman':'Je onverwachte idee raakt iemand die luistert.',
-      '♓ Vissen':'Een herinnering drijft boven en brengt warmte.'
-    },
-    '2025-10-19':{
-      '♈ Ram':'Je laat los wat niet meer voedt.',
-      '♉ Stier':'Een moment van stilte met een ander spreekt boekdelen.',
-      '♊ Tweelingen':'Je denkt sneller dan je hart bijhoudt — luister even andersom.',
-      '♋ Kreeft':'Een bekend gezicht voelt plots nieuw.',
-      '♌ Leeuw':'Vandaag ben jij de zon in een ander verhaal.',
-      '♍ Maagd':'Je voelt de blik van iemand die jouw rust opmerkt.',
-      '♎ Weegschaal':'Je weegt je woorden en vindt zachtheid.',
-      '♏ Schorpioen':'Er broeit iets moois in het alledaagse.',
-      '♐ Boogschutter':'Je enthousiasme raakt een onverwachte snaar.',
-      '♑ Steenbok':'Een klein succes maakt ruimte voor vertrouwen.',
-      '♒ Waterman':'Iemand begrijpt je zonder uitleg.',
-      '♓ Vissen':'Je verbeelding schetst een toekomst vol kleur.'
-    },
-    '2025-10-20':{
-      '♈ Ram':'Vandaag telt geduld dubbel in liefde.',
-      '♉ Stier':'Je voelt dat iemand jouw rust zoekt.',
-      '♊ Tweelingen':'Een onverwacht bericht maakt je dag zachter.',
-      '♋ Kreeft':'Je vindt thuis in iemands blik.',
-      '♌ Leeuw':'Je glans wordt oprecht bewonderd.',
-      '♍ Maagd':'Iemand waardeert je stilzwijgende steun.',
-      '♎ Weegschaal':'Vandaag brengt helderheid in verwarring.',
-      '♏ Schorpioen':'Een gevoel wordt beantwoord.',
-      '♐ Boogschutter':'Een oude connectie krijgt nieuw leven.',
-      '♑ Steenbok':'Je trouw maakt indruk zonder woorden.',
-      '♒ Waterman':'Iemand volgt jouw vrije ritme met een glimlach.',
-      '♓ Vissen':'Je gevoel voor timing raakt precies goed.'
-    },
-    '2025-10-21':{
-      '♈ Ram':'Je daadkracht wekt vertrouwen.',
-      '♉ Stier':'Je stabiliteit trekt iemand dichterbij.',
-      '♊ Tweelingen':'Een onverwachte grap breekt spanning.',
-      '♋ Kreeft':'Je kwetsbaarheid opent harten.',
-      '♌ Leeuw':'Vandaag krijg je de erkenning die je verdient.',
-      '♍ Maagd':'Je aandachtige blik zegt meer dan duizend woorden.',
-      '♎ Weegschaal':'Je evenwicht maakt ruimte voor verbinding.',
-      '♏ Schorpioen':'Een diep gesprek brengt helderheid.',
-      '♐ Boogschutter':'Avontuur lonkt, maar liefde houdt je vast.',
-      '♑ Steenbok':'Je betrouwbaarheid wordt gezien én gevoeld.',
-      '♒ Waterman':'Je deelt iets wat iemand stil laat worden.',
-      '♓ Vissen':'Je dromen vinden vandaag echo in de werkelijkheid.'
-    },
-    '2025-10-22':{
-      '♈ Ram':'Je enthousiasme werkt aanstekelijk.',
-      '♉ Stier':'Een vertrouwd gevoel groeit tot iets nieuws.',
-      '♊ Tweelingen':'Je woorden zijn bruggen vandaag.',
-      '♋ Kreeft':'Je hart vindt rust in nabijheid.',
-      '♌ Leeuw':'Iemand waardeert je lef om eerlijk te zijn.',
-      '♍ Maagd':'Een kleine beweging zegt alles tegen de juiste persoon.',
-      '♎ Weegschaal':'Je vindt harmonie in een onverwachte ontmoeting.',
-      '♏ Schorpioen':'Een geheim wordt gedeeld, voorzichtig maar oprecht.',
-      '♐ Boogschutter':'Liefde komt in een vorm die je niet verwacht.',
-      '♑ Steenbok':'Je inzet krijgt warme beloning.',
-      '♒ Waterman':'Je anders-zijn trekt precies de juiste aandacht.',
-      '♓ Vissen':'Je intuïtie wijst naar de juiste richting.'
-    },
-    '2025-10-23':{
-      '♈ Ram':'Je voelt dat het bijna tijd is iets te durven.',
-      '♉ Stier':'Je herkent iets van jezelf in een ander.',
-      '♊ Tweelingen':'Een oud verhaal krijgt nieuwe betekenis.',
-      '♋ Kreeft':'Je deelt iets wat lang verborgen bleef.',
-      '♌ Leeuw':'Je warmte maakt het verschil vandaag.',
-      '♍ Maagd':'Je blik kruist die van iemand die je begrijpt.',
-      '♎ Weegschaal':'Je voelt balans tussen loslaten en vasthouden.',
-      '♏ Schorpioen':'Een zachte waarheid komt aan het licht.',
-      '♐ Boogschutter':'Je openheid lokt eerlijkheid uit.',
-      '♑ Steenbok':'Je hart is sterker dan je planning.',
-      '♒ Waterman':'Je verrast iemand met een onverwachte zachtheid.',
-      '♓ Vissen':'Een droom kruist de werkelijkheid op het juiste moment.'
-    },
-    '2025-10-24':{
-      '♈ Ram':'Vandaag draait alles om het durven ontvangen.',
-      '♉ Stier':'Je rust brengt harmonie aan het einde van de reis.',
-      '♊ Tweelingen':'Gesprekken vloeien moeiteloos.',
-      '♋ Kreeft':'Een omhelzing zegt alles wat nog moest worden gezegd.',
-      '♌ Leeuw':'Je straalt — en iedereen voelt het.',
-      '♍ Maagd':'Een blik, een glimlach, een voltooiing.',
-      '♎ Weegschaal':'Je vindt vrede in wat is.',
-      '♏ Schorpioen':'Je intensiteit verandert in zachtheid.',
-      '♐ Boogschutter':'Je deelt je vreugde moeiteloos.',
-      '♑ Steenbok':'Je hart ontspant eindelijk.',
-      '♒ Waterman':'Je bent vrij en verbonden tegelijk.',
-      '♓ Vissen':'Je ziel zingt stilletjes mee met de dag.'
-    }
-  };
+let signIndex = 0;
+const signBadge = document.getElementById('signBadge');
+const signName = document.getElementById('signName');
+const signQuoteEl = document.getElementById('signQuote');
 
-  const dailyWonder = {
-    '2025-10-17':'Vandaag is een mooie dag om te verdwalen in verwondering.',
-    '2025-10-18':'Een glimlach reist sneller dan het licht van de zon.',
-    '2025-10-19':'Dingen lijken kleiner van ver, behalve dromen.',
-    '2025-10-20':'Vandaag mag de tijd even niets van je vragen.',
-    '2025-10-21':'Kleine gebaren bouwen grote verhalen.',
-    '2025-10-22':'Wie verwondert, vergeet haast.',
-    '2025-10-23':'Verandering is ook een vorm van verwondering.',
-    '2025-10-24':'Verwondering eindigt nooit — ze verandert alleen van vorm.'
-  };
+function showSign(idx){
+  signIndex = (idx + horoscopes.length) % horoscopes.length;
+  const obj = horoscopes[signIndex];
+  const now = new Date();
+  const daySeed = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate();
+  const quoteIdx = (daySeed + signIndex) % obj.quotes.length;
+  signBadge.textContent = obj.sign;
+  signBadge.style.background = `linear-gradient(180deg, ${obj.color}, #fff7e6)`;
+  signName.textContent = obj.sign;
+  signQuoteEl.textContent = obj.quotes[quoteIdx];
+}
+showSign(0);
+document.getElementById('nextSign').addEventListener('click', ()=> showSign(signIndex+1));
+document.getElementById('prevSign').addEventListener('click', ()=> showSign(signIndex-1));
+document.getElementById('randomSign').addEventListener('click', ()=> showSign(Math.floor(Math.random()*horoscopes.length)));
 
-  // === API Fetch & Render Weather ===
-  function fetchWeather(){
-    fetch(WEATHER_API_URL)
-      .then(r => r.json())
-      .then(data => {
-        if(data.current_weather){
-          const t = data.current_weather.temperature;
-          const w = Math.round(data.current_weather.wind_speed);
-          // we don't get direct precipitation probability in current_weather, fallback
-          const precipProb = (data.hourly && data.hourly.precipitation_probability && data.hourly.precipitation_probability[0]) || 0;
-          el('temp').textContent = `${t}°C`;
-          el('weatherMeta').textContent = `Neerslagkans ~${precipProb}% – wind ${w} km/u`;
+/* -----------------------------
+   GAMES: memory / sliding puzzle / sudoku 9x9
+   Mix art: nebula/stars + gold accents + olive tones
+------------------------------*/
+const gameArea = document.getElementById('gameArea');
+const games = ['memory','puzzle','sudoku'];
+let currentGame = 0;
+document.getElementById('nextGame').addEventListener('click', ()=> setGame(currentGame+1));
+document.getElementById('prevGame').addEventListener('click', ()=> setGame(currentGame-1));
+document.getElementById('shuffleGame').addEventListener('click', ()=> initCurrentGame());
+
+function setGame(i){ currentGame = ((i % games.length) + games.length) % games.length; initCurrentGame(); }
+function initCurrentGame(){ const name = games[currentGame]; gameArea.innerHTML=''; if (name==='memory') initMemory(); else if (name==='puzzle') initPuzzle(); else if (name==='sudoku') initSudoku(); }
+
+/* SVG asset mix (nebula + gold + olive winter) */
+const svgStar = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g1' x1='0' x2='1'><stop offset='0' stop-color='#fff6b8'/><stop offset='1' stop-color='#ffd766'/></linearGradient></defs><rect width='100' height='100' rx='12' fill='url(#g1)'/><g fill='#233b2a' transform='translate(10,10)'><path d='M40 4l10 24 26 2-20 16 6 26-24-12-24 12 6-26L4 30l26-2z'/></g></svg>`);
+const svgPlanet = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='p1' cx='30%' cy='30%'><stop offset='0' stop-color='#fff2c9'/><stop offset='1' stop-color='#ffd28a'/></radialGradient></defs><rect width='100' height='100' rx='12' fill='#f6f5ee'/><g transform='translate(10,10)'><ellipse cx='40' cy='40' rx='26' ry='20' fill='url(#p1)' stroke='#3b5236' stroke-width='2'/><path d='M4 70c8-8 26-10 36-10s30 2 36 10' stroke='#cfa56a' stroke-width='3' fill='none' /></g></svg>`);
+const svgNebula = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='#07101a'/><g fill-opacity='0.95'><circle cx='60' cy='80' r='12' fill='#ffd766'/><circle cx='230' cy='50' r='8' fill='#fff9e2'/><circle cx='190' cy='220' r='10' fill='#ffe6b3'/><circle cx='60' cy='220' r='6' fill='#fff8d0'/></g></svg>`);
+
+/* ---------------- MEMORY ---------------- */
+function initMemory(){
+  const wrapper = document.createElement('div'); wrapper.style.width='100%';
+  const grid = document.createElement('div'); grid.className='memory-grid';
+  const pairSvgs = [
+    {id:'star', uri: svgStar},
+    {id:'planet', uri: svgPlanet},
+    {id:'nebula', uri: svgNebula},
+    {id:'comet', uri: svgStar}
+  ];
+  let deck = []; pairSvgs.forEach(p=>{ deck.push(p); deck.push(p); });
+  deck = deck.sort(()=>Math.random()-0.5);
+
+  let first=null, second=null, lock=false, matches=0;
+  deck.forEach((cardObj, idx)=>{
+    const c = document.createElement('div'); c.className='card'; c.setAttribute('data-key', cardObj.id);
+    c.addEventListener('click', ()=>{
+      if(lock || c.classList.contains('revealed') || c.classList.contains('matched')) return;
+      reveal(c, cardObj);
+      if(!first) first={el:c,key:cardObj.id};
+      else if(!second){
+        second={el:c,key:cardObj.id};
+        if(first.key===second.key){
+          first.el.classList.add('matched'); second.el.classList.add('matched'); matches++; first=null; second=null;
+          if(matches===pairSvgs.length){
+            const done=document.createElement('div'); done.textContent='🎉 Gefeliciteerd — match compleet!'; done.style.marginTop='8px'; done.style.fontWeight=700; wrapper.appendChild(done);
+          }
         } else {
-          el('temp').textContent = '–°C';
-          el('weatherMeta').textContent = 'Geen weerdata beschikbaar.';
+          lock=true; setTimeout(()=>{ hideCard(first.el); hideCard(second.el); first=null; second=null; lock=false; },900);
         }
-      })
-      .catch(err => {
-        console.error('Weer-API fout:', err);
-        el('temp').textContent = '–°C';
-        el('weatherMeta').textContent = 'Weerdata niet geladen.';
-      });
+      }
+    });
+    grid.appendChild(c);
+  });
+  wrapper.appendChild(grid);
+  const info = document.createElement('div'); info.style.fontSize='13px'; info.style.color='#3b3b36'; info.style.marginTop='8px';
+  info.textContent='Memory — zoek de paren met winterse sterren & gouden accenten.';
+  wrapper.appendChild(info);
+  gameArea.appendChild(wrapper);
+
+  function reveal(el, cardObj){
+    el.classList.add('revealed');
+    const img = document.createElement('div'); img.style.width='100%'; img.style.height='100%'; img.style.display='flex'; img.style.alignItems='center'; img.style.justifyContent='center';
+    img.innerHTML = `<img src="data:image/svg+xml;utf8,${cardObj.uri}" style="width:88%;height:88%;object-fit:contain;border-radius:6px">`;
+    el.innerHTML=''; el.appendChild(img);
+  }
+  function hideCard(el){ el.classList.remove('revealed'); el.innerHTML=''; }
+}
+
+/* ---------------- SLIDING PUZZLE 3x3 ---------------- */
+function initPuzzle(){
+  const wrapper = document.createElement('div');
+  const board = document.createElement('div'); board.className='puzzle-board';
+  const size = 3; const total = size*size;
+  const imgUrl = `data:image/svg+xml;utf8,${svgNebula}`;
+  let tiles = Array.from({length:total}, (_,i)=>i);
+  function shuffleTiles(){ do { tiles = tiles.sort(()=>Math.random()-0.5); } while(!isSolvable(tiles)); if(tiles[tiles.length-1]!==total-1){ const idx=tiles.indexOf(total-1); tiles.splice(idx,1); tiles.push(total-1); } }
+  function isSolvable(arr){ const a=arr.filter(v=>v!==total-1); let inv=0; for(let i=0;i<a.length;i++) for(let j=i+1;j<a.length;j++) if(a[i]>a[j]) inv++; return inv%2===0; }
+  shuffleTiles();
+  function render(){ board.innerHTML=''; for(let i=0;i<total;i++){ const v=tiles[i]; const tile=document.createElement('div'); if(v===total-1){ tile.className='tile empty'; } else { tile.className='tile'; const col=v%size, row=Math.floor(v/size); const bgW=300, bgH=300; const posX = - (col*(bgW/size)), posY = - (row*(bgH/size)); tile.style.backgroundImage = `url("${imgUrl}")`; tile.style.backgroundPosition = `${posX}px ${posY}px`; tile.style.backgroundSize = `${bgW}px ${bgH}px`; } tile.addEventListener('click', ()=> tryMove(i)); board.appendChild(tile);} }
+  function tryMove(index){ const emptyIdx = tiles.indexOf(total-1); const r1=Math.floor(index/size), c1=index%size; const r2=Math.floor(emptyIdx/size), c2=emptyIdx%size; const manhattan = Math.abs(r1-r2)+Math.abs(c1-c2); if(manhattan===1){ [tiles[index], tiles[emptyIdx]]=[tiles[emptyIdx], tiles[index]]; render(); if(isSolved()){ const done=document.createElement('div'); done.textContent='✨ Puzzel compleet! ✨'; done.style.marginTop='10px'; done.style.fontWeight=700; wrapper.appendChild(done); } } }
+  function isSolved(){ for(let i=0;i<total;i++) if(tiles[i]!==i) return false; return true; }
+  render(); wrapper.appendChild(board);
+  const hint = document.createElement('div'); hint.style.fontSize='13px'; hint.style.color='#3b3b36'; hint.style.marginTop='8px'; hint.textContent='Schuifpuzzel — klik op een stuk naast de lege plek.'; wrapper.appendChild(hint);
+  const controls = document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.marginTop='8px';
+  const btnShuffle = document.createElement('button'); btnShuffle.className='btn'; btnShuffle.textContent='Schud'; btnShuffle.addEventListener('click', ()=>{ shuffleTiles(); render(); });
+  controls.appendChild(btnShuffle); wrapper.appendChild(controls); gameArea.appendChild(wrapper);
+}
+
+/* ---------------- 9x9 SUDOKU ----------------
+   - generator (backtracking) creates full solution
+   - puzzle created by removing cells (not guaranteeing uniqueness but for casual play)
+   - UI: inputs for empty cells, Check, Hint, New puzzle
+------------------------------------------------*/
+function initSudoku(){
+  const wrapper = document.createElement('div'); wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.flexDirection='column'; wrapper.style.alignItems='center';
+  const title = document.createElement('div'); title.textContent='Sudoku (9×9) — vul de lege vakjes'; title.style.fontWeight='700'; wrapper.appendChild(title);
+
+  const N = 9;
+  const box = 3;
+  // create empty grid
+  let solution = Array.from({length:N}, ()=>Array(N).fill(0));
+
+  function isSafe(grid, r, c, val){
+    for(let i=0;i<N;i++) if(grid[r][i]===val) return false;
+    for(let i=0;i<N;i++) if(grid[i][c]===val) return false;
+    const startR = r - (r % box), startC = c - (c % box);
+    for(let i=0;i<box;i++) for(let j=0;j<box;j++) if(grid[startR+i][startC+j]===val) return false;
+    return true;
   }
 
-  // === RENDER FUNCTIONS ===
-  function renderDate(){
-    const now = new Date();
-    el('metaDate').textContent = now.toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  // backtracking fill
+  function fillGrid(grid){
+    for(let r=0;r<N;r++){
+      for(let c=0;c<N;c++){
+        if(grid[r][c]===0){
+          const nums = [1,2,3,4,5,6,7,8,9].sort(()=>Math.random()-0.5);
+          for(const v of nums){
+            if(isSafe(grid,r,c,v)){
+              grid[r][c]=v;
+              if(fillGrid(grid)) return true;
+              grid[r][c]=0;
+            }
+          }
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
-  function renderTears(rem){
-    const s = el('tearStack');
-    s.innerHTML = '';
-    for(let i=rem; i>0; i--){
-      const d = document.createElement('div');
-      d.className = 'tear';
-      d.textContent = (i===1) ? '1 nachtje' : `${i} nachtjes`;
-      s.appendChild(d);
+  fillGrid(solution);
+
+  // Make puzzle by removing cells (leave clues count)
+  function makePuzzle(sol, clues=30){
+    let puzzle = sol.map(r=>r.slice());
+    const cells = [];
+    for(let r=0;r<N;r++) for(let c=0;c<N;c++) cells.push([r,c]);
+    cells.sort(()=>Math.random()-0.5);
+    let removed=0;
+    for(const [r,c] of cells){
+      if ((N*N - removed) <= clues) break;
+      const backup = puzzle[r][c]; puzzle[r][c]=0; removed++;
+      // For speed we skip uniqueness check; casual puzzles are fine here
+    }
+    return puzzle;
+  }
+
+  let puzzle = makePuzzle(solution, 30);
+
+  // render grid
+  const gridEl = document.createElement('div'); gridEl.className='sudoku-grid'; gridEl.style.marginTop='8px';
+  const cellsEls = [];
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const wrap = document.createElement('div'); wrap.className='sudoku-cell';
+      const val = puzzle[r][c];
+      if(val!==0){ wrap.classList.add('prefilled'); wrap.textContent = val; }
+      else {
+        const input = document.createElement('input'); input.type='number'; input.min=1; input.max=9; input.setAttribute('inputmode','numeric');
+        // prevent invalid key presses
+        input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-9]/g,'').slice(0,1); });
+        wrap.appendChild(input);
+      }
+      gridEl.appendChild(wrap); cellsEls.push(wrap);
     }
   }
+  wrapper.appendChild(gridEl);
 
-  let currentIndex = 0;
-  function showHoroscope(i){
-    const sign = horoscopes[i];
-    const key = todayKey();
-    el('horoscopeSign').textContent = sign;
-    el('horoscopeText').textContent = (dailyHoroscopes[key] && dailyHoroscopes[key][sign]) || 'Vandaag is een dag vol mogelijkheden in de liefde.';
-  }
+  // controls
+  const ctrls = document.createElement('div'); ctrls.className='sudoku-controls';
+  const btnCheck = document.createElement('button'); btnCheck.className='btn'; btnCheck.textContent='Controleer';
+  const btnHint = document.createElement('button'); btnHint.className='btn'; btnHint.textContent='Hint';
+  const btnNew = document.createElement('button'); btnNew.className='btn'; btnNew.textContent='Nieuw';
+  const status = document.createElement('div'); status.style.marginTop='8px'; status.style.fontWeight='700';
 
-  function updateAll(){
-    renderDate();
-    const rem = nightsRemaining();
-    if(rem>0){
-      el('bigNumber').textContent = rem;
-      el('headlineNumber').textContent = rem;
-      el('photoCaption').textContent = rem===1 ? 'Nog 1 nachtje' : 'Nog te slapen nachtjes';
-    } else {
-      el('bigNumber').textContent = '🎉';
-      el('headlineNumber').textContent = 'HET IS EINDELIJK ZOVER!';
-      el('photoCaption').textContent = 'Vandaag is de dag!';
-      shootConfetti();
+  btnCheck.addEventListener('click', ()=>{
+    let correct=true; let allFilled=true;
+    for(let r=0;r<N;r++){
+      for(let c=0;c<N;c++){
+        const idx = r*N + c; const cell = cellsEls[idx];
+        if (puzzle[r][c] !== 0){
+          if (solution[r][c] !== puzzle[r][c]) correct=false;
+        } else {
+          const inp = cell.querySelector('input'); const v = inp.value ? Number(inp.value) : 0;
+          if (!v) { allFilled=false; correct=false; cell.style.background='#fff2f2'; }
+          else if (v !== solution[r][c]) { correct=false; cell.style.background='#fff2f2'; }
+          else { cell.style.background='#e9f7ee'; }
+        }
+      }
     }
-    renderTears(rem);
-    const key = todayKey();
-    el('fact').textContent = dailyWonder[key] || 'Laat je vandaag inspireren door de kleine wonderen om je heen.';
-    showHoroscope(currentIndex);
-    // fetch weather
-    fetchWeather();
-  }
+    if (correct && allFilled) { status.textContent = '🎉 Compleet en correct!'; status.style.color='#1b6e3a'; }
+    else if (!allFilled) { status.textContent = 'Vul alle vakken in (of gebruik een hint).'; status.style.color='#6b3b3b'; }
+    else { status.textContent = 'Er staan nog fouten — zoek ze even.'; status.style.color='#6b3b3b'; }
+  });
 
-  // === EVENT LISTENERS ===
-  el('masthead').onclick = updateAll;
-  el('forceTear').onclick = updateAll;
-  el('prevHoroscope').onclick = ()=>{ currentIndex = (currentIndex - 1 + horoscopes.length) % horoscopes.length; showHoroscope(currentIndex); };
-  el('nextHoroscope').onclick = ()=>{ currentIndex = (currentIndex + 1) % horoscopes.length; showHoroscope(currentIndex); };
+  btnHint.addEventListener('click', ()=>{
+    const empties=[];
+    for(let r=0;r<N;r++) for(let c=0;c<N;c++) if (puzzle[r][c]===0){
+      const idx = r*N+c; const cell = cellsEls[idx]; const inp = cell.querySelector('input');
+      if (inp && (!inp.value || inp.value==='')) empties.push({r,c,idx});
+    }
+    if (empties.length===0){ status.textContent='Geen lege vakken meer voor hint.'; return; }
+    const pick = empties[Math.floor(Math.random()*empties.length)]; const idx=pick.idx; const cell=cellsEls[idx]; const inp=cell.querySelector('input');
+    inp.value = solution[pick.r][pick.c]; cell.style.background='#e9f7ee'; status.textContent='Hint geplaatst.';
+  });
 
-  // === INIT ===
-  updateAll();
-  setInterval(updateAll, 60000);  // update elke minuut
-  </script>
+  btnNew.addEventListener('click', ()=>{
+    // regenerate full solution & puzzle
+    solution = Array.from({length:N}, ()=>Array(N).fill(0));
+    fillGrid(solution);
+    puzzle = makePuzzle(solution, 28 + Math.floor(Math.random()*8));
+    // re-render cells
+    for(let r=0;r<N;r++){
+      for(let c=0;c<N;c++){
+        const idx = r*N+c; const cell = cellsEls[idx]; cell.innerHTML=''; cell.classList.remove('prefilled'); cell.style.background='';
+        if (puzzle[r][c] !== 0){ cell.classList.add('prefilled'); cell.textContent = puzzle[r][c]; }
+        else { const input = document.createElement('input'); input.type='number'; input.min=1; input.max=9; input.setAttribute('inputmode','numeric'); input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-9]/g,'').slice(0,1);}); cell.appendChild(input);}
+      }
+    }
+    status.textContent='Nieuwe sudoku gegeneerd.';
+  });
+
+  ctrls.appendChild(btnCheck); ctrls.appendChild(btnHint); ctrls.appendChild(btnNew);
+  wrapper.appendChild(ctrls); wrapper.appendChild(status);
+  gameArea.appendChild(wrapper);
+}
+
+/* init first game */
+initCurrentGame();
+
+/* auto-rotate games every 35s */
+let autoRotate = setInterval(()=> setGame(currentGame+1), 35000);
+['nextGame','prevGame','shuffleGame','gameArea'].forEach(id=>{
+  document.getElementById(id)?.addEventListener?.('click', ()=> {
+    clearInterval(autoRotate);
+    setTimeout(()=> { autoRotate = setInterval(()=> setGame(currentGame+1), 35000); }, 60000);
+  });
+});
+
+/* Keyboard shortcuts */
+document.addEventListener('keydown', (e)=>{
+  if (e.key === 'ArrowRight') { setGame(currentGame+1); }
+  if (e.key === 'ArrowLeft') { setGame(currentGame-1); }
+  if (e.key === 'ArrowUp') { showSign(signIndex-1); }
+  if (e.key === 'ArrowDown') { showSign(signIndex+1); }
+});
+</script>
 </body>
 </html>
