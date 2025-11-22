@@ -1,176 +1,269 @@
 <!--trigger new2 28 nov 2025  OPT11  idee chinees koekje voor nieuwjaar onthoud! -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Glunder — Countdown</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glunder — Countdown & Spellen</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --burgundy: #5a1816;       
-    --olive-dark: #0b2b20;
-    --gold: #ffd766;
-    --beige: #efe6cf;
-    --num-green: #07321f;      
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071515 0%, #0b2b20 55%, #071915 100%);font-family:'Cormorant Garamond',serif;color:var(--beige);-webkit-font-smoothing:antialiased;}
-  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;}
-  .poster{ width:min(1100px,96%); border-radius:14px; padding:18px; display:grid; grid-template-columns:1fr 440px; gap:20px; position:relative; background: linear-gradient(180deg, rgba(8,18,14,0.45), rgba(8,16,14,0.12)); box-shadow: 0 20px 60px rgba(0,0,0,0.7); border:1px solid rgba(255,215,130,0.03); overflow:hidden; }
-  .ornaments{ position:absolute; inset:8px; pointer-events:none; border-radius:12px; background-image: url('countdown-poster.png'); background-size: cover; background-position:center; opacity:0.08; mix-blend-mode: screen; filter: saturate(0.6) brightness(0.95);}
-  .left{padding:14px; display:flex; flex-direction:column; gap:16px;}
-  .right{padding:14px; display:flex; flex-direction:column; gap:16px;}
-
-  .timer { background: linear-gradient(180deg,#122f28,#0e2f25); border-radius:12px; padding:22px; text-align:center; box-shadow:0 14px 36px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,215,130,0.03); display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;}
-  .time-label { font-size:13px; color: rgba(255,245,220,0.9); letter-spacing:0.06em; margin-bottom:10px; }
-
-  .moon { width:260px; height:260px; border-radius:50%; position:relative; display:flex;align-items:center;justify-content:center; background-image: url('countdown-poster.png'); background-size: cover; background-position:center; box-shadow: 0 10px 36px rgba(0,0,0,0.7), 0 0 26px rgba(255,220,120,0.04) inset; border: 3px solid rgba(255,215,130,0.06); overflow:visible;}
-  .moon::before{ content:""; position:absolute; inset:0; border-radius:50%; background: radial-gradient(circle at 30% 25%, rgba(255,243,215,0.62), rgba(239,230,207,0.62)); mix-blend-mode: lighten; pointer-events:none;}
-  .moon::after{ content:""; position:absolute; inset:0; border-radius:50%; background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.06), transparent 40%); pointer-events:none;}
-  .moon .num{ position:relative; z-index:2; font-family:'Playfair Display', serif; font-size: clamp(48px, 10vw, 120px); color: var(--num-green); font-weight:700; line-height:1; text-shadow: 0 0 20px rgba(255,235,170,0.18), 0 2px 0 rgba(0,0,0,0.35);}
-  .moon .moon-label { position:absolute; bottom:10px; width:100%; text-align:center; color:rgba(255,250,230,0.9); font-size:13px; }
-
-  .after-block { display:none; text-align:center; margin-top:10px; }
-  .after-block h1{ font-family:'Playfair Display',serif; font-style:italic; font-weight:700; color:var(--gold); font-size:36px; margin:0; text-shadow:0 0 18px rgba(255,240,180,0.4); }
-  .after-block p{ margin:8px 0 0 0; color:#fff2d3; font-style:italic; }
-
-  .horoscope { background: rgba(255,255,255,0.95); border-radius:10px; padding:12px; color:#12321f; box-shadow:0 8px 22px rgba(0,0,0,0.45); display:flex; gap:12px; align-items:center; }
-  .sign-badge{ width:72px; height:72px; border-radius:10px; background:linear-gradient(180deg,#f1f6ea,#eef8e8); display:flex;flex-direction:column;align-items:center;justify-content:center; color:#122d20; font-weight:700; border:1px solid rgba(40,60,40,0.06); flex-shrink:0;}
-  .sign-symbol{ font-size:22px; }
-  .sign-short{ margin-top:6px; font-size:12px; text-transform:uppercase; font-weight:700; color:#122d20; letter-spacing:0.04em; }
-
-  .controls{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-
-  .game-panel{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02)); border-radius:10px; padding:12px; box-shadow:0 8px 22px rgba(0,0,0,0.5); min-height:220px; display:flex;flex-direction:column;align-items:center; gap:12px; }
-  .game-title{ font-style:italic; font-weight:700; color:var(--beige); font-size:20px; }
-  .game-controls{ display:flex; gap:8px; justify-content:center; width:100%; }
-  .btn{ background:var(--gold); color:#2b2416; border:0; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 6px 10px rgba(200,150,60,0.12); }
-
-  .memory-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:100%; }
-  .memory-card{ border-radius:10px; height:90px; display:flex;align-items:center;justify-content:center; cursor:pointer; overflow:hidden; box-shadow: 0 8px 18px rgba(0,0,0,0.28); background:linear-gradient(180deg,#fffaf0,#f3fff7); }
-  .memory-card .face{ width:92%; height:84%; border-radius:8px; background-image: url('countdown-poster.png'); background-size:cover; background-position:center; transition:transform 220ms ease; display:flex;align-items:center;justify-content:center; }
-  .memory-card.revealed .face{ transform: scale(1.03); }
-  .memory-card.matched{ opacity:0.45; transform:scale(0.98); pointer-events:none; }
-
-  .puzzle-wrap{ width:100%; background: linear-gradient(180deg,var(--burgundy), #5b1b1b); padding:12px; border-radius:10px; display:flex;flex-direction:column;align-items:center; gap:10px; }
-  .puzzle-board{ width:320px; height:320px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; padding:10px; border-radius:8px; background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02)); }
-  .puzzle-tile{ border-radius:6px; background-size: 320px 320px; background-position:center; display:flex;align-items:center;justify-content:center; transition:transform 220ms ease, box-shadow 220ms ease; }
-  .puzzle-tile:hover{ transform:translateY(-6px); box-shadow: 0 18px 30px rgba(0,0,0,0.45); }
-  .puzzle-empty{ background:linear-gradient(180deg,#041512,#071a15); }
-
-  .sudoku-grid{ display:grid; grid-template-columns: repeat(6, 1fr); gap:8px; width:100%; max-width:420px; padding:12px; border-radius:10px; position:relative; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-  .sudoku-grid::before, .sudoku-grid::after{ content:''; position:absolute; background: rgba(255,215,130,0.22); }
-  .sudoku-grid::before{ width:4px; height:100%; left:50%; top:0; transform:translateX(-2px); border-radius:2px; }
-  .sudoku-grid::after{ height:4px; width:100%; top:50%; left:0; transform:translateY(-2px); border-radius:2px; }
-  .sudoku-cell{ background:#fff; border-radius:8px; padding:8px; display:flex;align-items:center;justify-content:center; font-weight:700; font-size:18px; color:#122d20; box-shadow:0 6px 12px rgba(0,0,0,0.06); }
-  .sudoku-cell.prefilled{ background:#f7f4ea; color:#122d20; }
-  /* Remove borders for input fields */
-  .sudoku-cell input{ border:none; background:transparent; width:100%; text-align:center; font-size:18px; color:#122d20; }
-
-  .small-note{ font-size:13px; color:rgba(255,250,230,0.9); opacity:0.95; margin-top:6px; }
-  .confetti{ position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:9999; display:none; overflow:hidden; }
-
-  @media(max-width:980px){
-    .poster{ grid-template-columns: 1fr; padding:12px; }
-    .moon{ width:190px; height:190px; }
-    .puzzle-board{ width:260px; height:260px; background-size:260px 260px; }
-  }
+:root{
+  --burgundy:#5a1816; --olive-dark:#0b2b20; --gold:#ffd766; --beige:#efe6cf; --num-green:#07321f;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;font-family:'Cormorant Garamond', serif;background:linear-gradient(180deg,#071515 0%,#0b2b20 55%,#071915 100%);color:var(--beige);}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.poster{display:grid;grid-template-columns:1fr 440px;gap:20px;position:relative;width:min(1100px,96%);border-radius:14px;padding:18px;background: linear-gradient(180deg, rgba(8,18,14,0.45), rgba(8,16,14,0.12));box-shadow:0 20px 60px rgba(0,0,0,0.7);border:1px solid rgba(255,215,130,0.03);}
+.left,.right{display:flex;flex-direction:column;gap:16px;padding:14px;}
+.timer{background: linear-gradient(180deg,#122f28,#0e2f25); border-radius:12px; padding:22px; text-align:center; box-shadow:0 14px 36px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,215,130,0.03); display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;}
+.time-label{font-size:13px;color: rgba(255,245,220,0.9);letter-spacing:0.06em;margin-bottom:10px;}
+.moon{width:260px;height:260px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;overflow:visible;background-size:cover;background-position:center;border:3px solid rgba(255,215,130,0.06);box-shadow:0 10px 36px rgba(0,0,0,0.7),0 0 26px rgba(255,220,120,0.04) inset;}
+.moon .num{position:relative; z-index:2; font-family:'Playfair Display', serif; font-size:clamp(48px,10vw,120px); color: var(--num-green); font-weight:700; line-height:1;text-shadow:0 0 20px rgba(255,235,170,0.18),0 2px 0 rgba(0,0,0,0.35);}
+.moon .moon-label{position:absolute;bottom:10px;width:100%;text-align:center;color:rgba(255,250,230,0.9);font-size:13px;}
+.after-block{text-align:center;margin-top:10px;display:none;}
+.after-block h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;color:var(--gold);font-size:36px;margin:0;text-shadow:0 0 18px rgba(255,240,180,0.4);}
+.after-block p{margin:8px 0 0 0;color:#fff2d3;font-style:italic;}
+.horoscope{background: rgba(255,255,255,0.95); border-radius:10px; padding:12px; color:#12321f; box-shadow:0 8px 22px rgba(0,0,0,0.45);}
+.horoscope .row{display:flex;gap:12px;align-items:center;}
+.sign-badge{width:72px;height:72px;border-radius:10px;background:linear-gradient(180deg,#f1f6ea,#eef8e8);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#122d20;font-weight:700;border:1px solid rgba(40,60,40,0.06);}
+.sign-symbol{font-size:22px;}
+.sign-short{margin-top:6px;font-size:12px;text-transform:uppercase;font-weight:700;color:#122d20;letter-spacing:0.04em;}
+.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.btn{background:var(--gold);color:#2b2416;border:0;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer;box-shadow:0 6px 10px rgba(200,150,60,0.12);}
+.game-panel{background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02)); border-radius:10px; padding:12px; box-shadow:0 8px 22px rgba(0,0,0,0.5); min-height:220px; display:flex;flex-direction:column;align-items:center; gap:12px;}
+.game-title{font-style:italic;font-weight:700;color:var(--beige);font-size:20px;}
+.sudoku-grid{display:grid;grid-template-columns: repeat(6, 1fr); gap:8px; width:100%; max-width:420px; padding:12px; border-radius:10px; position:relative; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+.sudoku-grid::before, .sudoku-grid::after{content:''; position:absolute; background: rgba(255,215,130,0.22);}
+.sudoku-grid::before{width:4px; height:100%; left:50%; top:0; transform:translateX(-2px); border-radius:2px;}
+.sudoku-grid::after{height:4px; width:100%; top:50%; left:0; transform:translateY(-2px); border-radius:2px;}
+.sudoku-cell{background:#fff; border-radius:8px; padding:0; display:flex;align-items:center;justify-content:center; font-weight:700; font-size:18px; color:#122d20;}
+.sudoku-cell.prefilled{background:#f7f4ea;color:#122d20;}
+.sudoku-cell input{width:100%;height:100%;border:none;background:none;text-align:center;font-weight:700;font-size:18px;outline:none;}
+.memory-grid{display:grid;grid-template-columns:repeat(4, 1fr); gap:10px; max-width:320px;}
+.memory-card{width:70px;height:70px;background:#f7f4ea;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;user-select:none;position:relative;transition:transform 0.3s;}
+.memory-card.flipped,.memory-card.matched{background:#ffd766;transform: rotateY(180deg);}
+.memory-card .front,.memory-card .back{position:absolute;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:10px;backface-visibility:hidden;}
+.memory-card .back{transform:rotateY(180deg);}
+@media(max-width:980px){.poster{grid-template-columns:1fr;padding:12px;}.moon{width:190px;height:190px;}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="poster" role="main" aria-label="Glunder poster">
-    <div class="ornaments" aria-hidden="true"></div>
 
-    <!-- LEFT: countdown + horoscope -->
+<div class="wrap">
+  <div class="poster">
     <div class="left">
-      <div class="timer" aria-live="polite">
+      <div class="timer">
         <div class="time-label" id="timeLabel">Countdown</div>
-        <div class="moon" role="img" aria-label="Maan met aantal nachtjes" id="moonEl">
+        <div class="moon" id="moonEl">
           <div class="num" id="moonNumber">…</div>
           <div class="moon-label" id="moonLabel">nachtjes</div>
         </div>
-
-        <div class="after-block" id="afterBlock" aria-hidden="true">
+        <div class="after-block" id="afterBlock">
           <h1>Vandaag is het eindelijk zover!</h1>
           <p>Vandaag weer samen</p>
           <p>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</p>
         </div>
-
         <div class="small-note">Amsterdam — 28 november 19:30</div>
       </div>
 
       <div class="horoscope">
-        <div class="sign-badge" id="signBadge">
-          <div class="sign-symbol" id="signSymbol">♈</div>
-          <div class="sign-short" id="signShort">Ram</div>
-        </div>
-        <div style="flex:1;">
-          <h3 id="signName" style="margin:0;color:#0f3b28">Ram</h3>
-          <p id="signQuote" style="margin:6px 0 0 0;color:#243b32">Je quote verschijnt hier…</p>
-          <div class="controls">
-            <button class="btn" id="prevSign">← Vorige</button>
-            <button class="btn" id="nextSign">Volgende →</button>
-            <button class="btn" id="randomSign">Willekeurig</button>
+        <div class="row">
+          <div class="sign-badge" id="signBadge">
+            <div class="sign-symbol" id="signSymbol">♈</div>
+            <div class="sign-short" id="signShort">Ram</div>
+          </div>
+          <div style="flex:1;">
+            <h3 id="signName" style="margin:0;color:#0f3b28">Ram</h3>
+            <p id="signQuote" style="margin:6px 0 0 0;color:#243b32">Je quote verschijnt hier…</p>
+            <div class="controls">
+              <button class="btn" id="prevSign">← Vorige</button>
+              <button class="btn" id="nextSign">Volgende →</button>
+              <button class="btn" id="randomSign">Willekeurig</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT: games -->
     <div class="right">
-      <div class="game-panel" aria-label="Spellen">
+      <div class="game-panel">
         <div id="gameTitle" class="game-title">Glunder Sudoku</div>
-        <div id="gameArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:160px;justify-content:center"></div>
+        <div id="gameArea">
+          <div class="sudoku-grid" id="sudokuGrid">
+            <!-- 6x6 sudoku placeholder -->
+          </div>
+
+          <div class="memory-grid" id="memoryGrid" style="display:none;"></div>
+        </div>
         <div class="game-controls">
           <button class="btn" id="prevGame">← Vorig spel</button>
           <button class="btn" id="nextGame">Volgend spel →</button>
-          <button class="btn" id="shuffleGame">Shuffle spel</button>
         </div>
       </div>
-      <div style="height:6px"></div>
-      <div style="color:rgba(255,245,220,0.9);font-size:13px">Geniet & glunder ✨</div>
     </div>
   </div>
 </div>
 
-<div class="confetti" id="confetti"></div>
-
 <script>
-const SUPERMOON = 'countdown-poster.png';
+// Countdown
 const target = new Date('2025-11-28T19:30:00+01:00').getTime();
 const moonNumber = document.getElementById('moonNumber');
 const moonLabel = document.getElementById('moonLabel');
 const afterBlock = document.getElementById('afterBlock');
+const moonEl = document.getElementById('moonEl');
 const timeLabel = document.getElementById('timeLabel');
+const SUPERMOON = 'countdown-poster.png';
 
 function updateCountdown(){
   const now = Date.now();
   const diff = target - now;
   if(diff>0){
     const days = Math.floor(diff/(1000*60*60*24));
-    moonNumber.textContent=days;
-    moonLabel.textContent=days===1?'nacht':'nachtjes';
+    moonNumber.textContent = days;
+    moonLabel.textContent = days===1?'nacht':'nachtjes';
+    moonEl.style.display='flex';
     afterBlock.style.display='none';
-    document.getElementById('moonEl').style.display='flex';
+    moonEl.style.backgroundImage=`url("${SUPERMOON}")`;
     timeLabel.textContent='Countdown';
-  } else {
-    document.getElementById('moonEl').style.display='none';
+  }else{
+    moonEl.style.display='none';
     afterBlock.style.display='block';
     timeLabel.textContent='Vandaag!';
-    clearInterval(cntInterval);
-    showConfetti();
   }
 }
 updateCountdown();
-const cntInterval = setInterval(updateCountdown,1000);
+setInterval(updateCountdown,1000);
 
-// Horoscopes, games, memory, puzzle, sudoku JS...
-// [De rest van de logica blijft identiek, maar met SUPERMOON verwijzing correct, en Sudoku input-border verwijderd]
+// Horoscopes
+const horoscopes=[
+  {sign:"Ram",symbol:"♈",color:"#d6e9c9",quotes:["Je hart klopt sneller van verwachting.","Je durft — en dat maakt het spannend mooi.","Een kleine daad zet een avond in beweging."]},
+  {sign:"Stier",symbol:"♉",color:"#e7edd6",quotes:["Comfort en smaak maken dit moment kostbaar.","Een rustige aanwezigheid geeft diepe rust.","Geniet van de tastbare details om je heen."]},
+  {sign:"Tweelingen",symbol:"♊",color:"#d8f0eb",quotes:["Communicatie opent nieuwe deuren.","Blijf nieuwsgierig, alles verrijkt je.","Je energie stroomt als een lichte bries."]},
+  {sign:"Kreeft",symbol:"♋",color:"#e0e9f2",quotes:["Thuis voelt nu extra warm.","Een emotionele golf brengt inzicht.","Zorg voor jezelf, dat geeft kracht."]},
+  {sign:"Leeuw",symbol:"♌",color:"#fbe7d6",quotes:["Laat je licht stralen!","Een compliment verandert de dag.","Creativiteit stroomt overvloedig."]},
+  {sign:"Maagd",symbol:"♍",color:"#e6f3e6",quotes:["Structuur helpt je vooruit.","Kleine stappen geven grote resultaten.","Wees nauwkeurig maar mild voor jezelf."]},
+  {sign:"Weegschaal",symbol:"♎",color:"#f0f4f7",quotes:["Balans brengt rust.","Een mooie ontmoeting op je pad.","Vertrouw op je gevoel bij keuzes."]},
+  {sign:"Schorpioen",symbol:"♏",color:"#e6e0f2",quotes:["Diepte en focus brengen inzicht.","Je passie is je kracht.","Laat los wat je niet dient."]},
+  {sign:"Boogschutter",symbol:"♐",color:"#fef4e6",quotes:["Avontuur lonkt.","Nieuwe kennis verrijkt je.","Laat spontaniteit toe."]},
+  {sign:"Steenbok",symbol:"♑",color:"#e0e0e0",quotes:["Doorzettingsvermogen wint.","Plan en handel.","Je toewijding inspireert anderen."]},
+  {sign:"Waterman",symbol:"♒",color:"#d6f0f2",quotes:["Innovatie en creativiteit.","Samenwerken opent deuren.","Denk buiten de lijnen."]},
+  {sign:"Vissen",symbol:"♓",color:"#e6f0f7",quotes:["Intuïtie leidt je.","Mediteer en voel de stroom.","Droom groot en blijf gegrond."]}
+];
+let signIndex=0;
+const signBadge=document.getElementById('signBadge');
+const signSymbol=document.getElementById('signSymbol');
+const signShort=document.getElementById('signShort');
+const signName=document.getElementById('signName');
+const signQuoteEl=document.getElementById('signQuote');
+function showSign(idx){
+  signIndex=(idx+horoscopes.length)%horoscopes.length;
+  const obj=horoscopes[signIndex];
+  const daySeed=new Date().getDate();
+  const quoteIdx=(daySeed+signIndex)%obj.quotes.length;
+  signSymbol.textContent=obj.symbol;
+  signShort.textContent=obj.sign;
+  signBadge.style.background=`linear-gradient(180deg, ${obj.color}, #fff7e6)`;
+  signName.textContent=obj.sign;
+  signQuoteEl.textContent=obj.quotes[quoteIdx];
+}
+showSign(0);
+document.getElementById('nextSign').addEventListener('click',()=>showSign(signIndex+1));
+document.getElementById('prevSign').addEventListener('click',()=>showSign(signIndex-1));
+document.getElementById('randomSign').addEventListener('click',()=>showSign(Math.floor(Math.random()*horoscopes.length)));
 
-// ... voor volledige code: dezelfde functionaliteit als in eerdere versie, geïntegreerd hier.
+// Sudoku 6x6
+const sudokuGrid = document.getElementById('sudokuGrid');
+// Voorbeeld 6x6 puzzle (0 = leeg)
+const sudokuPuzzle = [
+  [1,0,3,0,5,0],
+  [0,2,0,4,0,6],
+  [3,0,1,0,6,0],
+  [0,5,0,2,0,4],
+  [2,0,4,0,1,0],
+  [0,6,0,5,0,3]
+];
+function renderSudoku(){
+  sudokuGrid.innerHTML='';
+  for(let r=0;r<6;r++){
+    for(let c=0;c<6;c++){
+      const cell = document.createElement('div');
+      cell.classList.add('sudoku-cell');
+      const val = sudokuPuzzle[r][c];
+      if(val>0){
+        cell.textContent=val;
+        cell.classList.add('prefilled');
+      }else{
+        const input = document.createElement('input');
+        input.type='text';
+        input.maxLength=1;
+        input.addEventListener('input',()=>input.value=input.value.replace(/[^1-6]/,''));
+        cell.appendChild(input);
+      }
+      sudokuGrid.appendChild(cell);
+    }
+  }
+}
+renderSudoku();
+
+// Memory Game
+const memoryGrid = document.getElementById('memoryGrid');
+const memoryCards = ['🍎','🍌','🍒','🍇','🍉','🥝','🍍','🍑'];
+let memoryDeck=[],flipped=[],matches=0;
+function initMemory(){
+  memoryDeck=[...memoryCards,...memoryCards];
+  memoryDeck.sort(()=>Math.random()-0.5);
+  memoryGrid.innerHTML='';
+  flipped=[];matches=0;
+  memoryDeck.forEach(sym=>{
+    const card=document.createElement('div');
+    card.classList.add('memory-card');
+    card.innerHTML=`<div class="front">?</div><div class="back">${sym}</div>`;
+    card.addEventListener('click',()=>flipCard(card));
+    memoryGrid.appendChild(card);
+  });
+}
+function flipCard(card){
+  if(card.classList.contains('flipped')||card.classList.contains('matched')||flipped.length>=2) return;
+  card.classList.add('flipped');
+  flipped.push(card);
+  if(flipped.length===2){
+    const [c1,c2]=flipped;
+    const b1=c1.querySelector('.back').textContent;
+    const b2=c2.querySelector('.back').textContent;
+    if(b1===b2){
+      c1.classList.add('matched');
+      c2.classList.add('matched');
+      flipped=[];
+      matches+=1;
+      if(matches===memoryCards.length)setTimeout(()=>alert('🎉 Alle paren gevonden!'),300);
+    }else{
+      setTimeout(()=>{c1.classList.remove('flipped');c2.classList.remove('flipped');flipped=[];},700);
+    }
+  }
+}
+
+// Switch games
+const gameTitle=document.getElementById('gameTitle');
+const gameArea=document.getElementById('gameArea');
+let currentGame=0; // 0 = Sudoku,1 = Memory
+document.getElementById('nextGame').addEventListener('click',()=>switchGame(1));
+document.getElementById('prevGame').addEventListener('click',()=>switchGame(-1));
+function switchGame(dir){
+  currentGame=(currentGame+dir+2)%2;
+  if(currentGame===0){
+    gameTitle.textContent='Glunder Sudoku';
+    sudokuGrid.style.display='grid';
+    memoryGrid.style.display='none';
+  }else{
+    gameTitle.textContent='Memory Game';
+    sudokuGrid.style.display='none';
+    memoryGrid.style.display='grid';
+    initMemory();
+  }
+}
+switchGame(0);
 </script>
+
 </body>
 </html>
