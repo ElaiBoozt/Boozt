@@ -1,4 +1,4 @@
-<!--trigger new1 28 nov 2025   idee chinees koekje voor nieuwjaar onthoud! -->
+<!--trigger new2 28 nov 2025   idee chinees koekje voor nieuwjaar onthoud! -->
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -9,110 +9,197 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --olive:#3f5a2f;
-    --olive-deep:#324623;
+    --olive:#122d20;         /* donkerder olijfgroen achtergrond */
+    --olive-panel:#263e2a;   /* timervak diep olijf */
     --gold:#ffd766;
     --beige:#f7efe0;
+    --card-bg: rgba(255,255,255,0.92);
     --accent:#e6b46a;
-    --card-bg: rgba(255,255,255,0.88);
   }
-  html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background: radial-gradient(circle at 12% 12%, #fcf8ee 0%, #efe2c9 36%, #e6cfab 100%); color:#1b1b19;}
+
+  html,body{height:100%;margin:0;font-family:'Cormorant Garamond',serif;background: linear-gradient(180deg,#072018 0%, #0f2d25 45%, #122d20 100%); color:var(--beige);}
   .page {min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box;}
 
+  /* Poster layout */
   .poster {
-    width:min(1100px, 96%);
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,245,235,0.95));
-    border-radius:18px;padding:28px;box-shadow: 0 18px 40px rgba(30,30,30,0.18);
-    display:grid;grid-template-columns: 1fr 400px;gap:22px;align-items:start;position:relative;overflow:hidden;
+    width:min(1100px,96%);
+    background: linear-gradient(180deg, rgba(10,20,14,0.45), rgba(255,255,255,0.03));
+    border-radius:16px;
+    padding:22px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:20px;
+    position:relative;
+    overflow:hidden;
+    border: 1px solid rgba(255,215,130,0.06);
   }
 
-  /* Gloss & subtle stars */
-  .gloss {position:absolute; inset:0; pointer-events:none; background-image:
-    radial-gradient(circle at 18% 26%, rgba(255,244,200,0.06) 0 2px, transparent 3px),
-    radial-gradient(circle at 80% 62%, rgba(255,230,180,0.05) 0 3px, transparent 4px);
-    mix-blend-mode: screen;
+  /* decorative gold frame echoes the poster you provided */
+  .frame-decoration {
+    position:absolute; inset:12px; border-radius:12px; pointer-events:none;
+    box-shadow: 0 0 0 2px rgba(255,215,130,0.03) inset, 0 0 0 1px rgba(255,215,130,0.01);
   }
 
-  .left {padding:20px;}
+  /* Left large area */
+  .left {padding:18px; display:flex;flex-direction:column; gap:18px;}
+
+  /* Timer card: uses the uploaded moon image as background and places the number inside */
   .timer-card {
-    background: linear-gradient(180deg, var(--olive) 0%, var(--olive-deep) 100%);
-    border-radius:14px;padding:28px;color:var(--gold);text-align:center;
-    box-shadow: 0 8px 24px rgba(50,50,20,0.35), inset 0 -6px 18px rgba(255,215,130,0.03);
+    background: radial-gradient(circle at 25% 20%, rgba(255,245,200,0.02), transparent 10%), linear-gradient(180deg,var(--olive-panel), #183924);
+    border-radius:14px;
+    padding:28px;
+    color:var(--gold);
+    text-align:center;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.6), inset 0 -8px 24px rgba(255,215,130,0.03);
+    position:relative;
+    min-height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+  }
+  .moon {
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background-image: url("/mnt/data/ChatGPT Image 22 nov 2025, 07_13_26.png");
+    background-size: cover;
+    background-position: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 24px rgba(255,220,120,0.06) inset;
     position:relative;
   }
-  #countdown {font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,96px);line-height:1;letter-spacing:0.02em;text-shadow:0 0 18px rgba(255,238,180,0.45);margin:0 0 10px 0;}
-  .small-label {color: rgba(255,250,230,0.9);font-size:14px;margin-bottom:6px;}
+  .moon .num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    color: rgba(12,40,25,1);
+    text-shadow: 0 0 6px rgba(255,240,200,0.35);
+    font-weight:700;
+    transform: translateY(-4px);
+  }
+  .moon .label {
+    position:absolute;
+    bottom:8px;
+    width:100%;
+    text-align:center;
+    color: rgba(255,250,230,0.9);
+    font-size:14px;
+    letter-spacing:0.06em;
+  }
+  .time-caption { color: var(--beige); font-size:14px; margin-top:12px; }
 
-  .after {display:none;color:var(--gold);}
-  .after h1 {font-family:'Playfair Display',serif;font-style:italic;font-weight:700;margin:0;font-size:clamp(28px,6vw,72px);text-shadow:0 0 18px rgba(255,245,200,0.5);}
-  .after .sub {margin-top:12px;font-style:italic;color:#fff8dc;font-size:clamp(14px,2.2vw,20px);line-height:1.2;}
+  /* After-count display (replaces the moon when time passed) */
+  .after { display:none; text-align:center; }
+  .after h1 { font-family:'Playfair Display',serif; color:var(--gold); font-size:clamp(30px,6vw,64px); margin:0; font-style:italic; text-shadow:0 0 18px rgba(255,240,180,0.4);}
+  .after p { margin:8px 0 0 0; color: #fff2d3; font-style:italic; }
 
-  .right {padding:20px;display:flex;flex-direction:column;gap:18px;align-items:stretch;}
-  .panel {background:var(--card-bg);border-radius:12px;padding:14px;box-shadow: 0 6px 16px rgba(10,10,10,0.06);}
+  /* Horoscope panel */
+  .panel {
+    background: var(--card-bg);
+    border-radius:12px;
+    padding:14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    color:#222;
+  }
+  .horoscope { display:flex; gap:12px; align-items:center; }
+  .sign-badge {
+    width:78px; height:78px; border-radius:12px; display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-weight:700;color:#122d20; background: linear-gradient(180deg,#f1f6ea,#eef8e8);
+    border: 2px solid rgba(35,60,40,0.08);
+    box-shadow: 0 8px 18px rgba(30,30,30,0.06);
+  }
+  .sign-symbol { font-size:20px; line-height:1; }
+  .sign-name { margin-top:6px; font-size:12px; color:#1b3b28; text-transform:uppercase; font-weight:700; letter-spacing:0.06em; }
+  .horoscope-text h3 { margin:0; font-size:18px; color:#24321b; }
+  .horoscope-text p { margin:6px 0 0; color:#333; font-size:15px; }
 
-  .horoscope {display:flex;gap:12px;align-items:center;}
-  .sign-badge {width:78px;height:78px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#1b1b19;background: linear-gradient(180deg,#d8e7c8,#eaf4d8);border:2px solid rgba(0,0,0,0.06);box-shadow: 0 6px 12px rgba(50,50,30,0.06);font-size:14px;text-transform:uppercase;}
-  .horoscope-text {flex:1;text-align:left;}
-  .horoscope-text h3 {margin:0;font-size:18px;color:#24321b;}
-  .horoscope-text p {margin:6px 0 0 0;color:#3a3a2f;font-size:15px;}
+  .controls { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
 
-  .controls {display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-  .btn {background:var(--gold); color:#2b2416; border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;box-shadow: 0 6px 10px rgba(200,150,60,0.12);}
+  /* Right column */
+  .right { padding:18px; display:flex; flex-direction:column; gap:18px; }
 
-  .game-area {display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;min-height:150px;}
+  .game-area { display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; min-height:180px; }
 
-  .memory-grid {display:grid;grid-template-columns: repeat(4, 1fr); gap:8px; width:100%;}
-  .card {background: linear-gradient(180deg,#0f2a2a 0%, #123333 100%);border-radius:8px;padding:12px;height:72px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;cursor:pointer;user-select:none;box-shadow: 0 6px 10px rgba(0,0,0,0.25);}
-  .card.revealed {background: linear-gradient(180deg,#e9f7ee,#dff2e4); color:#12331a;}
-  .card.matched {opacity:0.35; transform:scale(0.98); cursor:default;}
+  .btn { background:var(--gold); color:#2b2416; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; box-shadow:0 6px 10px rgba(200,150,60,0.12); }
 
-  .puzzle-board {width:300px;height:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
-  .tile {background-size: 300px 300px;background-position:center;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;box-shadow: inset 0 -8px 18px rgba(0,0,0,0.2);}
-  .tile.empty {background:transparent;cursor:default;box-shadow:none}
+  /* Memory grid */
+  .memory-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; width:100%; }
+  .card { background: linear-gradient(180deg,#eaf7f0,#f8fff8); border-radius:10px; padding:6px; height:80px; display:flex; align-items:center; justify-content:center; color:#122d20; font-size:18px; cursor:pointer; box-shadow: 0 6px 10px rgba(0,0,0,0.12); }
+  .card.revealed { background:#fffbe8; }
+  .card.matched { opacity:0.45; transform:scale(0.98); cursor:default; }
 
-  .sudoku-grid {display:grid;grid-template-columns: repeat(9, 1fr); gap:6px; width:100%; max-width:420px;}
-  .sudoku-cell {background:#fff;border-radius:6px;padding:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#222;box-shadow: 0 4px 8px rgba(0,0,0,0.06);}
-  .sudoku-cell input{width:100%;height:100%;border:0;text-align:center;font-size:18px;background:transparent;outline:none}
-  .sudoku-cell.prefilled {background:#f3f6ed;color:#1b2b18}
-  .sudoku-controls {display:flex;gap:8px;justify-content:center;margin-top:8px;}
+  /* Puzzle tiles */
+  .puzzle-board { width:300px; height:300px; display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .tile { border-radius:8px; background-size: 300px 300px; background-position:center; display:flex;align-items:center;justify-content:center; cursor:pointer; box-shadow: inset 0 -8px 18px rgba(0,0,0,0.08); color:#fff; font-weight:700; }
 
-  .footer-note {font-size:12px;color:#4b4b40;opacity:0.9;margin-top:8px;text-align:center}
+  /* Sudoku 6x6 */
+  .sudoku-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; width:100%; max-width:420px; position:relative; padding:10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px; }
+  .sudoku-grid::before, .sudoku-grid::after {
+    content:''; position:absolute; background:rgba(20,20,18,0.28);
+  }
+  /* vertical center line (between col 3 and 4) */
+  .sudoku-grid::before { width:3px; height:100%; left:50%; top:0; transform:translateX(-1.5px); border-radius:2px; }
+  /* horizontal center line (between row 3 and 4) */
+  .sudoku-grid::after { height:3px; width:100%; top:50%; left:0; transform:translateY(-1.5px); border-radius:2px; }
 
-  @media(max-width:980px){ .poster {grid-template-columns:1fr; padding:18px;} .right {order:3} .sign-badge {width:60px;height:60px;font-size:12px} }
+  .sudoku-cell { background:#fff; border-radius:6px; padding:6px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#122d20; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
+  .sudoku-cell.prefilled { background:#f3f6ed; color:#1b2b18; }
+  .sudoku-cell input { width:100%; height:100%; text-align:center; border:0; outline:none; font-size:18px; background:transparent; }
+
+  .sudoku-controls { display:flex; gap:8px; justify-content:center; margin-top:8px; }
+
+  /* responsive */
+  @media(max-width:980px){
+    .poster { grid-template-columns: 1fr; padding:14px; }
+    .right { order:3; }
+    .moon { width:170px; height:170px; }
+  }
 </style>
 </head>
 <body>
 <div class="page">
   <div class="poster" role="main" aria-label="Glunder Evening poster">
-    <div class="gloss" aria-hidden="true"></div>
+    <div class="frame-decoration" aria-hidden="true"></div>
 
     <!-- LEFT -->
     <div class="left">
       <div class="timer-card" aria-live="polite">
         <div class="small-label" id="timeLabel">Countdown naar 28 nov 19:30</div>
-        <div id="countdown" aria-atomic="true">laden…</div>
 
+        <!-- moon with number inside (image you uploaded used as background) -->
+        <div class="moon" aria-hidden="false" role="img" aria-label="Maan met aantal nachtjes">
+          <div class="num" id="moonNumber">…</div>
+          <div class="label" id="moonLabel">nachtjes</div>
+        </div>
+
+        <!-- after block shown after countdown -->
         <div class="after" id="afterBlock" role="status" aria-hidden="true">
           <h1>Vandaag is het eindelijk zover!</h1>
-          <div class="sub">
-            <div>Vandaag weer samen</div>
-            <div>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</div>
-          </div>
+          <p>Vandaag weer samen</p>
+          <p>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</p>
         </div>
+
+        <div class="time-caption">Amsterdam — 28 november 19:30</div>
       </div>
 
-      <div style="height:16px;"></div>
-
-      <div class="panel" style="margin-top:14px;">
+      <!-- Horoscope panel -->
+      <div class="panel" style="margin-top:12px;">
         <div class="horoscope">
-          <div class="sign-badge" id="signBadge">Ram</div>
+          <div class="sign-badge" id="signBadge">
+            <div class="sign-symbol" id="signSymbol">♈</div>
+            <div class="sign-name" id="signShort">Ram</div>
+          </div>
+
           <div class="horoscope-text">
             <h3 id="signName">Ram</h3>
             <p id="signQuote">Je quote verschijnt hier…</p>
           </div>
         </div>
 
-        <div class="controls">
+        <div class="controls" style="margin-top:12px;">
           <button class="btn" id="prevSign">← Vorige</button>
           <button class="btn" id="nextSign">Volgende →</button>
           <button class="btn" id="randomSign">Willekeurig</button>
@@ -123,7 +210,7 @@
     <!-- RIGHT -->
     <div class="right">
       <div class="panel game-area" aria-label="Spel-sectie">
-        <div style="font-weight:700;color:#2d2d2a">Speeltje</div>
+        <div style="font-weight:700;color:#e6b46a">Speeltje</div>
         <div id="gameArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;min-height:160px;justify-content:center"></div>
 
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;">
@@ -132,36 +219,40 @@
           <button class="btn" id="shuffleGame">Shuffle spel</button>
         </div>
 
-        <div class="footer-note">Kies, speel even, en glunder ✨</div>
+        <div class="footer-note" style="margin-top:8px">Kies, speel even, en glunder ✨</div>
       </div>
 
-      <div class="panel" style="text-align:center;">
-        <div style="font-weight:700;margin-bottom:6px">Een warme groet</div>
-        <div style="color:#55534a">Een kleine poster voor een bijzondere avond — veel plezier en succes met glunderen.</div>
-      </div>
+      <!-- removed the "warme groet" panel as requested -->
+
     </div>
   </div>
 </div>
 
 <script>
 /* -----------------------------
-   Countdown
+   Countdown: days until 28 Nov 2025 19:30 Amsterdam
 ------------------------------*/
 const target = new Date('2025-11-28T19:30:00+01:00').getTime();
-const countdownEl = document.getElementById('countdown');
+const moonNumber = document.getElementById('moonNumber');
+const moonLabel = document.getElementById('moonLabel');
 const afterBlock = document.getElementById('afterBlock');
-const timeLabel = document.getElementById('timeLabel');
+const countdownLabel = document.getElementById('timeLabel');
 
 function updateCountdown(){
   const now = Date.now();
   const diff = target - now;
   if (diff > 0){
     const days = Math.floor(diff/(1000*60*60*24));
-    countdownEl.textContent = days + (days===1 ? ' nacht' : ' nachtjes');
-    countdownEl.style.display='block'; afterBlock.style.display='none';
-    timeLabel.textContent = 'Countdown naar 28 nov 19:30';
+    moonNumber.textContent = days;
+    moonLabel.textContent = days === 1 ? 'nacht' : 'nachtjes';
+    afterBlock.style.display = 'none';
+    document.querySelector('.moon').style.display = 'flex';
+    countdownLabel.textContent = 'Countdown naar 28 nov 19:30';
   } else {
-    countdownEl.style.display='none'; afterBlock.style.display='block'; timeLabel.textContent='Vandaag!';
+    // show final celebratory block (replace moon)
+    document.querySelector('.moon').style.display = 'none';
+    afterBlock.style.display = 'block';
+    countdownLabel.textContent = 'Vandaag!';
     clearInterval(cntInterval);
   }
 }
@@ -169,11 +260,11 @@ updateCountdown();
 const cntInterval = setInterval(updateCountdown, 1000);
 
 /* -----------------------------
-   Horoscopes: 12 signs x 8 unique quotes
-   (mix: speels, poëtisch, mystiek) - no duplicates between signs
+   Horoscopes: signs + 8 unique quotes each
+   plus symbol mapping
 ------------------------------*/
 const horoscopes = [
-  {sign:"Ram", color:"#d6e9c9", quotes:[
+  {sign:"Ram", symbol:"♈", color:"#d6e9c9", quotes:[
     "Je hart klopt sneller van verwachting.",
     "Je durft — en dat maakt het spannend mooi.",
     "Een kleine daad zet een avond in beweging.",
@@ -183,7 +274,7 @@ const horoscopes = [
     "Iemand merkt je warmte op zonder woorden.",
     "Durf te glunderen — het past je goed."
   ]},
-  {sign:"Stier", color:"#e7edd6", quotes:[
+  {sign:"Stier", symbol:"♉", color:"#e7edd6", quotes:[
     "Comfort en smaak maken dit moment kostbaar.",
     "Een rustige aanwezigheid geeft diepe rust.",
     "Geniet van de tastbare details om je heen.",
@@ -193,7 +284,7 @@ const horoscopes = [
     "Een bekend lied roept zachte herinnering op.",
     "Eenvoudige luxe kleedt jouw momenten."
   ]},
-  {sign:"Tweelingen", color:"#d9efd9", quotes:[
+  {sign:"Tweelingen", symbol:"♊", color:"#d9efd9", quotes:[
     "Je praatjes openen kleine werelden van plezier.",
     "Humor maakt een kamer lichter en zachter.",
     "Een nieuwsgierige vraag start een hartelijk gesprek.",
@@ -203,7 +294,7 @@ const horoscopes = [
     "Korte gesprekken kunnen diepe connecties brengen.",
     "Je charme werkt als een zachte uitnodiging."
   ]},
-  {sign:"Kreeft", color:"#e7e6d7", quotes:[
+  {sign:"Kreeft", symbol:"♋", color:"#e7e6d7", quotes:[
     "Zachtheid en aandacht scheppen een thuisgevoel.",
     "Een warme blik zegt wat woorden niet hoeven.",
     "Koester kleine momenten van echte verbinding.",
@@ -213,7 +304,7 @@ const horoscopes = [
     "Laat tederheid de avond verlichten.",
     "Intimiteit groeit in kleine, stille gebaren."
   ]},
-  {sign:"Leeuw", color:"#efe7c8", quotes:[
+  {sign:"Leeuw", symbol:"♌", color:"#efe7c8", quotes:[
     "Je helderheid trekt bewondering zonder moeite.",
     "Vandaag zal je lach de kamer doen oplichten.",
     "Stralend en zacht — je bent onmiskenbaar aanwezig.",
@@ -223,7 +314,7 @@ const horoscopes = [
     "Laat je hart spreken — het klinkt als muziek.",
     "Een klein applausje kan onverwacht veel betekenen."
   ]},
-  {sign:"Maagd", color:"#eef3e0", quotes:[
+  {sign:"Maagd", symbol:"♍", color:"#eef3e0", quotes:[
     "Oog voor detail maakt kleine magie zichtbaar.",
     "Je zorgvuldigheid tovert orde tot rust.",
     "Subtiele perfecties geven de avond inhoud.",
@@ -233,7 +324,7 @@ const horoscopes = [
     "Je precisie vertaalt zich in elegante momenten.",
     "Een kleine handeling oogst grote waardering."
   ]},
-  {sign:"Weegschaal", color:"#dfe7d2", quotes:[
+  {sign:"Weegschaal", symbol:"♎", color:"#dfe7d2", quotes:[
     "Schoonheid en evenwicht dansen langs je heen.",
     "Een charmante opmerking opent zachte ogen.",
     "Balans brengt ruimte voor oprechte gesprekken.",
@@ -243,7 +334,7 @@ const horoscopes = [
     "Jouw eenvoud ademt een bijzondere allure.",
     "Harmonie kleurt de avond in goudtinten."
   ]},
-  {sign:"Schorpioen", color:"#e9e5d8", quotes:[
+  {sign:"Schorpioen", symbol:"♏", color:"#e9e5d8", quotes:[
     "Intensiteit en zachtheid vinden elkaar bij jou.",
     "Een scherpe blik kan heel veel zeggen vandaag.",
     "Laat je diepgang zachtjes naar buiten stromen.",
@@ -253,7 +344,7 @@ const horoscopes = [
     "Laat je hart spreken — in stilte of in woord.",
     "Passie met tederheid maakt alles eerbiedig."
   ]},
-  {sign:"Boogschutter", color:"#e8efd9", quotes:[
+  {sign:"Boogschutter", symbol:"♐", color:"#e8efd9", quotes:[
     "Avontuurlijke vonken maken de avond licht.",
     "Een onbevangen lach opent onverwachte deuren.",
     "Nieuwsgierigheid leidt tot warme verrassingen.",
@@ -263,7 +354,7 @@ const horoscopes = [
     "Laat enthousiasme zacht de ruimte vullen.",
     "Een lichte grap breekt het ijs in goud."
   ]},
-  {sign:"Steenbok", color:"#e6e3d6", quotes:[
+  {sign:"Steenbok", symbol:"♑", color:"#e6e3d6", quotes:[
     "Stabiel en attent — jouw houding raakt anderen.",
     "Doorzettingsvermogen krijgt een zachte glans vanavond.",
     "Doordachte woorden geven houvast en nabijheid.",
@@ -273,7 +364,7 @@ const horoscopes = [
     "Je vastberadenheid toont zich als zorg en stijl.",
     "Met bedachtzaamheid bouw je intieme ruimte."
   ]},
-  {sign:"Waterman", color:"#e9f0e7", quotes:[
+  {sign:"Waterman", symbol:"♒", color:"#e9f0e7", quotes:[
     "Je verrassende blik creëert nieuwe mogelijkheden.",
     "Vernieuwend en vriendelijk — een aanstekelijke mix.",
     "Durf uniek te zijn; anderen volgen je graag.",
@@ -283,7 +374,7 @@ const horoscopes = [
     "Anders zijn voelt vandaag als een zachte kracht.",
     "Vreemde wendingen leiden soms tot warme momenten."
   ]},
-  {sign:"Vissen", color:"#edf6e9", quotes:[
+  {sign:"Vissen", symbol:"♓", color:"#edf6e9", quotes:[
     "Zacht en dromerig — je brengt rust in het nu.",
     "Een intuïtieve beweging verbindt twee zielen.",
     "Dromen en realiteit vinden vanavond elkaar.",
@@ -297,6 +388,8 @@ const horoscopes = [
 
 let signIndex = 0;
 const signBadge = document.getElementById('signBadge');
+const signSymbol = document.getElementById('signSymbol');
+const signShort = document.getElementById('signShort');
 const signName = document.getElementById('signName');
 const signQuoteEl = document.getElementById('signQuote');
 
@@ -306,7 +399,8 @@ function showSign(idx){
   const now = new Date();
   const daySeed = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate();
   const quoteIdx = (daySeed + signIndex) % obj.quotes.length;
-  signBadge.textContent = obj.sign;
+  signSymbol.textContent = obj.symbol;
+  signShort.textContent = obj.sign;
   signBadge.style.background = `linear-gradient(180deg, ${obj.color}, #fff7e6)`;
   signName.textContent = obj.sign;
   signQuoteEl.textContent = obj.quotes[quoteIdx];
@@ -317,8 +411,8 @@ document.getElementById('prevSign').addEventListener('click', ()=> showSign(sign
 document.getElementById('randomSign').addEventListener('click', ()=> showSign(Math.floor(Math.random()*horoscopes.length)));
 
 /* -----------------------------
-   GAMES: memory / sliding puzzle / sudoku 9x9
-   Mix art: nebula/stars + gold accents + olive tones
+   Games: memory / puzzle / sudoku 6x6
+   Use bright planet/star SVG slices (nebula + gold + olive)
 ------------------------------*/
 const gameArea = document.getElementById('gameArea');
 const games = ['memory','puzzle','sudoku'];
@@ -330,20 +424,20 @@ document.getElementById('shuffleGame').addEventListener('click', ()=> initCurren
 function setGame(i){ currentGame = ((i % games.length) + games.length) % games.length; initCurrentGame(); }
 function initCurrentGame(){ const name = games[currentGame]; gameArea.innerHTML=''; if (name==='memory') initMemory(); else if (name==='puzzle') initPuzzle(); else if (name==='sudoku') initSudoku(); }
 
-/* SVG asset mix (nebula + gold + olive winter) */
-const svgStar = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g1' x1='0' x2='1'><stop offset='0' stop-color='#fff6b8'/><stop offset='1' stop-color='#ffd766'/></linearGradient></defs><rect width='100' height='100' rx='12' fill='url(#g1)'/><g fill='#233b2a' transform='translate(10,10)'><path d='M40 4l10 24 26 2-20 16 6 26-24-12-24 12 6-26L4 30l26-2z'/></g></svg>`);
-const svgPlanet = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='p1' cx='30%' cy='30%'><stop offset='0' stop-color='#fff2c9'/><stop offset='1' stop-color='#ffd28a'/></radialGradient></defs><rect width='100' height='100' rx='12' fill='#f6f5ee'/><g transform='translate(10,10)'><ellipse cx='40' cy='40' rx='26' ry='20' fill='url(#p1)' stroke='#3b5236' stroke-width='2'/><path d='M4 70c8-8 26-10 36-10s30 2 36 10' stroke='#cfa56a' stroke-width='3' fill='none' /></g></svg>`);
-const svgNebula = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='#07101a'/><g fill-opacity='0.95'><circle cx='60' cy='80' r='12' fill='#ffd766'/><circle cx='230' cy='50' r='8' fill='#fff9e2'/><circle cx='190' cy='220' r='10' fill='#ffe6b3'/><circle cx='60' cy='220' r='6' fill='#fff8d0'/></g></svg>`);
+/* inline asset (brighter planet/nebula) */
+const svgPlanetBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><radialGradient id='gp' cx='30%' cy='30%'><stop offset='0' stop-color='#fff7d2'/><stop offset='1' stop-color='#ffd98a'/></radialGradient></defs><rect width='200' height='200' rx='20' fill='#f6f8f4'/><g transform='translate(12,20)'><ellipse cx='80' cy='80' rx='58' ry='40' fill='url(#gp)' stroke='#3a5236' stroke-width='3'/></g></svg>`);
+const svgStarBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='gs' x1='0' x2='1'><stop offset='0' stop-color='#fffbe0'/><stop offset='1' stop-color='#ffd766'/></linearGradient></defs><rect width='200' height='200' rx='20' fill='#f5f8f3'/><g transform='translate(18,18)' fill='#2d4a2f'><path d='M54 6l13 32 33 2-25 20 7 33-31-15-31 15 7-33L1 40l33-2z'/></g></svg>`);
+const svgNebulaBright = encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='#071028'/><g fill-opacity='0.98'><circle cx='60' cy='80' r='16' fill='#ffd766'/><circle cx='230' cy='50' r='10' fill='#fff9e2'/><circle cx='190' cy='220' r='14' fill='#ffe6b3'/><circle cx='60' cy='220' r='8' fill='#fff8d0'/></g></svg>`);
 
-/* ---------------- MEMORY ---------------- */
+/* --- MEMORY --- */
 function initMemory(){
   const wrapper = document.createElement('div'); wrapper.style.width='100%';
   const grid = document.createElement('div'); grid.className='memory-grid';
   const pairSvgs = [
-    {id:'star', uri: svgStar},
-    {id:'planet', uri: svgPlanet},
-    {id:'nebula', uri: svgNebula},
-    {id:'comet', uri: svgStar}
+    {id:'planet', uri: svgPlanetBright},
+    {id:'star', uri: svgStarBright},
+    {id:'nebula', uri: svgNebulaBright},
+    {id:'comet', uri: svgStarBright}
   ];
   let deck = []; pairSvgs.forEach(p=>{ deck.push(p); deck.push(p); });
   deck = deck.sort(()=>Math.random()-0.5);
@@ -363,75 +457,72 @@ function initMemory(){
             const done=document.createElement('div'); done.textContent='🎉 Gefeliciteerd — match compleet!'; done.style.marginTop='8px'; done.style.fontWeight=700; wrapper.appendChild(done);
           }
         } else {
-          lock=true; setTimeout(()=>{ hideCard(first.el); hideCard(second.el); first=null; second=null; lock=false; },900);
+          lock=true; setTimeout(()=>{ hideCard(first.el); hideCard(second.el); first=null; second=null; lock=false; }, 900);
         }
       }
     });
     grid.appendChild(c);
   });
   wrapper.appendChild(grid);
-  const info = document.createElement('div'); info.style.fontSize='13px'; info.style.color='#3b3b36'; info.style.marginTop='8px';
-  info.textContent='Memory — zoek de paren met winterse sterren & gouden accenten.';
+  const info = document.createElement('div'); info.style.fontSize='13px'; info.style.color='#cfcfbf'; info.style.marginTop='8px';
+  info.textContent='Memory — zoek de paren (heldere planeten & sterren).';
   wrapper.appendChild(info);
   gameArea.appendChild(wrapper);
 
   function reveal(el, cardObj){
     el.classList.add('revealed');
     const img = document.createElement('div'); img.style.width='100%'; img.style.height='100%'; img.style.display='flex'; img.style.alignItems='center'; img.style.justifyContent='center';
-    img.innerHTML = `<img src="data:image/svg+xml;utf8,${cardObj.uri}" style="width:88%;height:88%;object-fit:contain;border-radius:6px">`;
+    img.innerHTML = `<img src="data:image/svg+xml;utf8,${cardObj.uri}" style="width:94%;height:94%;object-fit:contain;border-radius:8px">`;
     el.innerHTML=''; el.appendChild(img);
   }
   function hideCard(el){ el.classList.remove('revealed'); el.innerHTML=''; }
 }
 
-/* ---------------- SLIDING PUZZLE 3x3 ---------------- */
+/* --- SLIDING PUZZLE 3x3 --- */
 function initPuzzle(){
   const wrapper = document.createElement('div');
   const board = document.createElement('div'); board.className='puzzle-board';
   const size = 3; const total = size*size;
-  const imgUrl = `data:image/svg+xml;utf8,${svgNebula}`;
+  const imgUrl = `data:image/svg+xml;utf8,${svgPlanetBright}`;
   let tiles = Array.from({length:total}, (_,i)=>i);
   function shuffleTiles(){ do { tiles = tiles.sort(()=>Math.random()-0.5); } while(!isSolvable(tiles)); if(tiles[tiles.length-1]!==total-1){ const idx=tiles.indexOf(total-1); tiles.splice(idx,1); tiles.push(total-1); } }
   function isSolvable(arr){ const a=arr.filter(v=>v!==total-1); let inv=0; for(let i=0;i<a.length;i++) for(let j=i+1;j<a.length;j++) if(a[i]>a[j]) inv++; return inv%2===0; }
   shuffleTiles();
-  function render(){ board.innerHTML=''; for(let i=0;i<total;i++){ const v=tiles[i]; const tile=document.createElement('div'); if(v===total-1){ tile.className='tile empty'; } else { tile.className='tile'; const col=v%size, row=Math.floor(v/size); const bgW=300, bgH=300; const posX = - (col*(bgW/size)), posY = - (row*(bgH/size)); tile.style.backgroundImage = `url("${imgUrl}")`; tile.style.backgroundPosition = `${posX}px ${posY}px`; tile.style.backgroundSize = `${bgW}px ${bgH}px`; } tile.addEventListener('click', ()=> tryMove(i)); board.appendChild(tile);} }
+  function render(){ board.innerHTML=''; for(let i=0;i<total;i++){ const v=tiles[i]; const tile=document.createElement('div'); if(v===total-1){ tile.className='tile empty'; tile.style.background='linear-gradient(180deg,#f9fbfa,#eef6f0)'; } else { tile.className='tile'; const col=v%size, row=Math.floor(v/size); const bgW=300, bgH=300; const posX = - (col*(bgW/size)), posY = - (row*(bgH/size)); tile.style.backgroundImage = `url("${imgUrl}")`; tile.style.backgroundPosition = `${posX}px ${posY}px`; tile.style.backgroundSize = `${bgW}px ${bgH}px`; } tile.addEventListener('click', ()=> tryMove(i)); board.appendChild(tile);} }
   function tryMove(index){ const emptyIdx = tiles.indexOf(total-1); const r1=Math.floor(index/size), c1=index%size; const r2=Math.floor(emptyIdx/size), c2=emptyIdx%size; const manhattan = Math.abs(r1-r2)+Math.abs(c1-c2); if(manhattan===1){ [tiles[index], tiles[emptyIdx]]=[tiles[emptyIdx], tiles[index]]; render(); if(isSolved()){ const done=document.createElement('div'); done.textContent='✨ Puzzel compleet! ✨'; done.style.marginTop='10px'; done.style.fontWeight=700; wrapper.appendChild(done); } } }
   function isSolved(){ for(let i=0;i<total;i++) if(tiles[i]!==i) return false; return true; }
   render(); wrapper.appendChild(board);
-  const hint = document.createElement('div'); hint.style.fontSize='13px'; hint.style.color='#3b3b36'; hint.style.marginTop='8px'; hint.textContent='Schuifpuzzel — klik op een stuk naast de lege plek.'; wrapper.appendChild(hint);
+  const hint = document.createElement('div'); hint.style.fontSize='13px'; hint.style.color='#cfcfbf'; hint.style.marginTop='8px'; hint.textContent='Schuifpuzzel — herken planeten-delen en schuif ze op hun plek.'; wrapper.appendChild(hint);
   const controls = document.createElement('div'); controls.style.display='flex'; controls.style.gap='8px'; controls.style.marginTop='8px';
   const btnShuffle = document.createElement('button'); btnShuffle.className='btn'; btnShuffle.textContent='Schud'; btnShuffle.addEventListener('click', ()=>{ shuffleTiles(); render(); });
   controls.appendChild(btnShuffle); wrapper.appendChild(controls); gameArea.appendChild(wrapper);
 }
 
-/* ---------------- 9x9 SUDOKU ----------------
-   - generator (backtracking) creates full solution
-   - puzzle created by removing cells (not guaranteeing uniqueness but for casual play)
-   - UI: inputs for empty cells, Check, Hint, New puzzle
-------------------------------------------------*/
+/* --- SUDOKU 6x6 (2x3 boxes) --- */
 function initSudoku(){
   const wrapper = document.createElement('div'); wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.flexDirection='column'; wrapper.style.alignItems='center';
-  const title = document.createElement('div'); title.textContent='Sudoku (9×9) — vul de lege vakjes'; title.style.fontWeight='700'; wrapper.appendChild(title);
+  const title = document.createElement('div'); title.textContent='Sudoku (6×6) — vul de lege vakjes'; title.style.fontWeight='700'; wrapper.appendChild(title);
 
-  const N = 9;
-  const box = 3;
-  // create empty grid
+  const N = 6;
+  const boxR = 2; // boxes are 2 rows x 3 cols
+  const boxC = 3;
+
   let solution = Array.from({length:N}, ()=>Array(N).fill(0));
 
   function isSafe(grid, r, c, val){
     for(let i=0;i<N;i++) if(grid[r][i]===val) return false;
     for(let i=0;i<N;i++) if(grid[i][c]===val) return false;
-    const startR = r - (r % box), startC = c - (c % box);
-    for(let i=0;i<box;i++) for(let j=0;j<box;j++) if(grid[startR+i][startC+j]===val) return false;
+    const startR = r - (r % boxR);
+    const startC = c - (c % boxC);
+    for(let i=0;i<boxR;i++) for(let j=0;j<boxC;j++) if(grid[startR+i][startC+j]===val) return false;
     return true;
   }
 
-  // backtracking fill
   function fillGrid(grid){
     for(let r=0;r<N;r++){
       for(let c=0;c<N;c++){
         if(grid[r][c]===0){
-          const nums = [1,2,3,4,5,6,7,8,9].sort(()=>Math.random()-0.5);
+          const nums = [1,2,3,4,5,6].sort(()=>Math.random()-0.5);
           for(const v of nums){
             if(isSafe(grid,r,c,v)){
               grid[r][c]=v;
@@ -445,25 +536,22 @@ function initSudoku(){
     }
     return true;
   }
-
   fillGrid(solution);
 
-  // Make puzzle by removing cells (leave clues count)
-  function makePuzzle(sol, clues=30){
+  function makePuzzle(sol, clues=18){
     let puzzle = sol.map(r=>r.slice());
-    const cells = [];
+    const cells=[];
     for(let r=0;r<N;r++) for(let c=0;c<N;c++) cells.push([r,c]);
     cells.sort(()=>Math.random()-0.5);
     let removed=0;
     for(const [r,c] of cells){
       if ((N*N - removed) <= clues) break;
-      const backup = puzzle[r][c]; puzzle[r][c]=0; removed++;
-      // For speed we skip uniqueness check; casual puzzles are fine here
+      puzzle[r][c]=0; removed++;
     }
     return puzzle;
   }
 
-  let puzzle = makePuzzle(solution, 30);
+  let puzzle = makePuzzle(solution, 18);
 
   // render grid
   const gridEl = document.createElement('div'); gridEl.className='sudoku-grid'; gridEl.style.marginTop='8px';
@@ -472,11 +560,11 @@ function initSudoku(){
     for(let c=0;c<N;c++){
       const wrap = document.createElement('div'); wrap.className='sudoku-cell';
       const val = puzzle[r][c];
-      if(val!==0){ wrap.classList.add('prefilled'); wrap.textContent = val; }
-      else {
-        const input = document.createElement('input'); input.type='number'; input.min=1; input.max=9; input.setAttribute('inputmode','numeric');
-        // prevent invalid key presses
-        input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-9]/g,'').slice(0,1); });
+      if(val!==0){
+        wrap.classList.add('prefilled'); wrap.textContent = val;
+      } else {
+        const input = document.createElement('input'); input.type='number'; input.min=1; input.max=6; input.setAttribute('inputmode','numeric');
+        input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-6]/g,'').slice(0,1); });
         wrap.appendChild(input);
       }
       gridEl.appendChild(wrap); cellsEls.push(wrap);
@@ -523,16 +611,13 @@ function initSudoku(){
   });
 
   btnNew.addEventListener('click', ()=>{
-    // regenerate full solution & puzzle
-    solution = Array.from({length:N}, ()=>Array(N).fill(0));
-    fillGrid(solution);
-    puzzle = makePuzzle(solution, 28 + Math.floor(Math.random()*8));
-    // re-render cells
+    solution = Array.from({length:N}, ()=>Array(N).fill(0)); fillGrid(solution);
+    puzzle = makePuzzle(solution, 16 + Math.floor(Math.random()*6));
     for(let r=0;r<N;r++){
       for(let c=0;c<N;c++){
         const idx = r*N+c; const cell = cellsEls[idx]; cell.innerHTML=''; cell.classList.remove('prefilled'); cell.style.background='';
         if (puzzle[r][c] !== 0){ cell.classList.add('prefilled'); cell.textContent = puzzle[r][c]; }
-        else { const input = document.createElement('input'); input.type='number'; input.min=1; input.max=9; input.setAttribute('inputmode','numeric'); input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-9]/g,'').slice(0,1);}); cell.appendChild(input);}
+        else { const input = document.createElement('input'); input.type='number'; input.min=1; input.max=6; input.setAttribute('inputmode','numeric'); input.addEventListener('input', ()=> { if(input.value) input.value = input.value.replace(/[^1-6]/g,'').slice(0,1);}); cell.appendChild(input); }
       }
     }
     status.textContent='Nieuwe sudoku gegeneerd.';
