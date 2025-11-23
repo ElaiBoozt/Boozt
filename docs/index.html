@@ -136,32 +136,40 @@
 </div>
 
 <script>
-/* COUNTDOWN FIX */
 function updateCountdown() {
     const target = new Date("2025-11-28T19:30:00+01:00");
     const now = new Date();
 
+    // bereken middernacht van vandaag
     const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const targetMidnight = new Date(target.getFullYear(), target.getMonth(), target.getDate());
 
+    // verschil in dagen
     let nights = Math.ceil((targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24));
+
     if (nights < 0) nights = 0;
 
     document.getElementById("countdown-number").textContent = nights;
 
+    // speciale tekst pas op 28 november tonen
     const specialText = document.getElementById("special-final-lines");
+    if (!specialText) return;
 
     const isTargetDay =
         now.getFullYear() === 2025 &&
-        now.getMonth() === 10 &&
+        now.getMonth() === 10 &&      // maand = 10 → november
         now.getDate() === 28;
 
     specialText.style.display = isTargetDay ? "block" : "none";
 }
-
 updateCountdown();
 setInterval(updateCountdown, 60000);
+</script>
 
+    <div id="special-final-lines" style="display:none; margin-top:15px; font-size:32px; font-style:italic; font-weight:700;">
+    Vandaag is het eindelijk zover!<br>
+    <span style="font-size:22px;">Vandaag weer samen<br>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</span>
+</div>
 
 /* SUDOKU FIX */
 const sudokuStart = [
@@ -197,3 +205,4 @@ for (let r = 0; r < 6; r++) {
 
 </body>
 </html>
+
