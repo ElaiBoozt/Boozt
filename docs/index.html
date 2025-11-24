@@ -1,686 +1,589 @@
 <!-- Dit is een commentaar -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Glunder — Countdown & Spellen</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glunder</title>
 
 <style>
-  :root{
-    --dark:#08261d;
-    --panel:#0f3b2c;
-    --gold:#ffd766;
-    --beige:#efe6cf;
-    --olive:#07321f;
-    --accent:#d8c79e;
-  }
 
-  *{box-sizing:border-box}
-  body{ margin:0; font-family:'Cormorant Garamond', serif; background:linear-gradient(180deg,#061615,#092919); color:var(--beige); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-  .wrap{ max-width:1100px; margin:18px auto; padding:18px; display:grid; grid-template-columns: 1fr 420px; gap:18px; align-items:start; }
+body {
+    margin: 0;
+    padding: 0;
+    background: #1a1712;
+    font-family: "Cormorant Garamond", serif;
+    color: #efe7d8;
+    text-align: center;
+}
 
-  /* Poster / left column */
-  .left{ display:flex; flex-direction:column; gap:16px; }
-  .right{ display:flex; flex-direction:column; gap:16px; }
+h1 {
+    margin-top: 35px;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
 
-  .card{
-    border-radius:12px; padding:16px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-    box-shadow: 0 12px 40px rgba(0,0,0,0.55); border:1px solid rgba(255,215,130,0.04);
-  }
+.section {
+    margin: 40px auto;
+    max-width: 520px;
+    padding: 20px 25px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
 
-  /* Ornaments faint */
-  .ornament {
-    position:absolute; right:12px; top:12px; font-size:28px; color:var(--accent); opacity:0.07; pointer-events:none;
-  }
+.game-title {
+    font-size: 34px;
+    margin-bottom: 22px;
+    font-weight: 700;
+    font-style: italic;
+    color: #e5d9bf;
+}
 
-  /* Countdown card */
-  .countdown {
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
-    min-height:320px; position:relative; text-align:center;
-    background: linear-gradient(180deg,var(--panel), #103826);
-  }
-  .count-label { font-size:14px; color: rgba(255,250,230,0.9); letter-spacing:0.08em; }
+/* COUNTDOWN */
+#countdown-container {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 0 auto;
+}
 
-  /* moon circle */
-  .moon {
-    width:260px; height:260px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    background-image: url('supermoon.png');
-    background-size: cover; background-position:center;
-    border: 3px solid rgba(255,215,130,0.08);
-    box-shadow: 0 14px 40px rgba(0,0,0,0.65), inset 0 6px 24px rgba(255,240,180,0.03);
-    position:relative;
-    overflow:visible;
-    transition: transform .45s ease;
-    animation: moonPulse 3.8s ease-in-out infinite;
-  }
+#countdown-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: brightness(1.25) contrast(1.1);
+}
 
-  @keyframes moonPulse {
-    0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255,215,120,0)); }
-    50% { transform: scale(1.01); filter: drop-shadow(0 10px 30px rgba(255,215,120,0.06)); }
-    100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255,215,120,0)); }
-  }
+#countdown-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 78px;
+    font-weight: 900;
+    color: #1a2d14;
+    text-shadow: 0 0 20px rgba(255,255,200,0.7);
+}
 
-  .moon-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(44px, 10vw, 92px);
-    color: var(--olive);
-    font-weight:700;
-    text-shadow: 0 0 18px rgba(255,240,180,0.18);
-    z-index:2;
-  }
+/* Sudoku */
+#sudoku {
+    margin: 0 auto;
+    border: 3px solid #d8c79e;
+    width: 360px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
 
-  .moon-label { position:absolute; bottom:10px; font-size:14px; color:rgba(255,250,230,0.9); }
+.sudoku-cell {
+    width: 100%;
+    height: 54px;
+    text-align: center;
+    font-size: 28px;
+    border: 1px solid #d8c79e;
+    background: rgba(255,255,255,0.12);
+    color: #f0e7d4;
+}
 
-  /* special lines hidden until event day */
-  .special-final { display:none; margin-top:8px; font-style:italic; font-weight:700; color:var(--gold); font-size:28px; opacity:0; transition:opacity .8s ease; }
+.sudoku-cell[readonly] {
+    background: rgba(216,199,158,0.32);
+    font-weight: 700;
+}
 
-  .special-final.show { display:block; opacity:1; }
+/* bloklijnen */
+.sudoku-cell:nth-child(6n+1) { border-left: 3px solid #d8c79e; }
+.sudoku-cell:nth-child(n+19) { border-top: 3px solid #d8c79e; }
 
-  /* Horoscope */
-  .horoscope { display:flex; gap:12px; align-items:center; }
-  .sign-badge{ width:78px;height:78px;border-radius:10px; background:linear-gradient(180deg,#f1f6ea,#eef8e8); color:#12321f; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; border:2px solid rgba(40,60,40,0.06); }
-  .horoscope-text h3 { margin:0; color:#0f3b28; }
-  .controls { display:flex; gap:8px; margin-top:10px; }
+/* MEMORY */
+.memory-grid {
+    width: 300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
 
-  .btn { background:var(--gold); color:#281f12; border:0; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
+.memory-card {
+    width: 70px;
+    height: 70px;
+    background: #2d2b25;
+    border: 1px solid #d8c79e;
+    border-radius: 10px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.45s ease;
+}
 
-  /* Games column */
-  .game-card { padding:14px; display:flex; flex-direction:column; gap:12px; align-items:center; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); border-radius:12px; }
-  .game-title { font-style:italic; font-weight:700; color:var(--beige); font-size:20px; }
+.memory-card.flip {
+    transform: rotateY(180deg);
+}
 
-  /* Memory grid */
-  .memory-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; width:100%; max-width:360px; }
-  .memory-card { border-radius:10px; height:78px; background:linear-gradient(180deg,#fffaf0,#f3fff7); box-shadow: 0 8px 18px rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; border:2px solid rgba(216,199,158,0.16); }
-  .memory-card img { width:100%; height:100%; object-fit:cover; display:block; transform-origin:center; transition: transform .28s ease; }
-  .memory-card.revealed img { transform: scale(1.02); }
-  .memory-card.matched { opacity:0.45; transform:scale(.98); pointer-events:none; box-shadow:none; }
+.memory-front,
+.memory-back {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    backface-visibility: hidden;
+}
 
-  /* Puzzle (3x3) */
-  .puzzle-wrap { width:100%; max-width:340px; background: linear-gradient(180deg,#0b3a2c,#0a3326); padding:10px; border-radius:10px; }
-  .puzzle-board { width:320px; height:320px; display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; margin:0 auto; }
-  .puzzle-tile { border-radius:8px; background-image: url('supermoon.png'); background-size: 320px 320px; background-position:center; cursor:pointer; transition: transform .18s ease, box-shadow .18s ease; box-shadow: inset 0 -8px 18px rgba(0,0,0,0.08); }
-  .puzzle-tile:hover { transform: translateY(-6px); box-shadow: 0 18px 30px rgba(0,0,0,0.45); }
-  .puzzle-empty { background: linear-gradient(180deg,#061f18,#052014); cursor:default; box-shadow:none; }
+.memory-back {
+    background: linear-gradient(135deg, #c7b38a, #e8dbc0);
+    transform: rotateY(180deg);
+}
 
-  /* Sudoku 6x6 */
-  .sudoku-wrap { width:100%; max-width:420px; margin:0 auto; }
-  .sudoku-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap:8px; padding:12px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); position:relative; }
-  .sudoku-cell { background:#fff; border-radius:8px; padding:0; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#122d20; box-shadow: 0 6px 12px rgba(0,0,0,0.06); }
-  .sudoku-cell input { width:100%; height:48px; text-align:center; border:0; outline:none; font-size:18px; background:transparent; color:#122d20; }
-  .sudoku-cell.prefilled { background:#f3f6ed; color:#122d20; }
-  .sudoku-grid::before, .sudoku-grid::after { content:''; position:absolute; background:rgba(255,215,130,0.22); }
-  .sudoku-grid::before { width:4px; height:100%; left:50%; top:0; transform:translateX(-2px); border-radius:2px; }
-  .sudoku-grid::after { height:4px; width:100%; top:50%; left:0; transform:translateY(-2px); border-radius:2px; }
+/* Schuifpuzzel */
+#puzzle-board {
+    width: 310px;
+    height: 310px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    gap: 2px;
+}
 
-  /* solved effect */
-  .solved-glow { box-shadow: 0 0 40px rgba(255,215,120,0.28) !important; transform: scale(1.01); transition: transform .3s ease; }
+.puzzle-tile {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 6px;
+}
 
-  /* Confetti container */
-  .confetti { position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:9999; display:none; overflow:hidden; }
+.puzzle-empty {
+    background: rgba(255,255,255,0.1);
+}
 
-  /* responsive */
-  @media(max-width:980px){
-    .wrap{ grid-template-columns: 1fr; padding:12px; }
-    .puzzle-board{ width:260px; height:260px; background-size:260px 260px; }
-    .moon{ width:190px; height:190px; background-size:cover; }
-  }
+/* solved effect */
+.solved-glow {
+    animation: solvedGlow 2s ease-in-out forwards;
+}
+
+@keyframes solvedGlow {
+    0% { box-shadow: 0 0 0px gold; }
+    100% { box-shadow: 0 0 28px gold; }
+}
+
+/* MOBILE */
+@media(max-width:520px){
+    #sudoku { width: 300px; }
+    .sudoku-cell { height: 45px; font-size: 22px; }
+    #countdown-container { width: 220px; height: 220px; }
+    #countdown-number { font-size: 66px; }
+}
+
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="left">
-    <div class="card countdown">
-      <div class="count-label">Countdown</div>
-      <div class="moon" id="moonEl" role="img" aria-label="Maan met aantal nachtjes">
-        <div class="moon-number" id="moonNumber">…</div>
-        <div class="moon-label" id="moonLabel">nachtjes</div>
-      </div>
+<h1>Glunder Aftelmoment ✨</h1>
 
-      <div id="specialFinal" class="special-final" aria-hidden="true">
+<div class="section">
+    <div id="countdown-container">
+        <img src="supermoon.png">
+        <div id="countdown-number">0</div>
+    </div>
+
+    <div style="margin-top:15px; font-size:22px; font-weight:500;">
+        Nog even wachten lieve Glunder 🌙
+    </div>
+
+    <div id="special-final-lines" style="display:none; margin-top:20px; font-size:32px; font-weight:700; font-style:italic;">
         Vandaag is het eindelijk zover!<br>
-        <span style="font-size:18px;">Vandaag weer samen • Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</span>
-      </div>
+        <span style="font-size:22px;">Vandaag weer samen<br>Vandaag dichtbij, Glunder 🧜🏻‍♀️✨</span>
     </div>
-
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div style="font-weight:700;font-size:18px;">Dagelijkse Horoscoop</div>
-        <div style="opacity:0.16;font-size:20px;">✦</div>
-      </div>
-
-      <div class="horoscope" style="margin-top:12px;">
-        <div class="sign-badge" id="signBadge">
-          <div style="font-size:22px;" id="signSymbol">♈</div>
-          <div class="" id="signShort" style="font-size:11px;margin-top:6px;"></div>
-        </div>
-        <div style="flex:1;">
-          <div class="horoscope-text">
-            <h3 id="signName">Ram</h3>
-            <p id="signQuote">Quote verschijnt hier…</p>
-          </div>
-          <div class="controls">
-            <button class="btn" id="prevSign">← Vorige</button>
-            <button class="btn" id="nextSign">Volgende →</button>
-            <button class="btn" id="randomSign">Willekeurig</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="right">
-    <div class="card game-card">
-      <div class="game-title">Glunder Memory</div>
-      <div class="memory-grid" id="memoryGrid" aria-live="polite"></div>
-    </div>
-
-    <div class="card game-card">
-      <div class="game-title">Glunder Schuifpuzzel</div>
-      <div class="puzzle-wrap">
-        <div class="puzzle-board" id="puzzleBoard"></div>
-        <div style="margin-top:8px;color:rgba(255,250,230,0.9);font-size:13px;">Schuif om de supermaan te herstellen</div>
-      </div>
-    </div>
-
-    <div class="card game-card">
-      <div class="game-title">Glunder Sudoku</div>
-      <div class="sudoku-wrap">
-        <div class="sudoku-grid" id="sudokuGrid"></div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;">
-          <button class="btn" id="checkSudoku">Controleer</button>
-          <button class="btn" id="resetSudoku">Reset</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
 
-<div class="confetti" id="confetti"></div>
+  <!-- MEMORY -->
+<div class="section">
+    <div class="game-title"><i><b>Glunder Memory</b></i></div>
+
+    <div id="memory-grid" class="memory-grid"></div>
+
+    <div id="memory-solved" style="display:none; margin-top:18px; font-size:24px;">
+        ✨ Je hebt alle kaarten gevonden! Nieuwe ronde start… ✨
+    </div>
+</div>
 
 <script>
-/* =========================================================
-   Countdown: nights between today (midnight) and target date
-   Show special text only on target day (28 Nov 2025)
-   ========================================================= */
-const targetDate = new Date('2025-11-28T19:30:00+01:00');
+// ------------------ COUNTDOWN ------------------
+function updateCountdown() {
+    const today = new Date();
+    const target = new Date("2024-11-28T19:30:00");
 
-function updateCountdown(){
-  const now = new Date();
-  const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const targetMidnight = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+    const diff = target - today;
+    const nights = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-  let nights = Math.ceil((targetMidnight - todayMidnight) / (1000*60*60*24));
-  if (nights < 0) nights = 0;
+    const number = document.getElementById("countdown-number");
+    const finalText = document.getElementById("special-final-lines");
 
-  document.getElementById('moonNumber').textContent = nights;
-  document.getElementById('moonLabel').textContent = nights === 1 ? 'nacht' : 'nachtjes';
-
-  const isTargetDay = now.getFullYear() === targetDate.getFullYear()
-    && now.getMonth() === targetDate.getMonth()
-    && now.getDate() === targetDate.getDate();
-
-  const specialEl = document.getElementById('specialFinal');
-  if (isTargetDay) {
-    specialEl.classList.add('show');
-    specialEl.setAttribute('aria-hidden','false');
-  } else {
-    specialEl.classList.remove('show');
-    specialEl.setAttribute('aria-hidden','true');
-  }
+    if (today >= target) {
+        number.textContent = "0";
+        finalText.style.display = "block";
+    } else {
+        number.textContent = nights;
+        finalText.style.display = "none";
+    }
 }
+setInterval(updateCountdown, 1000);
 updateCountdown();
-setInterval(updateCountdown, 20000);
 
-/* =========================================================
-   HOROSCOPES (12 x 8 quotes) - daily rotating quote logic
-   ========================================================= */
-const horoscopes = [
-  {sign:"Ram", symbol:"♈", quotes:[
-    "Je hart klopt sneller van verwachting.",
-    "Je durft — en dat maakt het spannend mooi.",
-    "Een kleine daad zet een avond in beweging.",
-    "Je glimlach nodigt iemand dichterbij.",
-    "Vandaag straal je met zachte overgave.",
-    "Laat je energie zachtjes de kamer vullen.",
-    "Iemand merkt je warmte op zonder woorden.",
-    "Durf te glunderen — het past je goed."
-  ]},
-  {sign:"Stier", symbol:"♉", quotes:[
-    "Comfort en smaak maken dit moment kostbaar.",
-    "Een rustige aanwezigheid geeft diepe rust.",
-    "Geniet van de tastbare details om je heen.",
-    "Vandaag voelt nabijheid als een cadeau.",
-    "Subtiele aanraking zegt meer dan menig woord.",
-    "Laat je zintuigen rustig de weg wijzen.",
-    "Een bekend lied roept zachte herinnering op.",
-    "Eenvoudige luxe kleedt jouw momenten."
-  ]},
-  {sign:"Tweelingen", symbol:"♊", quotes:[
-    "Je praatjes openen kleine werelden van plezier.",
-    "Humor maakt een kamer lichter en zachter.",
-    "Een nieuwsgierige vraag start een hartelijk gesprek.",
-    "Je woorden dansen licht in de lucht.",
-    "Verrassing in taal brengt een glimlach.",
-    "Laat je geest speels de avond kleuren.",
-    "Korte gesprekken kunnen diepe connecties brengen.",
-    "Je charme werkt als een zachte uitnodiging."
-  ]},
-  {sign:"Kreeft", symbol:"♋", quotes:[
-    "Zachtheid en aandacht scheppen een thuisgevoel.",
-    "Een warme blik zegt wat woorden niet hoeven.",
-    "Koester kleine momenten van echte verbinding.",
-    "Je zorgzame aard opent stil gedeelde ruimte.",
-    "Herinneringen vinden vanavond een zachte plek.",
-    "Je aanwezigheid voelt als een geruststellende omhelzing.",
-    "Laat tederheid de avond verlichten.",
-    "Intimiteit groeit in kleine, stille gebaren."
-  ]},
-  {sign:"Leeuw", symbol:"♌", quotes:[
-    "Je helderheid trekt bewondering zonder moeite.",
-    "Vandaag zal je lach de kamer doen oplichten.",
-    "Stralend en zacht — je bent onmiskenbaar aanwezig.",
-    "Een compliment weerkaatst jouw warme energie.",
-    "Je durft te schitteren op een elegante manier.",
-    "Grootsheid met tederheid is jouw stijl vandaag.",
-    "Laat je hart spreken — het klinkt als muziek.",
-    "Een klein applausje kan onverwacht veel betekenen."
-  ]},
-  {sign:"Maagd", symbol:"♍", quotes:[
-    "Oog voor detail maakt kleine magie zichtbaar.",
-    "Je zorgvuldigheid tovert orde tot rust.",
-    "Subtiele perfecties geven de avond inhoud.",
-    "Je praktische aanraking voelt als blijk van zorg.",
-    "Nette aandacht creëert warme herinnering.",
-    "Stilheid met zorg kan veel liefde zeggen.",
-    "Je precisie vertaalt zich in elegante momenten.",
-    "Een kleine handeling oogst grote waardering."
-  ]},
-  {sign:"Weegschaal", symbol:"♎", quotes:[
-    "Schoonheid en evenwicht dansen langs je heen.",
-    "Een charmante opmerking opent zachte ogen.",
-    "Balans brengt ruimte voor oprechte gesprekken.",
-    "Je elegantie nodigt mensen uit dichtbij te komen.",
-    "Rust en stijl maken vanavond memorabel.",
-    "Zachte humor weeft fijne herinneringen in de tijd.",
-    "Jouw eenvoud ademt een bijzondere allure.",
-    "Harmonie kleurt de avond in goudtinten."
-  ]},
-  {sign:"Schorpioen", symbol:"♏", quotes:[
-    "Intensiteit en zachtheid vinden elkaar bij jou.",
-    "Een scherpe blik kan heel veel zeggen vandaag.",
-    "Laat je diepgang zachtjes naar buiten stromen.",
-    "Intieme aandacht schept onvergetelijke momenten.",
-    "Een geheim gebaar heeft grote betekenis vanavond.",
-    "Diepe gevoelens vertalen zich in warme daden.",
-    "Laat je hart spreken — in stilte of in woord.",
-    "Passie met tederheid maakt alles eerbiedig."
-  ]},
-  {sign:"Boogschutter", symbol:"♐", quotes:[
-    "Avontuurlijke vonken maken de avond licht.",
-    "Een onbevangen lach opent onverwachte deuren.",
-    "Nieuwsgierigheid leidt tot warme verrassingen.",
-    "Speelsheid nodigt anderen uit te delen.",
-    "Durf te stappen; mooie herinneringen wachten.",
-    "Recht door zee met een glimlach wint harten.",
-    "Laat enthousiasme zacht de ruimte vullen.",
-    "Een lichte grap breekt het ijs in goud."
-  ]},
-  {sign:"Steenbok", symbol:"♑", quotes:[
-    "Stabiel en attent — jouw houding raakt anderen.",
-    "Doorzettingsvermogen krijgt een zachte glans vanavond.",
-    "Doordachte woorden geven houvast en nabijheid.",
-    "Je inzet creëert waardevolle momenten.",
-    "Een rustige daad blijkt groter dan verwacht.",
-    "Consistentie voelt als een warm anker voor anderen.",
-    "Je vastberadenheid toont zich als zorg en stijl.",
-    "Met bedachtzaamheid bouw je intieme ruimte."
-  ]},
-  {sign:"Waterman", symbol:"♒", quotes:[
-    "Je verrassende blik creëert nieuwe mogelijkheden.",
-    "Vernieuwend en vriendelijk — een aanstekelijke mix.",
-    "Durf uniek te zijn; anderen volgen je graag.",
-    "Een origineel idee kan het gesprek verrijken.",
-    "Jouw visie nodigt uit tot open gesprekken.",
-    "Creatieve vonken kleuren de avond met plezier.",
-    "Anders zijn voelt vandaag als een zachte kracht.",
-    "Vreemde wendingen leiden soms tot warme momenten."
-  ]},
-  {sign:"Vissen", symbol:"♓", quotes:[
-    "Zacht en dromerig — je brengt rust in het nu.",
-    "Een intuïtieve beweging verbindt twee zielen.",
-    "Dromen en realiteit vinden vanavond elkaar.",
-    "Laat je verbeelding leiden naar warme herinneringen.",
-    "Een kleine fantasie wordt tastbare zachtheid.",
-    "Je empathie maakt nabijheid veilig en rijk.",
-    "Mildheid en diepte vormen een stille belofte.",
-    "Eenvoudige dromen worden vanavond kostbaar."
-  ]}
-];
+// ------------------ MEMORY GAME ------------------
 
-let signIndex = 0;
-function showSign(idx){
-  signIndex = (idx + horoscopes.length) % horoscopes.length;
-  const obj = horoscopes[signIndex];
-  const now = new Date();
-  const daySeed = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate();
-  const quoteIdx = (daySeed + signIndex) % obj.quotes.length;
-  document.getElementById('signSymbol').textContent = obj.symbol;
-  document.getElementById('signShort').textContent = obj.sign;
-  document.getElementById('signName').textContent = obj.sign;
-  document.getElementById('signQuote').textContent = obj.quotes[quoteIdx];
-}
-showSign(0);
-document.getElementById('nextSign').addEventListener('click', ()=> showSign(signIndex+1));
-document.getElementById('prevSign').addEventListener('click', ()=> showSign(signIndex-1));
-document.getElementById('randomSign').addEventListener('click', ()=> showSign(Math.floor(Math.random()*horoscopes.length)));
-
-/* =========================================================
-   Confetti helper (used for solved effects)
-   ========================================================= */
-function showConfetti() {
-  const container = document.getElementById('confetti');
-  container.innerHTML = '';
-  container.style.display = 'block';
-  const colors = ['#ffd766','#e6b46a','#fff6d9','#d4a64b'];
-  const count = 48;
-  for (let i=0;i<count;i++){
-    const el = document.createElement('div');
-    el.style.position='absolute';
-    el.style.width=(6+Math.random()*10)+'px';
-    el.style.height=el.style.width;
-    el.style.left = (40 + Math.random()*20) + '%';
-    el.style.top = (30 + Math.random()*20) + '%';
-    el.style.background = colors[Math.floor(Math.random()*colors.length)];
-    el.style.opacity = 0.95;
-    el.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
-    el.style.borderRadius='2px';
-    container.appendChild(el);
-    const dx = (Math.random()-0.5)*1200;
-    const dy = -600 - Math.random()*900;
-    const rot = (Math.random()-0.5)*720;
-    el.animate([
-      { transform: el.style.transform + ' translate(0px,0px)', opacity:1 },
-      { transform: el.style.transform + ` translate(${dx}px,${dy}px) rotate(${rot}deg)`, opacity:0.0 }
-    ], { duration: 1500 + Math.random()*900, easing:'cubic-bezier(.15,.7,.4,1)' });
-  }
-  setTimeout(()=> { container.style.display='none'; container.innerHTML=''; }, 2400);
-}
-
-/* =========================================================
-   MEMORY (playable): uses your files in same folder
-   memory_moon.png, memory_sun.png, memory_saturn.png, memory_venus.png
-   ========================================================= */
 const memoryImages = [
-  {id:'moon', src:'memory_moon.png'},
-  {id:'sun', src:'memory_sun.png'},
-  {id:'saturn', src:'memory_saturn.png'},
-  {id:'venus', src:'memory_venus.png'}
-];
-let memoryDeck = [...memoryImages, ...memoryImages].sort(()=>Math.random()-0.5);
-const memoryGrid = document.getElementById('memoryGrid');
-let firstCard=null, secondCard=null, memLock=false, memMatches=0;
-
-function renderMemory(){
-  memoryGrid.innerHTML='';
-  memoryDeck.forEach((cardObj, idx)=>{
-    const el = document.createElement('div');
-    el.className='memory-card';
-    el.dataset.id = cardObj.id;
-    el.innerHTML = `<img src="${cardObj.src}" alt="${cardObj.id}">`;
-    el.addEventListener('click', ()=> flipCard(el));
-    memoryGrid.appendChild(el);
-  });
-}
-function flipCard(el){
-  if(memLock || el.classList.contains('revealed') || el.classList.contains('matched')) return;
-  el.classList.add('revealed');
-  el.querySelector('img').style.display = 'block';
-  if(!firstCard) firstCard = el;
-  else if(!secondCard){
-    secondCard = el;
-    if(firstCard.dataset.id === secondCard.dataset.id){
-      // match
-      firstCard.classList.add('matched');
-      secondCard.classList.add('matched');
-      firstCard=null; secondCard=null;
-      memMatches++;
-      // solved?
-      if(memMatches === memoryImages.length){
-        // solved effect
-        markSolved(memoryGrid);
-      }
-    } else {
-      memLock = true;
-      setTimeout(()=> {
-        firstCard.classList.remove('revealed');
-        secondCard.classList.remove('revealed');
-        firstCard.querySelector('img').style.display='none';
-        secondCard.querySelector('img').style.display='none';
-        firstCard=null; secondCard=null; memLock=false;
-      },700);
-    }
-  }
-}
-renderMemory();
-
-/* =========================================================
-   SLIDING PUZZLE (3x3) using supermoon.png slices
-   - ensures solvable shuffle
-   - auto-check solved and show effect
-   ========================================================= */
-const puzzleBoard = document.getElementById('puzzleBoard');
-const PUZZLE_SIZE = 3; // 3x3
-let puzzleTiles = []; // positions 0..8, last is null(empty)
-
-function isSolvable(arr){
-  const a = arr.filter(v=>v!=null);
-  let inv = 0;
-  for(let i=0;i<a.length;i++) for(let j=i+1;j<a.length;j++) if(a[i] > a[j]) inv++;
-  return inv % 2 === 0;
-}
-function shufflePuzzle(){
-  let arr = [...Array(PUZZLE_SIZE*PUZZLE_SIZE).keys()];
-  arr[arr.length-1] = null;
-  // random shuffle until solvable
-  do {
-    for(let i=arr.length-1;i>0;i--){
-      const j = Math.floor(Math.random() * (i+1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  } while(!isSolvable(arr) || arr.indexOf(null) !== arr.length-1);
-  return arr;
-}
-function renderPuzzle(){
-  puzzleBoard.innerHTML='';
-  puzzleBoard.style.backgroundSize = `${PUZZLE_SIZE*100}% ${PUZZLE_SIZE*100}%`;
-  puzzleTiles.forEach((val, i)=>{
-    const tile = document.createElement('div');
-    if(val === null){
-      tile.className = 'puzzle-tile puzzle-empty';
-    } else {
-      tile.className = 'puzzle-tile';
-      const col = val % PUZZLE_SIZE;
-      const row = Math.floor(val / PUZZLE_SIZE);
-      const posX = - (col * (100));
-      const posY = - (row * (100));
-      tile.style.backgroundPosition = `${posX}% ${posY}%`;
-      tile.style.backgroundSize = `${PUZZLE_SIZE*100}% ${PUZZLE_SIZE*100}%`;
-    }
-    tile.addEventListener('click', ()=> tryMove(i));
-    puzzleBoard.appendChild(tile);
-  });
-}
-function tryMove(index){
-  const emptyIndex = puzzleTiles.indexOf(null);
-  const r1 = Math.floor(index / PUZZLE_SIZE), c1 = index % PUZZLE_SIZE;
-  const r2 = Math.floor(emptyIndex / PUZZLE_SIZE), c2 = emptyIndex % PUZZLE_SIZE;
-  const dist = Math.abs(r1-r2) + Math.abs(c1-c2);
-  if(dist === 1){
-    [puzzleTiles[index], puzzleTiles[emptyIndex]] = [puzzleTiles[emptyIndex], puzzleTiles[index]];
-    renderPuzzle();
-    if(isPuzzleSolved()) markSolved(puzzleBoard);
-  }
-}
-function isPuzzleSolved(){
-  for(let i=0;i<puzzleTiles.length-1;i++){
-    if(puzzleTiles[i] !== i) return false;
-  }
-  return true;
-}
-
-// initialize puzzle
-puzzleTiles = shufflePuzzle();
-renderPuzzle();
-
-/* =========================================================
-   SUDOKU 6x6: prefilled and user inputs, auto-validate and auto-check solved
-   ========================================================= */
-const sudokuGrid = document.getElementById('sudokuGrid');
-// a simple, solvable 6x6 start (0 = empty)
-let sudokuStart = [
-  [1,0,0,4,0,0],
-  [0,4,0,0,6,0],
-  [0,0,3,0,0,5],
-  [5,0,0,2,0,0],
-  [0,6,0,0,3,0],
-  [0,0,2,0,0,1]
+    "supermoon.png",
+    "memory_sun.png",
+    "memory_moon.png",
+    "memory_venus.png",
+    "docs/memory_saturn_png.jpg",
 ];
 
-function buildSudoku(){
-  sudokuGrid.innerHTML='';
-  for(let r=0;r<6;r++){
-    for(let c=0;c<6;c++){
-      const wrapper = document.createElement('div');
-      wrapper.className = 'sudoku-cell';
-      if(sudokuStart[r][c] !== 0){
-        wrapper.classList.add('prefilled');
-        wrapper.textContent = sudokuStart[r][c];
-      } else {
-        const inp = document.createElement('input');
-        inp.type = 'text';
-        inp.maxLength = 1;
-        inp.inputMode = 'numeric';
-        inp.addEventListener('input', ()=> {
-          inp.value = inp.value.replace(/[^1-6]/g,'').slice(0,1);
-          validateSudoku();
-        });
-        wrapper.appendChild(inp);
-      }
-      sudokuGrid.appendChild(wrapper);
-    }
-  }
+let memoryCards = [];
+let lockBoard = false;
+let firstCard, secondCard;
+
+function shuffleMemory() {
+    const grid = document.getElementById("memory-grid");
+    grid.innerHTML = "";
+
+    const doubled = [...memoryImages, ...memoryImages];
+    doubled.sort(() => Math.random() - 0.5);
+
+    memoryCards = [];
+
+    doubled.forEach(img => {
+        const card = document.createElement("div");
+        card.classList.add("memory-card");
+
+        const front = document.createElement("img");
+        front.classList.add("memory-front");
+        front.src = img;
+
+        const back = document.createElement("div");
+        back.classList.add("memory-back");
+
+        card.appendChild(front);
+        card.appendChild(back);
+
+        card.dataset.image = img;
+        card.addEventListener("click", flipCard);
+
+        memoryCards.push(card);
+        grid.appendChild(card);
+    });
 }
-function readSudoku(){
-  const grid = [];
-  const cells = sudokuGrid.querySelectorAll('.sudoku-cell');
-  for(let r=0;r<6;r++){
-    const row = [];
-    for(let c=0;c<6;c++){
-      const idx = r*6 + c;
-      const cell = cells[idx];
-      if(cell.classList.contains('prefilled')) row.push(Number(cell.textContent));
-      else {
-        const v = cell.querySelector('input').value;
-        row.push(v ? Number(v) : 0);
-      }
+
+function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
+
+    this.classList.add("flip");
+
+    if (!firstCard) {
+        firstCard = this;
+        return;
     }
-    grid.push(row);
-  }
-  return grid;
+
+    secondCard = this;
+    checkMemoryMatch();
 }
-function isSudokuValid(grid){
-  // rows & cols & boxes (2x3)
-  // check non-zero uniqueness
-  for(let r=0;r<6;r++){
-    const seen = new Set();
-    for(let c=0;c<6;c++){
-      const v = grid[r][c];
-      if(v===0) continue;
-      if(seen.has(v)) return false;
-      seen.add(v);
+
+function checkMemoryMatch() {
+    lockBoard = true;
+
+    const match = firstCard.dataset.image === secondCard.dataset.image;
+
+    if (match) {
+        firstCard.removeEventListener("click", flipCard);
+        secondCard.removeEventListener("click", flipCard);
+
+        resetMemoryTurn();
+        checkMemoryWin();
+    } else {
+        setTimeout(() => {
+            firstCard.classList.remove("flip");
+            secondCard.classList.remove("flip");
+            resetMemoryTurn();
+        }, 900);
     }
-  }
-  for(let c=0;c<6;c++){
-    const seen = new Set();
-    for(let r=0;r<6;r++){
-      const v = grid[r][c];
-      if(v===0) continue;
-      if(seen.has(v)) return false;
-      seen.add(v);
+}
+
+function resetMemoryTurn() {
+    [firstCard, secondCard, lockBoard] = [null, null, false];
+}
+
+function checkMemoryWin() {
+    if (memoryCards.every(card => card.classList.contains("flip"))) {
+        document.getElementById("memory-solved").style.display = "block";
+
+        setTimeout(() => {
+            document.getElementById("memory-solved").style.display = "none";
+            shuffleMemory();
+        }, 2500);
     }
-  }
-  // boxes 2 rows x 3 cols
-  for(let br=0;br<3;br++){
-    for(let bc=0; bc<2; bc++){
-      const seen = new Set();
-      const startR = br*2;
-      const startC = bc*3;
-      for(let r=0;r<2;r++){
-        for(let c=0;c<3;c++){
-          const v = grid[startR + r][startC + c];
-          if(v===0) continue;
-          if(seen.has(v)) return false;
-          seen.add(v);
+}
+
+shuffleMemory();
+</script>
+
+<!-- SCHUIFPUZZEL -->
+<div class="section">
+    <div class="game-title"><i><b>Glunder Schuifpuzzel</b></i></div>
+
+    <div id="slider-container">
+        <div id="slider-grid" class="slider-grid"></div>
+    </div>
+
+    <div id="slider-solved" style="display:none; margin-top:18px; font-size:24px;">
+        ✨ Puzzel opgelost! Nieuwe afbeelding wordt geladen… ✨
+    </div>
+</div>
+
+<script>
+
+// ---------------- SLIDING PUZZLE ----------------
+
+const sliderImages = [
+    "docs/supermoon.png",
+    "docs/memory_venus.png",
+    "docs/memory_sun.png",
+    "docs/memory_saturn_png.jpg"
+];
+
+let currentSliderIndex = 0;
+let tiles = [];
+let emptyIndex = 15; // position of the “empty” tile in a 4×4 grid
+
+function loadSlidingPuzzle() {
+    const grid = document.getElementById("slider-grid");
+    grid.innerHTML = "";
+    tiles = [];
+
+    const img = sliderImages[currentSliderIndex];
+
+    let positions = [...Array(15).keys()].sort(() => Math.random() - 0.5);
+
+    emptyIndex = 15;
+
+    for (let i = 0; i < 16; i++) {
+        const tile = document.createElement("div");
+        tile.classList.add("slider-tile");
+
+        if (i === 15) {
+            tile.classList.add("empty-tile");
+            tiles.push(tile);
+            grid.appendChild(tile);
+            continue;
         }
-      }
+
+        const p = positions[i];
+
+        tile.style.backgroundImage = `url(${img})`;
+
+        const x = p % 4;
+        const y = Math.floor(p / 4);
+        tile.style.backgroundPosition = `-${x * 100}px -${y * 100}px`;
+
+        tile.dataset.correct = p;
+        tile.dataset.index = i;
+
+        tile.addEventListener("click", () => slideTile(i));
+
+        tiles.push(tile);
+        grid.appendChild(tile);
     }
-  }
-  return true;
-}
-function isSudokuComplete(grid){
-  for(let r=0;r<6;r++) for(let c=0;c<6;c++) if(grid[r][c]===0) return false;
-  return true;
-}
-function validateSudoku(){
-  const grid = readSudoku();
-  const valid = isSudokuValid(grid);
-  const complete = isSudokuComplete(grid);
-  const el = document.getElementById('sudokuGrid');
-  if(valid) el.classList.remove('error');
-  else el.classList.add('error');
-
-  if(valid && complete){
-    markSolved(el);
-  }
-}
-document.getElementById('checkSudoku').addEventListener('click', validateSudoku);
-document.getElementById('resetSudoku').addEventListener('click', ()=> { sudokuStart = sudokuStart; buildSudoku(); });
-
-buildSudoku(); // initial
-
-/* =========================================================
-   MARK solved: adds glow + confetti
-   ========================================================= */
-function markSolved(element){
-  if(element.classList.contains('solved')) return; // only once
-  element.classList.add('solved','solved-glow');
-  showConfetti();
-
-  // small pulse then remove glow after some time
-  setTimeout(()=> element.classList.remove('solved-glow'), 2200);
 }
 
-/* Additional auto-checks: memory and puzzle already call markSolved when detected.
-   Make sudoku trigger validate on input (set above).
-*/
+function slideTile(i) {
+    if (!isAdjacent(i, emptyIndex)) return;
 
-/* Keyboard shortcuts: rotate games */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'r'){ // shuffle puzzle
-    puzzleTiles = shufflePuzzle(); renderPuzzle();
-  }
-});
+    const tile = tiles[i];
+    const empty = tiles[emptyIndex];
 
-/* Accessibility: set alt text for images used in memory (done via img alt attribute)
-*/
+    [tile.style.backgroundImage, empty.style.backgroundImage] =
+        [empty.style.backgroundImage, tile.style.backgroundImage];
+
+    [tile.style.backgroundPosition, empty.style.backgroundPosition] =
+        [empty.style.backgroundPosition, tile.style.backgroundPosition];
+
+    [tile.dataset.correct, empty.dataset.correct] =
+        [empty.dataset.correct, tile.dataset.correct];
+
+    empty.classList.remove("empty-tile");
+    tile.classList.add("empty-tile");
+
+    emptyIndex = i;
+
+    checkSlidingSolved();
+}
+
+function isAdjacent(a, b) {
+    const ax = a % 4, ay = Math.floor(a / 4);
+    const bx = b % 4, by = Math.floor(b / 4);
+    return Math.abs(ax - bx) + Math.abs(ay - by) === 1;
+}
+
+function checkSlidingSolved() {
+    const correct = tiles.every((t, i) => {
+        if (i === 15) return true;
+        return Number(t.dataset.correct) === i;
+    });
+
+    if (correct) {
+        const solvedBox = document.getElementById("slider-solved");
+        solvedBox.style.display = "block";
+
+        tiles.forEach(t => t.style.boxShadow = "0 0 18px gold");
+
+        setTimeout(() => {
+            solvedBox.style.display = "none";
+            tiles.forEach(t => t.style.boxShadow = "none");
+
+            currentSliderIndex = (currentSliderIndex + 1) % sliderImages.length;
+            loadSlidingPuzzle();
+        }, 2500);
+    }
+}
+
+loadSlidingPuzzle();
 
 </script>
+
+<!-- SUDOKU -->
+<div class="section">
+    <div class="game-title"><i><b>Glunder Sudoku</b></i></div>
+
+    <div id="sudoku-grid" class="sudoku-grid"></div>
+
+    <div id="sudoku-solved" style="display:none; margin-top:18px; font-size:24px;">
+        ✨ Sudoku opgelost! Nieuwe puzzel start… ✨
+    </div>
+</div>
+
+<script>
+// ---------------- SUDOKU ----------------
+
+// 3 volledig geldige 6×6 sudoku-oplossingen
+const sudokuSolutions = [
+    [
+        [1,2,3,4,5,6],
+        [4,5,6,1,2,3],
+        [2,3,1,5,6,4],
+        [5,6,4,2,3,1],
+        [3,1,2,6,4,5],
+        [6,4,5,3,1,2]
+    ],
+    [
+        [2,4,1,3,6,5],
+        [3,6,5,2,4,1],
+        [1,5,3,6,2,4],
+        [4,2,6,1,5,3],
+        [5,3,4,6,1,2],
+        [6,1,2,5,3,4]
+    ],
+    [
+        [3,1,6,5,4,2],
+        [5,2,4,3,6,1],
+        [1,6,2,4,5,3],
+        [4,3,5,2,1,6],
+        [6,4,1,3,2,5],
+        [2,5,3,1,6,4]
+    ]
+];
+
+let currentSudokuIndex = 0;
+
+function loadSudoku() {
+    const grid = document.getElementById("sudoku-grid");
+    grid.innerHTML = "";
+
+    const sol = sudokuSolutions[currentSudokuIndex];
+
+    let puzzle = JSON.parse(JSON.stringify(sol));
+    removeSudokuCells(puzzle);
+
+    for (let r=0; r<6; r++) {
+        for (let c=0; c<6; c++) {
+            const cell = document.createElement("input");
+            cell.maxLength = 1;
+            cell.classList.add("sudoku-cell");
+
+            if (puzzle[r][c] !== 0) {
+                cell.value = puzzle[r][c];
+                cell.disabled = true;
+                cell.classList.add("given");
+            } else {
+                cell.addEventListener("input", () => checkSudoku(puzzle, sol));
+            }
+
+            // visuele vakjesblokken (3×2)
+            if (r === 2 || r === 4) cell.style.borderBottom = "3px solid #cbb78f";
+            if (c === 1 || c === 3) cell.style.borderRight = "3px solid #cbb78f";
+
+            grid.appendChild(cell);
+        }
+    }
+}
+
+function removeSudokuCells(puzzle) {
+    let removeCount = 12; // genoeg voor 6×6 puzzel
+
+    while (removeCount > 0) {
+        const r = Math.floor(Math.random()*6);
+        const c = Math.floor(Math.random()*6);
+        if (puzzle[r][c] !== 0) {
+            puzzle[r][c] = 0;
+            removeCount--;
+        }
+    }
+}
+
+function checkSudoku(puzzle, solution) {
+    const cells = document.querySelectorAll("#sudoku-grid .sudoku-cell");
+    let idx = 0;
+    let correct = true;
+
+    for (let r=0; r<6; r++) {
+        for (let c=0; c<6; c++) {
+            const cell = cells[idx];
+
+            if (cell.disabled) {
+                idx++;
+                continue;
+            }
+
+            const val = parseInt(cell.value);
+            if (val !== solution[r][c]) {
+                correct = false;
+            }
+            idx++;
+        }
+    }
+
+    if (correct) {
+        const solvedBox = document.getElementById("sudoku-solved");
+        solvedBox.style.display = "block";
+
+        cells.forEach(c => c.style.boxShadow = "0 0 15px gold");
+
+        setTimeout(() => {
+            solvedBox.style.display = "none";
+            cells.forEach(c => c.style.boxShadow = "none");
+
+            currentSudokuIndex = (currentSudokuIndex + 1) % sudokuSolutions.length;
+            loadSudoku();
+        }, 2500);
+    }
+}
+
+loadSudoku();
+
+</script>
+
 </body>
 </html>
+  
